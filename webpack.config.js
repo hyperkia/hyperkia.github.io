@@ -21,7 +21,7 @@ module.exports = {
     directory: path.resolve(__dirname, "dist")
   },
 
-  port: 3000,
+  port: 7000,
   open: true,
 
   hot: false,          // ❌ no HMR (required for ESM)
