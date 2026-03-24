@@ -21,7 +21,7 @@ class KIA_App extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: 'components/kia-app/style.css'};
+    customizer = {styleHref: '/components/kia-app/style.css'};
 
     constructor() {
         super();
