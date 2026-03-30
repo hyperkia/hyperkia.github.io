@@ -31,6 +31,10 @@ const Index = {
 		KIA.dom.kiaCanvas.updatePagePointerLock();
 		// KIA.dom.kiaPages.changePageVisiblility();
 		// KIA.dom.kiaLayers.changePageVisiblility();
+	},
+
+	setSelectionCss(){
+		KIA.dom.kiaCanvas.updatePageSelectionCss();
 	}
 } 
 

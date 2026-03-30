@@ -17,6 +17,8 @@ import getSelectionStackByKey from './getSelectionStackByKey.js';
 import resolveInteractionTarget from './resolveInteractionTarget.js';
 import resolveInteractionTargetKey from './resolveInteractionTargetKey.js';
 import getSelectionUiType from './getSelectionUiType.js';
+import getSelectionElement from './getSelectionElement.js';
+import getSelectionCssObject from './getSelectionCssObject.js';
 
 
 
@@ -40,5 +42,7 @@ export {
 	resolveInteractionTarget,
 	resolveInteractionTargetKey,
 	getSelectionUiType,
+	getSelectionElement,
+	getSelectionCssObject,
 }
 

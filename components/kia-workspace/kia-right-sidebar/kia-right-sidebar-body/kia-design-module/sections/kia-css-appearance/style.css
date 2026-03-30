@@ -3,10 +3,10 @@
 .opacity-input::part(label-svg) {width: 19px;height: 19px;}
 
 .border-radius-input::part(label-svg){width: 17px;height: 20px;}
-.border-top-right-radius::part(label-svg){rotate: -90deg;transform-origin: 0 0;}
-.border-top-left-radius::part(label-svg){rotate: 0deg;transform-origin: 0 0;}
-.border-bottom-right-radius::part(label-svg){rotate: 180deg;transform-origin: 0 0;}
-.border-bottom-left-radius::part(label-svg){rotate: 90deg;transform-origin: 0 0;}
+.border-top-right-radius::part(label-svg){rotate: 0deg;transform-origin: 0 0;}
+.border-top-left-radius::part(label-svg){rotate: -90deg;transform-origin: 0 0;}
+.border-bottom-right-radius::part(label-svg){rotate: 90deg;transform-origin: 0 0;}
+.border-bottom-left-radius::part(label-svg){rotate: 180deg;transform-origin: 0 0;}
 
 .single-border-radius{display: none;}
 .module-row:has(.toggle-all-radius) .single-border-radius{display: block;}
@@ -15,6 +15,9 @@
 /* Selection Capability */
 :host([data-selection-type="sectionhtml"]){display: block;}
 :host([data-selection-type="imghtml"]){display: block;}
+:host([data-selection-type="texthtml"]){display: block;}
+/*
 :host([data-selection-type="videohtml"]){display: block;}
 :host([data-selection-type="documenthtml"]){display: block;}
 :host([data-selection-type="audiohtml"]){display: block;}
+*/

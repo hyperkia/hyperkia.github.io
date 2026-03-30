@@ -19,12 +19,6 @@ const Index = {
 	    }
 	  }
 	},
-	fonts: {},
-
-	loadFonts(fonts){
-		this.fonts = fonts || {};
-		KIA.observer.ui.observe('changeProjectFonts');
-	},
 
 	setCanvasScale(obj){
 		if(obj.zoom) this.canvasZoom = obj.zoom;
@@ -55,6 +49,7 @@ const Index = {
 	},
  
 	openColorPicker(obj){
+		this.colorPicker.value = obj.value;
 		this.colorPicker.open = true;
 		this.colorPicker.target.type = obj.type;
 		this.colorPicker.target.payload.property = obj.property;
@@ -63,16 +58,6 @@ const Index = {
 
 	setColorValue(hexValue){
 		this.colorPicker.value = hexValue;
-	},
-
-	addFont(fonts){		
-		for(let f in fonts) this.fonts[f] = fonts[f];
-		KIA.observer.ui.observe('changeProjectFonts');
-	},
-
-	deleteFont(name){
-		delete this.fonts[name];
-		KIA.observer.ui.observe('changeProjectFonts');
 	},
 }
 

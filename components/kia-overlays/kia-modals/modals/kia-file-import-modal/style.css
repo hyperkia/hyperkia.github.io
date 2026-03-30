@@ -8,7 +8,7 @@
 
 .tabmenu{display: flex;justify-content: flex-start;align-items: center;gap: 2px;margin-top: 8px;padding-right: 20px;}
 .tabmenu-item{display: inline-flex;justify-content: center;align-items: center;padding: 6px 14px;background-color: #383838;position: relative;color: #fff;font-size: 13px;user-select: none;border:2px solid #383838;font-weight: 500;cursor: pointer;}
-.tabmenu-item.active{background-color: transparent !important;color: #383838 !important;}
+.tabmenu-item.active{background-color: transparent !important;color: #383838 !important;pointer-events: none;}
 
 .tabcontents{flex-grow: 1;height: 100px;}
 .tabcontent{height:100%;display: none;pointer-events: none;}

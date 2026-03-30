@@ -51,6 +51,11 @@ class KIA_Color_Picker_Popover extends KIACustomElement{
 
         Events[e.type]?.handler?.(e);      
     }
+
+    open() {
+        props.root.classList.add('show');
+        methods.uiStateColorPickerValueToUI();
+    }
  
     init(){
         methods.updateAdditionalData();

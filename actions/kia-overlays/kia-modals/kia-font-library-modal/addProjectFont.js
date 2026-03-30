@@ -1,7 +1,7 @@
 function Index(fonts) {	
-	KIA.state.ui.addFont(fonts);
-	KIA.services.idb.core.updateKeyValueObject('options', {
-		projectFonts: KIA.state.ui.fonts,
+	KIA.state.canvas.addFont(fonts);
+	KIA.services.idb.core.updateKeyValueObject('canvas', {
+		projectFonts: KIA.state.canvas.projectFonts,
 	})	
 }
 

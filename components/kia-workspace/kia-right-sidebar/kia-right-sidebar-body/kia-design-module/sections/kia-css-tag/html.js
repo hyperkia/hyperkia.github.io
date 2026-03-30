@@ -36,11 +36,11 @@ const html = `
 				<textarea data-id="tag-innerText" class="tag-innertext" data-event="tagInnerText" placeholder="Type here..."></textarea>
 			</div>
 			
-			<div part="module-col w79">
+			<div part="module-col w79" class="tag-src-colm">
 				<input data-id="tag-src" class="tag-src" data-event="tagSrc" type="text" placeholder="url">
 			</div>
-			<div part="module-col module-last-btn-col w16">				
-				<kia-button class="set-tag-src" data-icon="upload-solid-full-symbol" data-event="setTagSrc" title="Upload"></kia-button>
+			<div class="upload-asset-colm" part="module-col module-last-btn-col w16">				
+				<kia-button class="upload-asset-btn" data-icon="upload-solid-full-symbol" data-event="setTagSrc" title="Upload"></kia-button>
 			</div>
 		</div>
 	</section>

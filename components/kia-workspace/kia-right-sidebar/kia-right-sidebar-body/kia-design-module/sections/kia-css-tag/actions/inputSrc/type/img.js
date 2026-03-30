@@ -23,7 +23,7 @@ function Index(){
 			src: ''
 		};
 	}
-
+	
 	return layerNewObj;
 }
 

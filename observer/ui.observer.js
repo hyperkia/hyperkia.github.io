@@ -26,11 +26,6 @@ const Index = {
 		KIA.dom.kiaColorPickerPopover.openColorPickerPopover();
 	},
 
-	changeProjectFonts(){
-		KIA.dom.kiaCssTypography.setProjectFontFamilyList();
-		KIA.dom.kiaCssTypography.setSelectedFontFamilyWeights();
-	},
-
 	setSelectionKeys(){
 		KIA.managers.css.selectionToPropsInput();
 		KIA.dom.kiaCssFilter.selectionToFilterInputs();

@@ -6,7 +6,7 @@ const html = `
 		<kia-button data-icon="x-solid-symbol" data-event="closeModal"></kia-button>
 	  </header>
 	  <div class="icon-items scroll-design" data-id="icon-items"></div>
-	  <strong class="no-icon-item-text">No Icon Found <br> Search Different Keywords</strong>
+	  <strong class="noicon-text">No icon found for "<span class="search-icon-name"></span>" <br> Try a different spelling or browse similar icons</strong>
 	 </section>
 `;
 

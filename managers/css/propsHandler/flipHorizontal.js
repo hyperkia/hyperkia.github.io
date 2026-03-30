@@ -1,4 +1,5 @@
-function Index(css, source) {
+
+function Index(source, result) {
 
 	if(source === 'propsInputToSelection') {
 		const key = KIA.dom.read.getSelectionKey();
@@ -16,8 +17,8 @@ function Index(css, source) {
 			scaleY = 1;	
 		}
 
-		delete css['flip-horizontal'];
-		css.scale = `${scaleX} ${scaleY}`;
+		result.css.scale = `${scaleX} ${scaleY}`;
+		console.log(result);
 	}
 
 }

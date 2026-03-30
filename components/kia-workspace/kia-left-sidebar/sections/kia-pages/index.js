@@ -22,7 +22,7 @@ class KIA_Pages extends KIACustomElement {
         this.attachShadow({ mode: 'open' });
         this._defaultSetup();
         this.props.root = this;       
-        this._eventsSetup(Events);  
+        this._eventsSetup(Events);
     }
 
     handleEvents(e){       

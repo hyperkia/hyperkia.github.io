@@ -55,7 +55,7 @@ const Index = {
     },
 
     showProjectFonts(){
-        const htmlFonts = this.getFontsHtml({fonts: Object.keys(KIA.state.ui.fonts), action: 'delete'});
+        const htmlFonts = this.getFontsHtml({fonts: Object.keys(KIA.state.canvas.projectFonts), action: 'delete'});
         props.root.$id.downloadedFonts.innerHTML = htmlFonts;
     }
 

@@ -1,8 +1,8 @@
-function Index(pageObject) {
 
-    KIA.state.canvas.setPageOrders();
+
+function Index(pageObject) {
+    KIA.state.canvas.addNewPagesKey(pageObject.key);
     const pagesOrder = KIA.state.canvas.pagesOrder;
-    pagesOrder.push(pageObject.key);
     KIA.services.idb.core.updateKeyValueObject('canvas', { pagesOrder })
 
     KIA.state.pages.addNewPage(pageObject);
@@ -10,3 +10,4 @@ function Index(pageObject) {
 } 
 
 export default Index;
+

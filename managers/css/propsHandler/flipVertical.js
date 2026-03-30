@@ -1,4 +1,5 @@
-function Index(css, source) {
+
+function Index(source, result) {
 	if(source === 'propsInputToSelection') {
 		const key = KIA.dom.read.getSelectionKey();
 		const lCss = KIA.state.layers.map[key].css;
@@ -15,8 +16,7 @@ function Index(css, source) {
 			scaleY = -1;	
 		}
 
-		delete css['flip-vertical'];
-		css.scale = `${scaleX} ${scaleY}`;
+		result.css.scale = `${scaleX} ${scaleY}`;
 	}
 
 }

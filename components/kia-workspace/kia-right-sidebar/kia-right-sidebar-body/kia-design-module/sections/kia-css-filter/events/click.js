@@ -17,6 +17,7 @@ class Index {
 		const attrsString = (rowEl.dataset.activeFilters || '') + `--${name}`;
 		rowEl.dataset.activeFilters = attrsString;
 		const inputEl = props.root._qs(`[data-prop="filter-${name}"]`);
+		rowEl.querySelector(`[data-filter-visible]`).dataset.filterVisible = true;
 		const stackKey = crypto.randomUUID();
 		const layerNewObj = {
 			key: layerKey,
@@ -31,9 +32,9 @@ class Index {
 				}
 			}
 		};
-		KIA.actions.share.addStack(layerNewObj);
-		KIA.actions.share.updateStack(layerNewObj);
-		inputEl.dataset.stack = key;
+		
+		KIA.actions.share.setLayerSelectionStack(layerNewObj);
+		inputEl.dataset.stack = stackKey;
 		inputEl.value = inputEl.dataset.default;
 		inputEl.focus();
 	}
@@ -55,7 +56,7 @@ class Index {
 	        	
 			}
 		};
-        KIA.actions.share.updateStack(layerNewObj); 
+        KIA.actions.share.setLayerSelectionStack(layerNewObj); 
 	}
  
 	static filterVisible(){
@@ -75,7 +76,7 @@ class Index {
 			}
 		};
 		props.eTarget.dataset.filterVisible = status;
-        KIA.actions.share.updateStack(layerNewObj);
+        KIA.actions.share.setLayerSelectionStack(layerNewObj);
 	}
 
 }

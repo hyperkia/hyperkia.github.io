@@ -1,8 +1,6 @@
 
 import setSelectionInnerText from './setselection/setSelectionInnerText.js';
 import setSelectionSrc from './setselection/setSelectionSrc.js';
-import setSelectionNodeName from './setselection/setSelectionNodeName.js';
-import setSelectionStack from './setselection/setSelectionStack.js';
 import deleteSelectedLayer from './setselection/deleteSelectedLayer.js';
 import deleteSelectedPage from './setselection/deleteSelectedPage.js';
 import updateSelectionZIndex from './updateSelectionZIndex.js';
@@ -25,12 +23,21 @@ import updateLayerPointerLock from './updateLayerPointerLock.js';
 import updateCanvasCss from './updateCanvasCss.js';
 import setCanvasActiveTool from './setCanvasActiveTool.js';
 
+import updateLayerSelectionAttributes from './selection-layer/updateLayerSelectionAttributes.js';
+import updateLayerSelectionSAttributes from './selection-layer/updateLayerSelectionAttributes.js';
+import updateLayerSelectionCss from './selection-layer/updateLayerSelectionCss.js';
+import updateLayerSelectionSCss from './selection-layer/updateLayerSelectionSCss.js';
+import updateLayerSelectionStringProperties from './selection-layer/updateLayerSelectionStringProperties.js';
+import updateLayerSelectionNodeName from './selection-layer/updateLayerSelectionNodeName.js';
+import updateLayerSelectionAssets from './selection-layer/updateLayerSelectionAssets.js';
 
-export {	
+import updatePageSelectionCss from './selection-page/updatePageSelectionCss.js';
+
+
+
+export default {	
 	setSelectionInnerText,
 	setSelectionSrc,
-	setSelectionNodeName,
-	setSelectionStack,
 	deleteSelectedLayer,
 	deleteSelectedPage,
 	updateSelectionZIndex,
@@ -52,4 +59,14 @@ export {
 	updateLayerPointerLock,
 	updateCanvasCss,
 	setCanvasActiveTool,
+
+	updateLayerSelectionAttributes,
+	updateLayerSelectionSAttributes,
+	updateLayerSelectionCss,
+	updateLayerSelectionSCss,
+	updateLayerSelectionStringProperties,
+	updateLayerSelectionNodeName,
+	updateLayerSelectionAssets,
+
+	updatePageSelectionCss,
 };

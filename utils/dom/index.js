@@ -12,6 +12,7 @@ import objectToAttributeString from './objectToAttributeString.js';
 import fileToDimensionObject from './fileToDimensionObject.js';
 import getDropFile from './getDropFile.js';
 import getTypeOf from './getTypeOf.js';
+import cleanSVGElement from './cleanSVGElement.js';
 	
 	
 export default {
@@ -29,4 +30,5 @@ export default {
 	fileToDimensionObject,
 	getDropFile,
 	getTypeOf,
+	cleanSVGElement,
 }

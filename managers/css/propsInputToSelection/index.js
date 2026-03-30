@@ -15,7 +15,7 @@ function Index(css) {
 			break;
 
 		case 'canvas':
-			canva(css);
+			canvas(css);
 			break;
 	}
 }

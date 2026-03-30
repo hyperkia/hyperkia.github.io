@@ -33,10 +33,6 @@ const Index = {
 		KIA.dom.kiaCanvas.setSelectionNodeName();
 	},
 
-	updateStack(){
-		KIA.dom.kiaCanvas.setSelectionStack();
-	},
-
 	deleteSelectedLayer(){
 		KIA.dom.kiaCanvas.deleteSelectedLayer();
 	},
@@ -55,7 +51,29 @@ const Index = {
 
 	createdLayer(){		
 		KIA.dom.kiaLayers.renderLayers();
-	}
+	},
+
+
+
+	setSelectionStringProperties(){
+		KIA.dom.kiaCanvas.updateLayerSelectionStringProperties();	
+	},
+
+	setSelectionAttributes(){
+		KIA.dom.kiaCanvas.updateLayerSelectionAttributes();
+	},
+
+	setSelectionCss(){
+		KIA.dom.kiaCanvas.updateLayerSelectionCss();
+	},
+
+	setSelectionSCss(){
+		KIA.dom.kiaCanvas.updateLayerSelectionSCss();
+	},
+
+	setSelectionAssets(){
+		KIA.dom.kiaCanvas.updateLayerSelectionAssets();
+	},
 
 } 
 

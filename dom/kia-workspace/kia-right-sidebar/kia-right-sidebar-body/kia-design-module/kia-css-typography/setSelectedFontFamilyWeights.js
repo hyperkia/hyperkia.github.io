@@ -1,5 +1,6 @@
 function Index() {
-	const fonts = KIA.state.ui.fonts;
+	const fonts = KIA.state.canvas.projectFonts;
+	if(!fonts) return;
 	const selectedFamily = KIA.kiaCssTypography.$id.fontFamilySelect.value;
 	const selectedFamilyData = fonts[selectedFamily];
 	if(! selectedFamilyData) return;

@@ -10,6 +10,8 @@ class Index {
 
 	static changeFontFamily(e){
 		KIA.dom.kiaCssTypography.setSelectedFontFamilyWeights();
+		const fontFamily = props.root.$id.fontFamilySelect.value;
+		props.root.style.setProperty('--selection--font-family', `"${fontFamily.replaceAll('"','')}"`);
 	}
 
 }

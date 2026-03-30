@@ -5,6 +5,7 @@
 
 /* Selection Capability */
 :host([data-selection-type="canvas"]){display: block;}
-:host([data-selection-type="page"]){display: block;}
 :host([data-selection-type="sectionhtml"]){display: block;}
-:host([data-selection-type="moresvg"]){display: block;}
+:host([data-selection-type="texthtml"]){display: block;}
+:host([data-selection-type="page"]){display: block;}
+:host([data-selection-type$="svg"]){display: block;}

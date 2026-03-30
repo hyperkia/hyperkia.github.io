@@ -13,9 +13,17 @@
 .single-border-width{display: none;}
 .module-row:has(.toggle-all-width) .single-border-width{display: block;}
 
+.border-style-colm{display: var(--display, block);}
+.stroke-dasharray-colm{display: var(--display, none);}
 
+/* Selection Capability */
 :host([data-selection-type="sectionhtml"]){display: block;}
 :host([data-selection-type="imghtml"]){display: block;}
+:host([data-selection-type="texthtml"]){display: block;}
+:host([data-selection-type$="svg"]){display: block;}
+:host([data-selection-type$="svg"]) .stroke-dasharray-colm{--display: block;}
+:host([data-selection-type$="svg"]) :where(.all-border-button-colm, .border-style-colm){--display: none;}
+/*
 :host([data-selection-type="videohtml"]){display: block;}
 :host([data-selection-type="documenthtml"]){display: block;}
-:host([data-selection-type="audiohtml"]){display: block;}
+:host([data-selection-type="audiohtml"]){display: block;}*/

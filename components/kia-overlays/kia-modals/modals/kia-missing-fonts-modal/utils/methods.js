@@ -3,7 +3,7 @@ import props from '../utils/props.js';
 
 const Index = {
 	init(){
-		const availableFonts = KIA.state.ui.fonts;
+		const availableFonts = KIA.state.canvas.projectFonts;
 		const missingFonts = new Set();		
 		const layers = KIA.state.layers.map;
 		for(let k in layers) {

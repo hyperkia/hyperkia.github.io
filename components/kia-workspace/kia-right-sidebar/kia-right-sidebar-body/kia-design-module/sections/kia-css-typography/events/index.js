@@ -2,6 +2,7 @@ import click from './click.js';
 import kiaPropInput from './kiaPropInput.js';
 import changeColorPickerValue from './changeColorPickerValue.js';
 import kiaSelectOptionChange from './kiaSelectOptionChange.js';
+import selectionChange from './selectionChange.js';
 
 
 export { 
@@ -9,4 +10,5 @@ export {
 	kiaPropInput,
 	changeColorPickerValue,
 	kiaSelectOptionChange,
+	selectionChange,
 }

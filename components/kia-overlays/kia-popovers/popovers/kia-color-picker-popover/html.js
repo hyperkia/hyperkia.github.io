@@ -20,7 +20,7 @@ const html = `
             </div>
             <div class="cpicker-alphaslider">
                 <div data-id="cpicker-alphaslider-bg" class="cpicker-alphaslider-bg">
-                    <input data-id="inputslider-alpha" type="range" value="80" min="0" max="100">
+                    <input data-id="inputslider-alpha" type="range" value="100" min="0" max="100">
                 </div>
             </div>
             <div class="cpicker-form">           
@@ -43,7 +43,7 @@ const html = `
                         <input data-id="inputhex" type="text" class="cpicker-input inputhex">
                     </div>
                     <div class="cpicker-inputs cpicker-input-alpha show" data-id="cpicker-input-alpha" min="0" max="1" step="0.01" style="pointer-events:none;">
-                        <input data-id="inputalpha" type="text" class="cpicker-input" value="80">
+                        <input data-id="inputalpha" type="text" class="cpicker-input" value="100">
                     </div>
                 </div>
             </div>

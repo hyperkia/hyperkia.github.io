@@ -14,6 +14,7 @@ import kiaMissingFontsModal from './kia-overlays/kia-modals/kia-missing-fonts-mo
 import kiaAssetsManagerModal from './kia-overlays/kia-modals/kia-assets-manager-modal/index.js';
 import * as kiaColorPickerPopover from './kia-overlays/kia-popovers/kia-color-picker-popover/index.js';
 import * as share from './share/index.js';
+import runtime from './runtime/index.js';
 
 KIA.actions = {
 	kiaApp,
@@ -30,6 +31,7 @@ KIA.actions = {
 	kiaFileImportModal,
 	kiaColorPickerPopover,
 	share,
+	runtime,
 	kiaMissingFontsModal,
 	kiaAssetsManagerModal,
 }

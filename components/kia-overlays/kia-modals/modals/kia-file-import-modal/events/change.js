@@ -10,8 +10,10 @@ class Index {
 
 	static async importFile(){
 		const file = props.root.$id.uploadFileInput.files[0];
-		const parsedData = await KIA.parsers.psdToObject.parse(file);			
-		KIA.actions.kiaFileImportModal.importPageAndLayers(parsedData);
+		let parsedData = null;
+		if(file.type === 'application/zip') parsedData = await KIA.transformer.fflateZip.zipToProject(file);
+		// const parsedData = await KIA.transformer.psdToObject.parse(file);			
+		KIA.actions.kiaFileImportModal.importProject(parsedData);
 		KIA.actions.kiaModals.closeModal();
 	}
 } 

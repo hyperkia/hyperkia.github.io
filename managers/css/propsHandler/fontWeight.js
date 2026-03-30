@@ -1,13 +1,28 @@
-function Index(css, source) {
+
+
+const prop = 'font-weight';
+
+function Index(source, result) {
+
+	const layerObj = KIA.dom.read.getSelectionLayerObject();
+
+	if(source === 'SelectionToPropsInput') {
+		if(layerObj.css[prop]) result[prop] = layerObj.css[prop];
+		if(!layerObj.css[prop]) result[prop] = '400';
+	}
+
 	if(source === 'propsInputToSelection') {
-		const value = css['font-weight'];
+		const inputCss = result.inputCss;
+		const value = inputCss['font-weight'];
 		if(value.includes('-italic')) {
-			css['font-weight'] = value.split('-')[0];
-			css['font-style'] = 'italic';
+			result.css['font-weight'] = value.split('-')[0];
+			result.css['font-style'] = 'italic';
 		} else {
-			css['font-style'] = 'normal';
+			result.css['font-style'] = 'normal';
+			result.css['font-weight'] = value;
 		}
 	}
+
 }
 
 export default Index;

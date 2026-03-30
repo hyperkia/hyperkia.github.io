@@ -11,7 +11,6 @@ class Index {
 		if (!props.activePage) return;
  
 		props.newLayer = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        props.newLayer.setAttribute('fill', '#d9d9d9');
         props.newLayer.setAttribute('data-svgshape', crypto.randomUUID());        
         props.root.$id[`pageSvg${props.activePageKey}`].appendChild(props.newLayer);
         this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
@@ -20,6 +19,7 @@ class Index {
 		props.newLayer.setAttribute('y1', this.cpsdXY.y);
 		props.newLayer.setAttribute('x2', this.cpsdXY.x);
 		props.newLayer.setAttribute('y2', this.cpsdXY.y);
+        props.newLayer.style.cssText = `stroke: #383838; stroke-width: 2px`;
 	}
 
 	static handlePointerMove(e) {
@@ -41,10 +41,14 @@ class Index {
             key,
             pId: props.activePage.dataset.page,
             nodeName: props.newLayer.nodeName.toLowerCase(),
-            attrs: {},
             type: 'linesvg',
+            attrs: {},
             css: {
                 width, left, top
+            },
+            scss: {
+                stroke: '#383838',
+                'stroke-width': '2px',
             },
             save: false,
             stack: {},
@@ -96,11 +100,11 @@ class Index {
                     x1: props.newLayer.x1.baseVal.value,                    
                     y1: props.newLayer.y1.baseVal.value,                    
                     x2: props.newLayer.x2.baseVal.value,                    
-                    y2: props.newLayer.y2.baseVal.value,
-                    fill: '#d9d9d9',
+                    y2: props.newLayer.y2.baseVal.value,                    
                 }, 
                 scss: {
-                    
+                    stroke: '#383838',
+                    'stroke-width': '2px',
                 },
                 save: true,
                 stack: {},

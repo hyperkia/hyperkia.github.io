@@ -16,16 +16,16 @@ const html = `
 
 			<div part="module-col">
 				<h6 part="module-col-title">Position</h6>
-				<kia-prop-input data-id="prop-left" data-prop="left" data-label-text="X" data-type="number" data-unit="px"></kia-prop-input> 
+				<kia-prop-input data-id="prop-left" data-prop="left" data-label-text="X" data-type="number" data-unit="px" data-min="-100000" data-max="100000"></kia-prop-input> 
 			</div>
 
 			<div part="module-col">				
-				<kia-prop-input data-id="prop-top" data-prop="top" data-label-text="Y" data-type="number" data-unit="px"></kia-prop-input> 
+				<kia-prop-input data-id="prop-top" data-prop="top" data-label-text="Y" data-type="number" data-unit="px" data-min="-100000" data-max="100000"></kia-prop-input> 
 			</div>
 
 			<div part="module-col">
 				<h6 part="module-col-title">Transform</h6>
-				<kia-prop-input data-id="prop-rotate" data-prop="rotate" data-label-icon="rotate_auto" data-type="number" data-unit="deg"></kia-prop-input> 
+				<kia-prop-input data-id="prop-rotate" data-prop="rotate" data-label-icon="rotate_auto" data-type="number" data-unit="deg" data-min="-360" data-max="360"></kia-prop-input> 
 			</div>
 
 			<div part="module-col w50">				

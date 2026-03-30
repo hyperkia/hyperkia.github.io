@@ -7,6 +7,7 @@ function Index() {
 		const pageEl = KIA.kiaCanvas._qs(`[data-page="${k}"]`);
 		if(!pageEl) {
 			const pageObj = KIA.state.pages.map[k];
+			if(!pageObj) return;
 			const pageItemTemplate = KIA.kiaCanvas.$id.pageItemTemplate.content.cloneNode(true);
 			const pageItemEl = pageItemTemplate.querySelector('.page');			
 

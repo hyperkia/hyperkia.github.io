@@ -1,6 +1,6 @@
 const Index = [
 
-/*	{
+{
 		action: 'bringToFront',
 		title: 'Bring To Front',
 		icon: {
@@ -64,7 +64,7 @@ const Index = [
 		},
 		shortcut: 'Ctrl + V'
 	},	
-*/
+
 	{
 		action: 'delete',
 		title: 'Delete',

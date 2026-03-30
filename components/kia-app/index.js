@@ -1,4 +1,4 @@
-import '../../parsers/index.js';
+import '../../transformer/index.js';
 import '../../utils/index.js';
 import '../../actions/index.js';
 import '../../services/index.js';
@@ -30,11 +30,11 @@ class KIA_App extends KIACustomElement {
     }
  
     connectedCallback() {
+        this.windowEvents();
         this.attachShadow({ mode: 'open' });
         this._defaultSetup();
         this.props.root = this;       
         this._eventsSetup(Events); 
-        this.init();
     }
 
     handleEvents(e){
@@ -60,18 +60,23 @@ class KIA_App extends KIACustomElement {
         Events[e.type]?.handler?.(e);      
     }
 
-    init() {
+    windowEvents() {        
+        window.addEventListener('DOMContentLoaded', (e) => {
+            KIA.actions.runtime.updateRuntime({ startedAt: Date.now() });
+        });
+        
+        window.addEventListener('error', (e) => {
+            console.log(window.APP_STATE);            
+            console.log(e);
+        });
+
         window.addEventListener('load', () => {
             KIA.actions.kiaApp.appLoaded();
             document.body.classList.remove('loading');
-            // console.log(KIA);
+            KIA.actions.runtime.updateRuntime({ finishedAt: Date.now() });
         });
-
-        window.addEventListener('error', (e) => {
-            console.log(e);
-            // alert('Console Error');
-        })
     }
+
 }
 
 if (!customElements.get('kia-app')) {

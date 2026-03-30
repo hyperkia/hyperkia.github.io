@@ -5,6 +5,7 @@ import startCanvasSelection from './startCanvasSelection.js';
 import changeCanvasZoom from './changeCanvasZoom.js';
 import canvasScaleOnLoad from './canvasScaleOnLoad.js';
 import moveCanvas from './moveCanvas.js';
+import setCanvasCss from './setCanvasCss.js';
 
 export {
 	createLayer,
@@ -14,4 +15,5 @@ export {
 	changeCanvasZoom,
 	canvasScaleOnLoad,
 	moveCanvas,
+	setCanvasCss,
 };

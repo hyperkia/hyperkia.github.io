@@ -7,13 +7,13 @@
 .icon-search:focus{outline: 2px solid #0d99ff;}
 
 .icon-items{width:100%;flex-grow: 1;display: grid;grid-template-columns: repeat(11, 1fr);overflow: auto;padding: 20px;align-content: flex-start;}
-.no-icon-item-text{font-size:22px;line-height: 1.5;font-weight: 500;position: absolute;top: calc(50% + 20px);left: 50%;transform: translate(-50%, -50%);display: block;text-align: center;}
-.icon-items:has(.icon-item) + .no-icon-item-text{display: none;}
+.noicon-text{font-size:22px;line-height: 1.5;font-weight: 500;position: absolute;top: calc(50% + 20px);left: 50%;transform: translate(-50%, -50%);display: block;text-align: center;}
+.icon-items:has(.icon-item) + .noicon-text{display: none;}
 .icon-item{height: auto;border-right:1px solid #ccc;border-bottom:1px solid #ccc;padding:8px;display: flex;justify-content: center;align-items: center;aspect-ratio: 1/1;}
 .icon-items > :nth-child(-n+11){border-top:1px solid #ccc;}
 .icon-items > :where(:nth-child(11n+12), :first-child){border-left:1px solid #ccc;}
 .icon-item svg{max-width: 100%;width:30px;max-height: 30px;fill: var(--icon--color--black);height: auto;}
-
+.search-icon-name::before{content: var(--search-icon-name);}
 
 
 

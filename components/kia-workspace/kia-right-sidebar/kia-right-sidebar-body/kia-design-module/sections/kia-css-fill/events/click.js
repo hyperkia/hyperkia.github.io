@@ -9,7 +9,8 @@ class Index {
 	}
 
 	static openColorPicker(){
-		KIA.actions.share.openColorPicker({type: 'css', property: 'background-color'});
+		const value = KIA.propInputs['background-color'].value;
+		KIA.actions.share.openColorPicker({type: 'css', property: 'background-color', value});
 	}
 
 }

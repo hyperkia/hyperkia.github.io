@@ -21,7 +21,7 @@ class Index {
         this.key = crypto.randomUUID();
         this.pathEl.setAttribute('data-svgshape', this.key);        
         props.newLayer.setAttribute('data-layer', this.key);        
-        props.newLayer.classList.add('canvas-layer')
+        props.newLayer.classList.add('canvas-layer');
 		props.activePage.appendChild(props.newLayer);
         this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
 	}

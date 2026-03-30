@@ -5,6 +5,7 @@ function Index() {
     const pageFragment = document.createDocumentFragment();
     pagesKey.forEach((k)=>{
         const p = pages[k];
+        if(!p) return;
         const itemTemplate = KIA.kiaLayers.$id.pageItemTemplate.content.cloneNode(true);
         const pageItem = itemTemplate.querySelector('.page-item');
         const pageName = itemTemplate.querySelector('.page-name');

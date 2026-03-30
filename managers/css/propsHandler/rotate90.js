@@ -1,15 +1,19 @@
-function Index(css, source) {
 
-	if(source === 'propsInputToSelection') {
-		const key = KIA.dom.read.getSelectionKey();
-		const lCss = KIA.state.layers.map[key].css;
-		let rotate = parseInt(lCss['rotate'])||0;
+const prop = 'rotate90';
+
+function Index(source, result) {
+
+	const layerObj = KIA.dom.read.getSelectionLayerObject();
+
+	if(source === 'propsInputToSelection') {	
+		let rotate = parseInt(layerObj.css['rotate'])||0;
 		rotate = rotate>=360 ? 360-rotate : rotate;
-		css['rotate'] = rotate + 90 + 'deg';
-		delete css.rotate90;
+		result.css['rotate'] = rotate + 90 + 'deg';		
 	}
 
 
 }
 
 export default Index;
+
+

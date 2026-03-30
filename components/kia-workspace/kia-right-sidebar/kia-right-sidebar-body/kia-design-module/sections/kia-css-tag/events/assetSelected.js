@@ -13,8 +13,6 @@ class Index {
 		methods.inputSrc(e);			
 	}
 
-	
-
 }
 
 export default Index;

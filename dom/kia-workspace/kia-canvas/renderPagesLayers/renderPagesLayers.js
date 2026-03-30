@@ -1,7 +1,6 @@
 import layerUi from './layerUi/index.js';
 
 function Index() {
-
     const pages = KIA.state.pages.map;
     const layers = KIA.state.layers.map;
     const html = {};
@@ -16,9 +15,10 @@ function Index() {
         pLayers.forEach((lk) => {
             const l = layers[lk];
             if(!l) return;
+            
             // HTML
             const n = l.nodeName;
-            if (['audio', 'document', 'img', 'path', 'video', 'rect', 'circle', 'line', 'ellipse'].includes(n)) {
+            if (['audio', 'document', 'img', 'path', 'video', 'rect', 'circle', 'line', 'ellipse', 'svg'].includes(n)) {
                 html[pk].push(layerUi[n](l));
             } else if (l.innerText) {
                 html[pk].push(layerUi.text(l));
@@ -40,7 +40,7 @@ function Index() {
 
     KIA.kiaCanvas.$id.style.innerHTML += css.join('');
 
-    const orderedPageKeys = Object.values(pages).sort((a, b) => a.css.order - b.css.order).map(p => p.key);
+    const orderedPageKeys = KIA.state.canvas.pagesOrder;
 
     let i = 0;
 

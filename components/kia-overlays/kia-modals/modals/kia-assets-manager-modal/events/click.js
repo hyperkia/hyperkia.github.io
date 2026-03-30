@@ -15,7 +15,7 @@ class Index {
         props.root._qs('.tabcontent.active')?.classList.remove('active');
         props.root._qs(`[data-target="${target}"]`).classList.add('active');
         props.root.$id[target].classList.add('active');
-        if(target === 'medialibrary') methods.showMediaLibrary();
+        if(target === 'medialibrary') KIA.dom.kiaAssetsManagerModal.renderAssetList();
     }
 
     static assetSelected(){

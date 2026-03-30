@@ -2,8 +2,8 @@
 const Index = {
 	map: {},
 
-	visibilityKey: null,
-	pointerLockKey: null,
+	visibilityKey: '',
+	pointerLockKey: '',
 
 	loadPages: function(pages){
 		this.map = pages;
@@ -46,14 +46,20 @@ const Index = {
 	setLayers(){},
 
 	setSelectionProperties(pageNewObj){
-		const key = KIA.dom.read.getSelectionKey();
-		const pageObj = this.map[key];
-		for(let p in pageNewObj) {
-			const vTypeOf = KIA.utils.dom.getTypeOf(pageNewObj[p]);
-			if(vTypeOf === 'string') pageObj[p] = pageNewObj[p];
-			// if(vTypeOf === 'array') console.log('---');
-			if(vTypeOf === 'object') Object.assign(pageObj[p], pageNewObj[p])						
-		}
+		// const key = KIA.dom.read.getSelectionKey();
+		// const pageObj = this.map[key];
+		// for(let p in pageNewObj) {
+		// 	const vTypeOf = KIA.utils.dom.getTypeOf(pageNewObj[p]);
+		// 	if(vTypeOf === 'string') pageObj[p] = pageNewObj[p];
+		// 	// if(vTypeOf === 'array') console.log('---');
+		// 	if(vTypeOf === 'object') Object.assign(pageObj[p], pageNewObj[p])						
+		// }
+	},
+
+	setSelectionCss(pageNewObj){
+		const key = pageNewObj.key;
+		Object.assign(this.map[key].css, pageNewObj.css);
+		KIA.observer.pages.observe('setSelectionCss');
 	}
 } 
 

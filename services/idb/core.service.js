@@ -3,8 +3,7 @@ const Index = {
 
     initDatabase() {
         return this.openDatabase().then((success) => {
-            this.db = success;
-            if(this.db.objectStoreNames.length !== 5) indexedDB.deleteDatabase('hyperkia');            
+            this.db = success;            
             return this.collectData();
         }).catch((error) => {
             console.error(error);
@@ -44,63 +43,45 @@ const Index = {
         data.canvas = await this.getKeyValueObject('canvas');
         data.options = await this.getKeyValueObject('options');
         data.assets = await this.getKeyValueObject('assets');
-        return data;
+        return data;        
     },
 
-    createObjectsVersion0() {
-        
-        const createObjectStore = ['pages', 'layers','assets']
-        const pageKey = crypto.randomUUID();
+    createObjectsVersion0() {        
+        const createObjectStore = ['pages', 'layers', 'assets']
         createObjectStore.forEach((os) => {
             const objectStore = this.db.createObjectStore(os, {
                 keyPath: 'key',
             })
-
-            // Add default page
-            if (objectStore.name === 'pages') {
-                objectStore.transaction.oncomplete = () => {
-                    this.addObject('pages', {
-                        key: pageKey,
-                        name: `Page 1`,
-                        css: {
-                            'background-color': '#ffffffff',
-                            width: '1920px',
-                            height: '6000px',
-                            visibility: 'visible',
-                            'pointer-events': 'auto',
-                        },
-                        layers: [],
-                        createdAt: Date.now(),
-                    }).catch((error) => {
-                        console.error(error);
-                    })
-                }
-            }
         })
 
         const canvasObject = this.db.createObjectStore('canvas');
         const optionsObject = this.db.createObjectStore('options');
 
-        canvasObject.add([pageKey], 'pagesOrder');
+        canvasObject.add(Date.now(), 'createdAt');
+        canvasObject.add(Date.now(), 'updatedAt');
     },
 
     createObjectsVersion1() {},
 
-    addObject(obJectStore, obj) {
+    addObject(objectStore, obj) {
+
         let objects = null;
         if (Array.isArray(obj)) {
             objects = obj;
         } else {
             objects = [obj];
         }
-
         const storeobjects = [];
 
-        return new Promise((resolve, reject) => {
-            const addTransaction = this.db.transaction([obJectStore], 'readwrite');
-            const addObjectStore = addTransaction.objectStore(obJectStore);
-            objects.forEach((o) => {
+        if(!this.db) return;
 
+        return new Promise((resolve, reject) => {
+            if(!this.db.objectStoreNames.contains(objectStore)) resolve({});
+            const addTransaction = this.db.transaction([objectStore], 'readwrite');
+            const addObjectStore = addTransaction.objectStore(objectStore);
+            objects.forEach((o) => {
+                o.updatedAt = Date.now();
+                o.createdAt = Date.now();
                 const addRequest = addObjectStore.add(o);
                 addRequest.onsuccess = (e) => {
                     storeobjects.push(o);
@@ -117,81 +98,89 @@ const Index = {
         })
     },
 
-    async getKeyValueObject(obJectStore, keyName) {
-        if (!this.db) {
-            this.db = await this.openDatabase();
-        }
+    async getKeyValueObject(objectStore, keyName) {
+        if (!this.db) this.db = await this.openDatabase();
 
         return new Promise((resolve, reject) => {
-            const transactionRequest = this.db.transaction([obJectStore], 'readonly');
-            const objectStoreRequest = transactionRequest.objectStore(obJectStore);
-            const getKeys = objectStoreRequest.getAllKeys();
-            const getValus = objectStoreRequest.getAll();
+            if(this.db.objectStoreNames.contains(objectStore)) {
+                const transactionRequest = this.db.transaction([objectStore], 'readonly');
+                const objectStoreRequest = transactionRequest.objectStore(objectStore);
+                const getKeys = objectStoreRequest.getAllKeys();
+                const getValus = objectStoreRequest.getAll();
 
-            transactionRequest.oncomplete = () => {
+                transactionRequest.oncomplete = () => {
+                    const keys = getKeys.result;
+                    const valus = getValus.result;
 
-                const keys = getKeys.result;
-                const valus = getValus.result;
+                    const keyValusPair = {};
+                    keys.forEach((k, i) => {
+                        keyValusPair[k] = valus[i];
+                    });
 
-                const keyValusPair = {};
-                keys.forEach((k, i) => {
-                    keyValusPair[k] = valus[i];
-                });
+                    if (keyName) resolve({
+                        [keyName]: keyValusPair[keyName]
+                    });
+                    if (!keyName) resolve(keyValusPair);
+                }
 
-                if (keyName) resolve({
-                    [keyName]: keyValusPair[keyName]
-                });
-                if (!keyName) resolve(keyValusPair);
-
+                transactionRequest.onerror = (error) => {
+                    reject(error);
+                }
+            } else {                
+                resolve({});
             }
-
-            transactionRequest.onerror = (error) => {
-                console.error(error);
-            }
+            
         })
     },
 
-    async getAllObjects(obJectStore, onload) {
+    async getAllObjects(objectStore, onload) {
         if (onload === 'onload' && !this.db) {
             this.db = await this.openDatabase();
         }
-
         return new Promise((resolve, reject) => {
-            const transactionRequest = this.db.transaction([obJectStore], 'readwrite');
-            const objectStoreRequest = transactionRequest.objectStore(obJectStore);
-            const getAllRequest = objectStoreRequest.getAll();
+            if(this.db.objectStoreNames.contains(objectStore)) {
+                const transactionRequest = this.db.transaction([objectStore], 'readwrite');
+                const objectStoreRequest = transactionRequest.objectStore(objectStore);
+                const getAllRequest = objectStoreRequest.getAll();
 
-            getAllRequest.onsuccess = () => {
-                const result = {};
-                getAllRequest.result.forEach((o) => {
-                    result[o.key] = o;
-                })
+                getAllRequest.onsuccess = () => {
+                    const result = {};
+                    getAllRequest.result.forEach((o) => {
+                        result[o.key] = o;
+                    })
 
-                resolve(result);
-            }
+                    resolve(result);
+                }
 
-            getAllRequest.onerror = (error) => {
-                console.error(error);
+                getAllRequest.onerror = (error) => {
+                    console.error(error);
+                }
+            } else {
+                resolve({});
             }
         })
     },
 
-    updateObject(obJectStore, key, obj) {
-
+    updateObject(objectStore, key, obj) {
+        if(!this.db) return;
         return new Promise((resolve, reject) => {
-            const transactionRequest = this.db.transaction([obJectStore], 'readwrite');
-            const objectStoreRequest = transactionRequest.objectStore(obJectStore);
+            if(!this.db.objectStoreNames.contains(objectStore)) resolve({});
+            const transactionRequest = this.db.transaction([objectStore], 'readwrite');
+            const objectStoreRequest = transactionRequest.objectStore(objectStore);
 
             const getRequest = objectStoreRequest.get(key);
 
             getRequest.onsuccess = () => {
                 const getObj = getRequest.result;                
 
+                getObj.updatedAt = Date.now();
                 for (let prop in obj) {
                     if (prop === 'key') continue;
                     if (typeof obj[prop] === 'string') {
+                        if(!getObj[prop]) getObj[prop] = '';
                         getObj[prop] = obj[prop];
                     } else if(Array.isArray(obj[prop])) {
+                        if(!getObj[prop]) getObj[prop] = null;
                         getObj[prop] = obj[prop];
                     } else if (typeof obj[prop] === 'object') {
                         if(!getObj[prop]) getObj[prop] = {};
@@ -220,11 +209,12 @@ const Index = {
 
     updateObjects(objectStore, objs) {
         return new Promise((resolve, reject) => {
+            if(!this.db.objectStoreNames.contains(objectStore)) resolve({});
             const tx = this.db.transaction([objectStore], 'readwrite');
             const store = tx.objectStore(objectStore);
 
             objs.forEach(obj => {
-                const getReq = store.get(obj.key);
+                const getReq = store.get(obj.key);                
 
                 getReq.onsuccess = () => {
                     const record = getReq.result;
@@ -239,7 +229,7 @@ const Index = {
                             record[prop] = obj[prop];
                         }
                     }
-
+                    record.updatedAt = Date.now();
                     store.put(record);
                 };
             });
@@ -266,13 +256,17 @@ const Index = {
         });
     },
 
-    updateKeyValueObject(objectStore, objects) {
+    updateKeyValueObject(objectStore, obj) {
+        if(!this.db) return;
         return new Promise((resolve, reject) => {
+            if(!this.db.objectStoreNames.contains(objectStore)) resolve({});
             const addTransaction = this.db.transaction([objectStore], 'readwrite');
             const addObjectStore = addTransaction.objectStore(objectStore);
 
-            for (let prop in objects) {
-                const addRequest = addObjectStore.put(objects[prop], prop);
+            obj.updatedAt = Date.now();
+
+            for (let prop in obj) {
+                const addRequest = addObjectStore.put(obj[prop], prop);
                 addRequest.onsuccess = (success) => {
                     // console.log(success);
                 }
@@ -286,6 +280,24 @@ const Index = {
             addTransaction.onerror = (e) => reject(e);
 
         })
+    },
+
+    replaceObjectByKey(objectStore, newObj){
+        return new Promise((resolve, reject) => {
+            if(!this.db.objectStoreNames.contains(objectStore)) resolve({});
+            const tx = this.db.transaction([objectStore], 'readwrite');
+            const store = tx.objectStore(objectStore);
+
+            newObj.updatedAt = Date.now();
+
+            // Ensure key remains same
+            const finalObj = { ...newObj, key: newObj.key };
+
+            const request = store.put(finalObj);
+
+            request.onsuccess = () => resolve(finalObj);
+            request.onerror = (e) => reject(e);
+        });
     },
 
 }

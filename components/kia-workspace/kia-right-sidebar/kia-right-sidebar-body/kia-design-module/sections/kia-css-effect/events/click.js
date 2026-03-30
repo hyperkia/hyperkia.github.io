@@ -34,8 +34,7 @@ class Index {
 			}			
 		};
 		if(name === 'box-shadow') layerNewObj.stack[stackKey].value = '0px 4px 10px 0 #00000040';
-		KIA.actions.share.addStack(layerNewObj);
-		KIA.actions.share.updateStack(layerNewObj);
+		KIA.actions.share.setLayerSelectionStack(layerNewObj);
 	}
 
 	static editEffect(){
@@ -66,7 +65,7 @@ class Index {
 				}
 			}        	
 		};
-        KIA.actions.share.updateStack(layerNewObj); 
+        KIA.actions.share.setLayerSelectionStack(layerNewObj); 
 	}
  
 	static filterVisible(){
@@ -85,7 +84,7 @@ class Index {
 				}
 			}        	
 		};
-        KIA.actions.share.updateStack(layerNewObj);
+        KIA.actions.share.setLayerSelectionStack(layerNewObj);
 	}
 
 }

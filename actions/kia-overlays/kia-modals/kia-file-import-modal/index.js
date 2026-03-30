@@ -1,5 +1,5 @@
-import importPageAndLayers from "./importPageAndLayers.js";
+import importProject from "./importProject.js";
 
 export default {
-	importPageAndLayers
+	importProject
 };

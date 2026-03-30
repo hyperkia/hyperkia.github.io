@@ -2,12 +2,14 @@
 import psdToObject from './psdToObject/index.js';
 import htmlToObject from './htmlToObject/index.js';
 import fontsToObject from './fontsToObject/index.js';
+import fflateZip from './fflateZip/index.js';
 
-const PARSERS = {
+const transformer = {
 	psdToObject,
 	htmlToObject,
-	fontsToObject
+	fontsToObject,
+	fflateZip,
 };
 
 
-KIA.parsers = PARSERS;
+KIA.transformer = transformer;

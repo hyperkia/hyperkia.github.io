@@ -10,7 +10,8 @@ class Index {
 	}
 
 	static openColorPicker(){
-		KIA.actions.share.openColorPicker({type: 'css', property: 'color'});
+		const value = KIA.propInputs['color'].value;
+		KIA.actions.share.openColorPicker({type: 'css', property: 'color', value, });
 	}
 
 }

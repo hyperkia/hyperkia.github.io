@@ -4,7 +4,7 @@ kia-right-header, kia-css-appearance, kia-css-appearance, kia-css-fill, kia-css-
 ::part(module-header){display: flex;justify-content: space-between;align-items: center;margin-bottom: 10px;}
 ::part(module-title){margin: 0;user-select: none;}
 ::part(module-col-title){margin-bottom: 4px;color: #7b7b7b;width: 100%;}
-::part(module-last-btn-col){margin-left: auto; display: inline-flex; justify-content: flex-end; align-items: center;}
+::part(module-last-btn-col){margin-left: auto; display: var(--display, inline-flex); justify-content: flex-end; align-items: center;}
 
 ::part(module-row){display: flex;justify-content: flex-start;align-items: flex-end;flex-wrap: wrap;gap: 8px;}
 ::part(module-row) + ::part(module-row){margin-top: 8px;}

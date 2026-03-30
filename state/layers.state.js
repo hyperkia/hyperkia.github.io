@@ -3,8 +3,8 @@ const Index = {
 
 	map: {},
 
-	visibilityKey: null,
-	pointerLockKey: null,
+	visibilityKey: '',
+	pointerLockKey: '',
 
 	renderLayers: function(layers){
 		this.map = layers;
@@ -86,16 +86,51 @@ const Index = {
 		KIA.observer.layers.observe('changelayerPointerLock');
 	},
 
-	setSelectionProperties(layerNewObj){
-		const key = KIA.dom.read.getSelectionKey();
-		const layerObj = this.map[key];		
-		for(let p in layerNewObj) {
-			const vTypeOf = KIA.utils.dom.getTypeOf(layerNewObj[p]);
-			if(vTypeOf === 'string') layerObj[p] = layerNewObj[p];
-			// if(vTypeOf === 'array') console.log('---');
-			if(vTypeOf === 'object') Object.assign(layerObj[p]||{}, layerNewObj[p])						
+	
+
+	setSelectionStringProperties(layerNewObj){
+		const key = layerNewObj.key;		
+		for(let [p,v] of Object.entries(layerNewObj)) {
+			if(typeof v === 'string') this.map[key][p] = v;
 		}
-	}
+		KIA.observer.layers.observe('setSelectionStringProperties');
+	},
+	setSelectionAttributes(layerNewObj){
+		const key = layerNewObj.key;
+		Object.assign(this.map[key].attrs, layerNewObj.attrs);
+		KIA.observer.layers.observe('setSelectionAttributes');
+	},
+	setSelectionCss(layerNewObj){
+		const key = layerNewObj.key;
+		Object.assign(this.map[key].css, layerNewObj.css);
+		KIA.observer.layers.observe('setSelectionCss');
+	},
+	setSelectionSAttributes(layerNewObj){
+		// const key = layerNewObj.key;
+		// if(this.map[key].sattrs) Object.assign(this.map[key].sattrs, layerNewObj.sattrs);
+	},
+	setSelectionSCss(layerNewObj){
+		const key = layerNewObj.key;
+		Object.assign(this.map[key].scss, layerNewObj.scss);
+		KIA.observer.layers.observe('setSelectionSCss');
+	},
+	setSelectionStack(layerNewObj){
+		const key = layerNewObj.key;
+		const layerObj = this.map[key];
+		const newStacks = layerNewObj.stack;
+		for(let k in newStacks) {
+			if(!layerObj.stack[k]) {
+				layerObj.stack[k] = newStacks[k];
+				continue;
+			}
+			Object.assign(layerObj.stack[k], newStacks[k]);
+		}
+	},
+	setSelectionAssets(layerNewObj){
+		const key = layerNewObj.key;
+		Object.assign(this.map[key].assets, layerNewObj.assets);
+		KIA.observer.layers.observe('setSelectionAssets');
+	},
 
 }
 

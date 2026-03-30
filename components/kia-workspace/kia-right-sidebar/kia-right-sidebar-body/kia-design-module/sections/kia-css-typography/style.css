@@ -3,7 +3,8 @@
 .line-height-input::part(label){font-style: normal;font-size: 12px;border-top: 1px solid currentColor;width: 13px;height: 16px;border-bottom: 1px solid currentColor;text-align: center;line-height: 13px;}
 .letter-spacing-input::part(label){font-style: normal;font-size: 12px;border-right: 1px solid currentColor;width: 13px;height: 16px;border-left: 1px solid currentColor;text-align: center;line-height: 13px;}
 .prop-color::part(label-svg){border:1px solid #383838;background-color: var(--value, inherit);}
-
+.font-family::part(summary){font-size: 0px;}
+.font-family::part(summary)::before{content: var(--selection--font-family);font-size: 12px;}
 .font-weight-select::part(select-option){display: none;}
 
 .font-weight-select[data-iweights*="1"]::part(i1) { display: block; }
@@ -29,6 +30,6 @@
 
 
 /* Selection Capability */
-:host([data-selection-type="canvas"]){display: block;}
-:host([data-selection-type="page"]){display: block;}
 :host([data-selection-type="texthtml"]){display: block;}
+:host([data-selection-type="page"]){display: block;}
+:host([data-selection-type="canvas"]){display: block;}

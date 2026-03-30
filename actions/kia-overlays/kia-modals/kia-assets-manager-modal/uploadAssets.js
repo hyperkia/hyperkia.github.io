@@ -1,17 +1,8 @@
-function Index(files){
-	const filesObj = [];
-	for(let f of files) {
-		const key = crypto.randomUUID();
-		filesObj.push({
-			key,
-			name: f.name,
-			size: f.size,
-			type: f.type,
-			blob: f,
-		});
-	}
-	KIA.state.assets.uploadAssets(filesObj);
-	KIA.services.idb.core.addObject('assets', filesObj);
+function Index(assetObj){
+	const { blob, ...stateAssetObj } = assetObj;
+	const { url, ...dbAssetObj } = assetObj;
+	KIA.state.assets.uploadAsset(stateAssetObj);
+	KIA.services.idb.core.addObject('assets', dbAssetObj); 
 }
 
 export default Index;

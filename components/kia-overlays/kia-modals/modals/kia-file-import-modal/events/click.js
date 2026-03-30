@@ -23,9 +23,9 @@ class Index {
         const url = props.root.$id.fromurlInput.value;
         const response = await fetch("./backend/fetch-html.php?url=" + encodeURIComponent(url));
         const rawhtml = await response.text();        
-        KIA.parsers.htmlToObject.parse(rawhtml,url).then((response)=>{          
+        KIA.transformer.htmlToObject.parse(rawhtml,url).then((response)=>{          
             KIA.actions.kiaModals.closeModal();
-            KIA.actions.kiaFileImportModal.importPageAndLayers(response);
+            KIA.actions.kiaFileImportModal.importProject(response);
             props.root.$id.importFromUrlBtn.innerText = 'Import';
             props.root.$id.importFromUrlBtn.classList.remove('disable');
         })

@@ -4,7 +4,7 @@ import './kia-code-module/index.js';
 
 const html = `
 	<section class="section">
-		<header class="header" style="display:none;">
+		<header class="header">
 			<div class="tab-links">				
 				<kia-button class="active iconbtn" data-class="tab-link" data-tab-target="design" data-icon="palette-solid-full-symbol"></kia-button>
 				<kia-button class="active iconbtn" data-class="tab-link" data-tab-target="code" data-icon="code-solid-full-symbol"></kia-button>

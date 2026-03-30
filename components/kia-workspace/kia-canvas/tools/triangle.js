@@ -14,7 +14,7 @@ class Index {
         props.trianglePurpose = 'selection';
         if (props.activeLayer) props.trianglePurpose = 'moving';            
         if(this.eTarget.matches('.multi-selection-active')) {
-            props.trianglePurpose = 'multiselection-hide';
+            props.trianglePurpose = 'multiselection';
         } else {
             KIA.kiaCanvas.$id.canvasSelection.classList.remove('multi-selection-active');
         }
@@ -54,14 +54,12 @@ class Index {
         const tY = Math.floor(this.csmXY.y - this.csdXY.y);
         props.activeLayer.style.translate = `${tX}px ${tY}px`;
 
-        KIA.actions.kiaCanvas.movingLayer({ 
-            nodeName: props.activeLayer.nodeName.toLowerCase(),
+        KIA.actions.kiaCanvas.movingLayer({             
             css: {
                 left: parseInt(props.activeLayerCSS.left) + tX,
                 top: parseInt(props.activeLayerCSS.top) + tY,
             },
             key: props.activeLayer.dataset.layer,
-            save: false,
         });
     }
 
@@ -72,10 +70,8 @@ class Index {
         const top  = parseInt(props.activeLayerCSS.top)  + (this.csmXY.y - this.csdXY.y) + 'px';
         Object.assign(props.activeLayer.style, { left, top, translate: 'none' });  
         KIA.actions.kiaCanvas.movingLayer({ 
-            nodeName: props.activeLayer.nodeName.toLowerCase(),
             css: {left,top},
-            key: props.activeLayer.dataset.layer,
-            save: true,
+            key: props.activeLayer.dataset.layer,            
         });        
     }
 

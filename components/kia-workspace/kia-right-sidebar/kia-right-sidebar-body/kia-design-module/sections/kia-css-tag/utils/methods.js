@@ -13,7 +13,8 @@ const Index = {
 
 	inputSrc: function(e){		
 		const layerNewObj = actions('inputSrc');
-		KIA.actions.kiaCssTag.inputSelectionSrc(layerNewObj);
+		KIA.actions.share.setLayerSelectionAttributes(layerNewObj);
+		KIA.actions.share.setLayerSelectionAssets(layerNewObj);
 	},	
 
 	layerSelected: function(){

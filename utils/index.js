@@ -5,6 +5,8 @@ import dom from "./dom/index.js";
 import number from "./number/index.js";
 import color from "./color/index.js";
 import url from "./url/index.js";
+import obj from "./obj/index.js";
+import file from "./file/index.js";
 
 KIA.utils = {
 	string,
@@ -13,5 +15,7 @@ KIA.utils = {
 	number,
 	color,
 	url,
+	obj,
+	file,
 };
 

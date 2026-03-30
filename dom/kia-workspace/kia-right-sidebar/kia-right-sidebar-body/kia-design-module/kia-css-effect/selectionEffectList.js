@@ -22,7 +22,7 @@ function Index() {
 			effectItem.dataset.shadow = s.name;
 			effectItem.dataset.stack = s.key;
 			const visibilityButtonEl = effectItem.querySelector('.effect-visibility');
-			visibilityButtonEl.dataset.shadow = s.status;
+			visibilityButtonEl.dataset.effectVisible = s.status;
 			usedItem++;
 		}
 	}

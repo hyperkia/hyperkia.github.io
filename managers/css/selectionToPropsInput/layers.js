@@ -4,14 +4,14 @@ import propHandler from '../propsHandler/index.js';
 function Index() {
 
 	const key = KIA.dom.read.getSelectionKey();
-	const lCss = Object.assign({}, KIA.state.layers.map[key].css);
+	const propsInputCss = {};
 	
 	for(let ph in propHandler) {
-		propHandler[ph](lCss, 'SelectionToPropsInput');
+		propHandler[ph]('SelectionToPropsInput', propsInputCss);
 	}
 
-	for(let p in lCss) {
-		if(KIA.propInputs[p]) KIA.propInputs[p].value = lCss[p];
+	for(let p in propsInputCss) {
+		if(KIA.propInputs[p]) KIA.propInputs[p].value = propsInputCss[p];
 	}
 
 }

@@ -18,6 +18,7 @@ class Index {
 	static menuAction(){
 		const action = props.eTarget.dataset.action;
 		menuActions[action]?.();
+		props.root.$id.nav.classList.remove('show');
 	}
 
 

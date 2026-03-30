@@ -1,16 +1,16 @@
 
 const Index = {
 
-	map: null,
-	selectedAsset: null,
+	map: {},
+	selectedAsset: {},
 	supportFormat: ['image/png','image/jpeg','image/gif','image/svg+xml','image/webp','image/avif'],
 
 	loadData(data){
 		this.map = data;
 	},
 
-	uploadAssets(assets){
-		assets.forEach((a)=>this.map[a.key]=a);
+	uploadAsset(asset){
+		this.map[asset.key] = asset;
 		KIA.observer.assets.observe('uploadAssets');
 	},
 

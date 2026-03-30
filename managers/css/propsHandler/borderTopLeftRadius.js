@@ -1,16 +1,23 @@
 
 const prop = 'border-top-left-radius';
 
-function Index(css, source) {
+function Index(source, result) {
+
+	const layerObj = KIA.dom.read.getSelectionLayerObject();
 
 	if(source === 'SelectionToPropsInput') {
-		if(css[prop] || css['border-radius']) {
-			css[prop] = parseInt(css[prop]) || parseInt(css['border-radius']);
+		if(layerObj.css[prop]) {
+			result[prop] = parseInt(layerObj.css[prop]);
 		}
 
-		if(!css[prop]) css[prop] = '';
+		if(!layerObj.css[prop]) result[prop] = '';
 	}
 
+	if(source === 'propsInputToSelection') {
+		const inputCss = result.inputCss;	
+		result.css[prop] = inputCss[prop];
+		if(inputCss[prop] === 'px') result.css[prop] = '0px';
+	}
 }
 
 export default Index;

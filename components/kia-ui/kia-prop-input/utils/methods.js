@@ -20,13 +20,15 @@ const Methods = {
 		}
 
 		let attrs = '';
-		if(dataset.prop) attrs += `data-prop="${dataset.prop}"`;
-		if(dataset.unit) attrs += `data-unit="${dataset.unit}"`;
-		if(dataset.type) attrs += `type="${dataset.type}"`;
-		if(dataset.min) attrs += `min="${dataset.min}"`;
-		if(dataset.max) attrs += `max="${dataset.max}"`;
-		if(dataset.step) attrs += `step="${dataset.step}"`;
-		if(dataset.placeholder) attrs += `placeholder="${dataset.placeholder}"`;
+		if(dataset.prop) attrs += `data-prop="${dataset.prop}" `;
+		if(dataset.unit) attrs += `data-unit="${dataset.unit}" `;
+		if(dataset.type) attrs += `type="${dataset.type}" `;
+		if(dataset.min) attrs += `min="${dataset.min}" `;
+		if(dataset.max) attrs += `max="${dataset.max}" `;
+		if(dataset.maxlength) attrs += `maxlength="${dataset.maxlength}" `;
+		if(dataset.step) attrs += `step="${dataset.step}" `;
+		if(dataset.placeholder) attrs += `placeholder="${dataset.placeholder}" `;
+
 		html += `
 			<input class="input" part="input" ${attrs}>
 			<kia-button class="variable-button" data-icon="gear-solid-full-symbol"></kia-button>

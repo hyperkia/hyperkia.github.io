@@ -9,6 +9,7 @@ import rect from './rect.js';
 import circle from './circle.js';
 import line from './line.js';
 import ellipse from './ellipse.js';
+import svg from './svg.js';
 
 export default {
 	audio,
@@ -22,4 +23,5 @@ export default {
 	circle,
 	line,
 	ellipse,
+	svg,
 };

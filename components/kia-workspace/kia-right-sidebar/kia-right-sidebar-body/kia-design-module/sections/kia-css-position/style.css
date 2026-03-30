@@ -2,10 +2,12 @@
 .justify-content{margin-right: 3px;display: inline-flex;}
 .align-items{margin-left: 3px;display: inline-flex;}
 
-
+/* Selection Capability */
 :host([data-selection-type="sectionhtml"]){display: block;}
 :host([data-selection-type="imghtml"]){display: block;}
+:host([data-selection-type="texthtml"]){display: block;}
+:host([data-selection-type$="svg"]){display: block;}
+/*
 :host([data-selection-type="videohtml"]){display: block;}
 :host([data-selection-type="documenthtml"]){display: block;}
 :host([data-selection-type="audiohtml"]){display: block;}
-:host([data-selection-type="texthtml"]){display: block;}

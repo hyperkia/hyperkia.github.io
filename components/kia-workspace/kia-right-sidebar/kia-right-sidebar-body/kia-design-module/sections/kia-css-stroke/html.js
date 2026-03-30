@@ -12,7 +12,7 @@ const html = `
 
 			<div part="module-col"></div>
 
-			<div part="module-col">
+			<div class="border-style-colm" part="module-col">
 				<h6 part="module-col-title">Style</h6>
 				<kia-prop-select data-prop="border-style" value="none" data-name="border-style">
 					<details class="select-wrapper">
@@ -38,27 +38,32 @@ const html = `
 
 			<div part="module-col">				
 				<h6 part="module-col-title">Weight</h6>
-				<kia-prop-input class="border-width-input" data-prop="border-width" data-unit="px" data-label-icon="line_weight" data-type="number"></kia-prop-input> 
+				<kia-prop-input class="border-width-input" data-prop="border-width" data-unit="px" data-label-icon="line_weight" data-type="number" data-min="0" data-max="1000"></kia-prop-input> 
 			</div>	
 
-			<div part="module-col module-last-btn-col w16">				
+			<div class="stroke-dasharray-colm" part="module-col">
+				<h6 part="module-col-title">Dash Pattern</h6>
+				<kia-prop-input data-prop="stroke-dasharray" data-label-icon="grip-lines-solid-full" data data-type="text" data-placeholder="5, 6"></kia-prop-input> 
+			</div>
+
+			<div class="all-border-button-colm" part="module-col module-last-btn-col w16">				
 				<kia-button class="all-border-button" data-icon="all-border-symbol" data-event="toggleAllWidth"></kia-button>
 			</div>
 
 			<div class="single-border-width" part="module-col">
-				<kia-prop-input class="border-width-input-top" data-prop="border-top-width" data-unit="px" data-label-customicon="true" data-type="number"></kia-prop-input> 
+				<kia-prop-input class="border-width-input-top" data-prop="border-top-width" data-unit="px" data-label-customicon="true" data-type="number" data-min="0" data-max="1000"></kia-prop-input> 
 			</div>
 
 			<div class="single-border-width" part="module-col">								
-				<kia-prop-input class="border-width-input-right" data-prop="border-right-width" data-unit="px" data-label-customicon="true" data-type="number"></kia-prop-input> 
+				<kia-prop-input class="border-width-input-right" data-prop="border-right-width" data-unit="px" data-label-customicon="true" data-type="number" data-min="0" data-max="1000"></kia-prop-input> 
 			</div>
 
 			<div class="single-border-width" part="module-col">								
-				<kia-prop-input class="border-width-input-bottom" data-prop="border-bottom-width" data-unit="px" data-label-customicon="true" data-type="number"></kia-prop-input> 
+				<kia-prop-input class="border-width-input-bottom" data-prop="border-bottom-width" data-unit="px" data-label-customicon="true" data-type="number" data-min="0" data-max="1000"></kia-prop-input> 
 			</div>
 
 			<div class="single-border-width" part="module-col">								
-				<kia-prop-input class="border-width-input-left" data-prop="border-left-width" data-unit="px" data-label-customicon="true" data-type="number"></kia-prop-input> 
+				<kia-prop-input class="border-width-input-left" data-prop="border-left-width" data-unit="px" data-label-customicon="true" data-type="number" data-min="0" data-max="1000"></kia-prop-input> 
 			</div>
 
 			
@@ -76,9 +81,7 @@ const html = `
 
 			
 		</div>
-	</section>
-	
-	
+	</section>	
 `;
 
 export default html;

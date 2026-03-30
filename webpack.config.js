@@ -21,16 +21,16 @@ module.exports = {
     directory: path.resolve(__dirname, "dist")
   },
 
-  port: 7000,
+  port: 3000,
   open: true,
 
-  hot: false,          // ❌ no HMR (required for ESM)
-  liveReload: false,   // ❌ client disabled anyway
+  hot: false,          
+  liveReload: false,   
 
-  client: false,       // 🔥 critical: no injected runtime
+  client: false,       
 
   devMiddleware: {
-    writeToDisk: true  // ✅ emit rebuilt files to dist/
+    writeToDisk: true  
   },
 
   watchFiles: [

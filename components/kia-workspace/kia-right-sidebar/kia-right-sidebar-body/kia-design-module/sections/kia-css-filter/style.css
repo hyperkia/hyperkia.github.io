@@ -17,9 +17,11 @@
 .filter-items-row[data-active-filters*="--saturate"] [data-filter="saturate"]{display: flex;}
 .filter-items-row[data-active-filters*="--sepia"] [data-filter="sepia"]{display: flex;}
 
-
+/* Selection Capability */
 :host([data-selection-type="sectionhtml"]){display: block;}
 :host([data-selection-type="imghtml"]){display: block;}
+:host([data-selection-type="texthtml"]){display: block;}
+/*
 :host([data-selection-type="videohtml"]){display: block;}
 :host([data-selection-type="documenthtml"]){display: block;}
-:host([data-selection-type="audiohtml"]){display: block;}
+:host([data-selection-type="audiohtml"]){display: block;}*/

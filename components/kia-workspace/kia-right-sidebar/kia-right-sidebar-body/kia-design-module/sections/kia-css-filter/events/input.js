@@ -18,7 +18,7 @@ class Index {
         		}	        	
         	}
 		};
-        KIA.actions.share.updateStack(layerNewObj); 
+        KIA.actions.share.setLayerSelectionStack(layerNewObj); 
 	}
 
 }

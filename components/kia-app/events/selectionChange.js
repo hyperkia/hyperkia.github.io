@@ -1,7 +1,7 @@
 
 class Index {
 
-	static components = ['kiaDesignModule', 'kiaCssTag', 'kiaCanvas'];
+	static components = ['kiaDesignModule', 'kiaCssTag', 'kiaCanvas', 'kiaCssTypography'];
 
 	static handler(e){
 		Index.components.forEach((c)=>{

@@ -4,9 +4,9 @@ import props from './props.js';
 const Methods = {
 
     // API
-    targetToUI(target) {
-        const rgbaStr = window.getComputedStyle(target)['background-color'];
-        props.rgba = this.KIA.utils.color.rgbaStrint2Object(rgbaStr);
+    uiStateColorPickerValueToUI() {
+        const hexa = KIA.state.ui.colorPicker.value;        
+        props.rgba = KIA.utils.color.hexaToRgbaObj(hexa);
         this.updateSVBoxBaseColor();
         this.updateSVBoxPointer();
         this.updateHueSliderPointer();
@@ -161,8 +161,6 @@ const Methods = {
         const hexValue = this.rgbToHex(props.rgba);
         props.root.$id.inputhex.value = hexValue;
     },
-
-    // Alpha Input
 
     // Utility Functions
 
@@ -335,7 +333,7 @@ const Methods = {
     },
 
     eventDispatchedToTarget() {
-        const hexValue = props.root.$id.inputhex.value + this.alphaNumberToHex(props.root.$id.inputalpha.value);        
+        const hexValue = props.root.$id.inputhex.value + this.alphaNumberToHex(props.root.$id.inputalpha.value);
         KIA.actions.kiaColorPickerPopover.setColorValue(hexValue);
     },
 

@@ -19,7 +19,7 @@ class Index {
         });
  
         
-        KIA.parsers.fontsToObject(props.fonts).then((response)=>{
+        KIA.transformer.fontsToObject(props.fonts).then((response)=>{
             const resolveFonts = {};
             const projectFonts = {};
             const fontsBlob = {};

@@ -1,8 +1,12 @@
+
+let debounceTimeout = null;
+
 function Index(layerObj) {
 	KIA.state.layers.movingLayer(layerObj);
-	if(layerObj.save) {		
-		KIA.services.idb.core.updateObject('layers', layerObj.key, {css: layerObj.css});	
-	}
+	clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+		KIA.services.idb.core.updateObject('layers', layerObj.key, {css: layerObj.css});
+    }, 150);
 	
 }
 

@@ -9,7 +9,7 @@
 
 .tabmenu{display: flex;justify-content: flex-start;align-items: center;gap: 2px;margin-top: 8px;padding-right: 20px;}
 .tabmenu-item{display: inline-flex;justify-content: center;align-items: center;padding: 6px 14px;background-color: #383838;position: relative;color: #fff;font-size: 13px;user-select: none;border:2px solid #383838;font-weight: 500;cursor: pointer;}
-.tabmenu-item.active{background-color: transparent !important;color: #383838 !important;}
+.tabmenu-item.active{background-color: transparent !important;color: #383838 !important;pointer-events: none;}
 
 .font-search{height: 34px;padding: 0 8px;width: 100%;max-width: 300px;margin: 0 10px 0 auto;outline: 2px solid #ccc;border-radius: 4px;border:none;}
 .font-search:focus{outline: 2px solid #0d99ff;}

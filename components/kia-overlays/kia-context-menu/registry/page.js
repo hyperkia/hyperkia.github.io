@@ -1,6 +1,6 @@
 const Index = [
 
-/*	{
+	{
 		action: 'lockUnlock',
 		title: 'Lock/Unlock',
 		icon: {
@@ -27,7 +27,7 @@ const Index = [
 		},
 		shortcut: 'Ctrl + D'
 	},
-*/
+
 	{
 		action: 'delete',
 		title: 'Delete',
