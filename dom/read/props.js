@@ -1,40 +1,40 @@
 const Index = {
-	SECTION_TAGS: [
-		'address',
-		'article',
-		'aside',
-		'div',
-		'figcaption',
-		'figure',
-		'footer',
-		'header',
-		'main',
-		'nav',
-		'section'
+	SECTION_TAGS: [ 
+		'ADDRESS',
+		'ARTICLE',
+		'ASIDE',
+		'DIV',
+		'FIGCAPTION',
+		'FIGURE',
+		'FOOTER',
+		'HEADER',
+		'MAIN',
+		'NAV',
+		'SECTION'
 	],
 
 	TEXT_TAGS: [
-		'a',
-		'abbr',
-		'b',
-		'cite',
-		'data',
-		'em',
-		'h1',
-		'h2',
-		'h3',
-		'h4',
-		'h5',
-		'h6',
-		'i',
-		'label',
-		'mark',
-		'p',
-		'q',
-		'small',
-		'span',
-		'strong',
-		'time',
+		'A',
+		'ABBR',
+		'B',
+		'CITE',
+		'DATA',
+		'EM',
+		'H1',
+		'H2',
+		'H3',
+		'H4',
+		'H5',
+		'H6',
+		'I',
+		'LABEL',
+		'MARK',
+		'P',
+		'Q',
+		'SMALL',
+		'SPAN',
+		'STRONG',
+		'TIME',
 	'u'
 	],
 
@@ -44,7 +44,9 @@ const Index = {
 		'rect',
 		'path',
 		'line'
-	] 
+	],
+
+	IMAGE_TAGS: ['IMG'],
 }
 
 export default Index;

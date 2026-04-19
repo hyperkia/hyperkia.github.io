@@ -10,6 +10,10 @@ if(window.KIA){
 		data: {
 			icons,
 			fonts,
-		}
+		},
+		layersRefMap: {},
+		canvasRefMap: {},
+		nodesMap: {},
+		propInputs: {},
 	};
 }

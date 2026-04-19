@@ -1,48 +1,58 @@
- 
+
 import props from '../utils/props.js';
-import actions from '../actions/index.js';
 
 const Index = {
 	inputInnerText: function(e){
-		const innerText = props.eTarget.value;
-		KIA.actions.share.inputSelectionInnerText({
-			innerText, 			
-			save: e.type==='keyup',
-		});
+		const textContent = props.eTarget.value;
+		const id = KIA.state.ui.getSelectionId();
+		KIA.actions.kiaLayers.setTextContent({
+			textContent,
+			id,
+			source: 'kiaCssTag',
+		}); 
 	},
 
-	inputSrc: function(e){		
-		const layerNewObj = actions('inputSrc');
-		KIA.actions.share.setLayerSelectionAttributes(layerNewObj);
-		KIA.actions.share.setLayerSelectionAssets(layerNewObj);
+	inputSrc: function(src){	
+		const id = KIA.state.ui.getSelectionId();
+		const layerNewObj = {
+			id,
+			attributes: {
+				src,
+			}
+		};
+	
+		KIA.actions.share.setLayerSelectionAttributes(layerNewObj);		
 	},	
 
 	layerSelected: function(){
 		const layerObj = KIA.dom.read.getSelectionLayerObject();
 
+
 		// Node 
-		const relatedNodes = KIA.dom.read.getRelatedNodes(layerObj.nodeName);
+		const nodeGroup = KIA.registry.tags.canTransform(layerObj.nodeName) || 'others';		
 		let nodeName = layerObj.nodeName;
-		if(!relatedNodes) {
-			nodeName = 'others';
-			props.root.$id.switchTag.$id.details.children[0].dataset.otherNodeName = layerObj.nodeName;
-			props.root.$id.switchTag.$id.details.children[0].part.add('others');
+		if(nodeGroup === 'others') {
+			props.root.$id.switchTag.$id.summary.setAttribute('data-other-node-name', nodeName);
 		} else {
-			props.root.$id.switchTag.$id.details.children[0].removeAttribute('data-other-node-name');
-			props.root.$id.switchTag.$id.details.children[0].part.remove('others');
+			props.root.$id.switchTag.$id.summary.removeAttribute('data-other-node-name');
 		}
+		props.root.dataset.nodeGroup = nodeGroup;
 		props.root.$id.switchTag.value = nodeName;
+		
 
 		// InnerText
-		props.root.$id.tagInnerText.innerText = '';
-		if(layerObj.innerText) {
-			props.root.$id.tagInnerText.value = layerObj.innerText;
+		props.root.$id.tagInnerText.value = '';
+		if(layerObj.textContent) {
+			props.root.$id.tagInnerText.value = layerObj.textContent;
 		}
+
 
 		// URL
 		props.root.$id.tagSrc.value = '';
-		if(layerObj.attrs.src) props.root.$id.tagSrc.value = layerObj.attrs.src;		
-		props.root.$id.tagSrc.removeAttribute('data-asset');
+		if(layerObj.attributes.src) {
+			const src = layerObj.attributes.src;
+			if(!KIA.state.assets.map[src]) props.root.$id.tagSrc.value = src;			
+		}		
 	},
 };
 

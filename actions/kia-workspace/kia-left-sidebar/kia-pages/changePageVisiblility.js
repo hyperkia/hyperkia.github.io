@@ -1,10 +1,14 @@
-function Index(key) {
-	const pageObj = KIA.state.pages.map[key];
-	const css = {
-		visibility: (pageObj.css.visibility === 'visible' ? 'hidden' : 'visible'),
+function Index(id) {
+	const pageObj = KIA.nodesMap[id];
+	const style = {
+		visibility: (pageObj.style.visibility === 'visible' ? 'hidden' : 'visible'),
 	};
-	KIA.state.pages.changePageVisiblility(key, css);
-	KIA.services.idb.core.updateObject('pages', pageObj.key, css);
+	const newPageObj = {
+		id,
+		style,
+	}
+	KIA.state.pages.setStyle(newPageObj);
+	KIA.services.idb.core.replaceObjectByKey('pages', pageObj);
 }
 
 export default Index;

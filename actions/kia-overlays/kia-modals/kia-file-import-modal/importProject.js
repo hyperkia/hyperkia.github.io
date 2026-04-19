@@ -1,9 +1,9 @@
 
 
 function isMissingFont(){
-	const availableFonts = KIA.state.canvas.projectFonts;
+	const availableFonts = KIA.state.canvas.getProp('projectFonts');
 	const missingFonts = new Set();
-	const layers = KIA.state.layers.map;
+	const layers = KIA.state.layers.getProp('map');
 	for(let k in layers) {
 		const layerFont = layers[k].css['font-family'];
 		if(layerFont && !availableFonts[layerFont]) missingFonts.add(layerFont);
@@ -36,17 +36,17 @@ function normalizeAssets(assets) {
 function Index(data) {
 	const normAssets = normalizeAssets(data.assets);
 
-	KIA.state.canvas.addNewPagesKey(data.canvas.pagesOrder);
+	KIA.state.canvas.addNewPagesKey(data.canvas.children);
 	KIA.state.assets.importAssets(normAssets.stateAssetObj);
 	KIA.state.pages.importPages(data.pages);
 	KIA.state.layers.importLayers(data.layers);
 	if(isMissingFont()) KIA.state.ui.setOpenModal('kiaMissingFontsModal');
-    const pagesOrder = KIA.state.canvas.pagesOrder;
+    const canvasChildren = KIA.state.canvas.getProp('children');
 
 	// KIA.services.idb.core.addObject('assets', Object.values(normAssets.dbAssetObj));
 	// KIA.services.idb.core.addObject('pages', Object.values(data.pages));
 	// KIA.services.idb.core.addObject('layers', Object.values(data.layers));
-	// KIA.services.idb.core.updateKeyValueObject('canvas', { pagesOrder });
+	// KIA.services.idb.core.updateKeyValueObject('canvas', { children: canvasChildren });
     KIA.state.ui.setActiveTool('triangle');
 }
 

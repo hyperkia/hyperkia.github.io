@@ -12,6 +12,8 @@ const Methods = {
 		thisEl.innerHTML = '';
 		tempEl.remove();
 		thisEl.$id.details = thisEl._qs('details');
+		thisEl.$id.summary = thisEl._qs('summary');
+		thisEl.$id.options = thisEl._qs('.select-options');
 	},
 
 	setDropdownPosition(){}, 

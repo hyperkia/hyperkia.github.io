@@ -27,9 +27,7 @@ const Index = {
 	},
 
 	setSelectionKeys(){
-		KIA.managers.css.selectionToPropsInput();
-		KIA.dom.kiaCssFilter.selectionToFilterInputs();
-		KIA.dom.kiaCssEffect.selectionEffectList();
+		KIA.managers.style.selectionToPropsInput();
 	},
 }
 

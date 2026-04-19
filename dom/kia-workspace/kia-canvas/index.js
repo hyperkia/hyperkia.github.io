@@ -1,11 +1,9 @@
 
-import setSelectionInnerText from './setselection/setSelectionInnerText.js';
-import setSelectionSrc from './setselection/setSelectionSrc.js';
-import deleteSelectedLayer from './setselection/deleteSelectedLayer.js';
+import updateDirtyLayerTextContent from './setselection/updateDirtyLayerTextContent.js';
+import deleteDirtyLayer from './dirtyLayer/deleteDirtyLayer.js';
 import deleteSelectedPage from './setselection/deleteSelectedPage.js';
-import updateSelectionZIndex from './updateSelectionZIndex.js';
 
-import renderPagesLayers from './renderPagesLayers/renderPagesLayers.js';
+import renderLayers from './layer/renderLayers.js';
 
 import createSelectionLayersOutline from './createSelectionLayersOutline.js';
 import drawMultiElementsSelectionBound from './drawMultiElementsSelectionBound.js';
@@ -13,37 +11,27 @@ import getElementsInMultiSelectionArea from './getElementsInMultiSelectionArea.j
 import setCanvasCurrentAction from './setCanvasCurrentAction.js';
 import setPageNamePosition from './setPageNamePosition.js';
 import setCanvasPositionScale from './setCanvasPositionScale.js';
-import pageNameChange from './pageNameChange.js';
-import renderPageList from './renderPageList.js';
-import renderPageNameList from './renderPageNameList.js';
-import changePageVisiblility from './changePageVisiblility.js';
-import updatePagePointerLock from './updatePagePointerLock.js';
-import updateLayerVisiblility from './updateLayerVisiblility.js';
-import updateLayerPointerLock from './updateLayerPointerLock.js';
-import updateCanvasCss from './updateCanvasCss.js';
+import setSelectionPageTitle from './setSelectionPageTitle.js';
+import createPage from './createPage.js';
+import createPageName from './createPageName.js';
+import updateCanvasStyle from './updateCanvasStyle.js';
 import setCanvasActiveTool from './setCanvasActiveTool.js';
 
-import updateLayerSelectionAttributes from './selection-layer/updateLayerSelectionAttributes.js';
-import updateLayerSelectionSAttributes from './selection-layer/updateLayerSelectionAttributes.js';
-import updateLayerSelectionCss from './selection-layer/updateLayerSelectionCss.js';
-import updateLayerSelectionSCss from './selection-layer/updateLayerSelectionSCss.js';
-import updateLayerSelectionStringProperties from './selection-layer/updateLayerSelectionStringProperties.js';
-import updateLayerSelectionNodeName from './selection-layer/updateLayerSelectionNodeName.js';
-import updateLayerSelectionAssets from './selection-layer/updateLayerSelectionAssets.js';
+import updateDirtyLayerAttributes from './dirtyLayer/updateDirtyLayerAttributes.js';
+import updateDirtyLayerStyle from './dirtyLayer/updateDirtyLayerStyle.js';
+import updateDirtyLayerNodeName from './dirtyLayer/updateDirtyLayerNodeName.js';
 
-import updatePageSelectionCss from './selection-page/updatePageSelectionCss.js';
-import updatePsdLayers from './updatePsdLayers.js';
+import updatePageSelectionStyle from './selection-page/updatePageSelectionStyle.js';
+import moveLayerInTree from './moveLayerInTree.js';
 
 
 
 export default {	
-	setSelectionInnerText,
-	setSelectionSrc,
-	deleteSelectedLayer,
+	updateDirtyLayerTextContent,
+	deleteDirtyLayer,
 	deleteSelectedPage,
-	updateSelectionZIndex,
 
-	renderPagesLayers,
+	renderLayers,
 	
 	createSelectionLayersOutline,
 	drawMultiElementsSelectionBound,
@@ -51,24 +39,17 @@ export default {
 	setCanvasCurrentAction,
 	setPageNamePosition,
 	setCanvasPositionScale,
-	pageNameChange,
-	renderPageList,
-	renderPageNameList,
-	changePageVisiblility,
-	updatePagePointerLock,
-	updateLayerVisiblility,
-	updateLayerPointerLock,
-	updateCanvasCss,
+	setSelectionPageTitle,
+	createPage,
+	createPageName,
+	updateCanvasStyle,
 	setCanvasActiveTool,
 
-	updateLayerSelectionAttributes,
-	updateLayerSelectionSAttributes,
-	updateLayerSelectionCss,
-	updateLayerSelectionSCss,
-	updateLayerSelectionStringProperties,
-	updateLayerSelectionNodeName,
-	updateLayerSelectionAssets,
+	updateDirtyLayerAttributes,
 
-	updatePageSelectionCss,
-	updatePsdLayers,
+	updateDirtyLayerStyle,
+	updateDirtyLayerNodeName,
+
+	updatePageSelectionStyle,
+	moveLayerInTree,
 };

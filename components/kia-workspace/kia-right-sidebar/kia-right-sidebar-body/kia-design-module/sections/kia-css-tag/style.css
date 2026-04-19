@@ -8,23 +8,24 @@
 
 ::part(summary) {text-transform: capitalize;}
 ::part(selection-option){display: none;text-transform: capitalize;}
-:host([data-selection-type="sectionhtml"]) kia-select::part(section) {display: block;}
-:host([data-selection-type="texthtml"]) kia-select::part(text) {display: block;}
+:host([data-node-group="container"]) kia-select::part(container) {display: block;}
+:host([data-node-group="text"]) kia-select::part(text) {display: block;}
 
-kia-select::part(others){pointer-events: none;font-size: 0px;}
-kia-select::part(others)::before{content: attr(data-other-node-name);font-size: 12px;}
-kia-select::part(others)::after{opacity: 0;}
+:host([data-node-group="others"]) kia-select::part(summary){pointer-events: none;font-size: 0px;}
+:host([data-node-group="others"]) kia-select::part(summary)::before{content: attr(data-other-node-name);font-size: 12px;}
+:host([data-node-group="others"]) kia-select::part(summary)::after{display: none;}
+:host([data-node-group="others"]) kia-select::part(select-options){display: none;}
 
 
 /* Selection Capability */
-:host([data-selection-type="sectionhtml"]){display: block;}
-:host([data-selection-type="sectionhtml"]) :where(.tag-innertext, .tag-src-colm,.upload-asset-colm){--display: none;}
-:host([data-selection-type="imghtml"]) {display: block;}
-:host([data-selection-type="imghtml"]) :where(.tag-innertext){display: none;}
-:host([data-selection-type="texthtml"]) {display: block;}
-:host([data-selection-type="texthtml"]) :where(.tag-src-colm, .upload-asset-colm){--display: none;}
-:host([data-selection-type$="svg"]) {display: block;}
-:host([data-selection-type$="svg"]) :where(.tag-src-colm, .upload-asset-colm, .tag-innertext){--display: none;}
+:host([data-selection-type="container"]){display: block;}
+:host([data-selection-type="container"]) :where(.tag-innertext, .tag-src-colm,.upload-asset-colm){--display: none;}
+:host([data-selection-type="media"]) {display: block;}
+:host([data-selection-type="media"]) :where(.tag-innertext){display: none;}
+:host([data-selection-type="text"]) {display: block;}
+:host([data-selection-type="text"]) :where(.tag-src-colm, .upload-asset-colm){--display: none;}
+:host([data-selection-type$="shape"]) {display: block;}
+:host([data-selection-type$="shape"]) :where(.tag-src-colm, .upload-asset-colm, .tag-innertext){--display: none;}
 /*
 :host([data-selection-type="videohtml"]) {display: block;}
 :host([data-selection-type="videohtml"]) :where(.tag-innertext){display: none;}

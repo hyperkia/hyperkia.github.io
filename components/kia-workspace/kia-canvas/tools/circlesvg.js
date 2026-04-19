@@ -1,118 +1,185 @@
-
 import props from '../utils/props.js';
 import methods from '../utils/methods.js';
 
 class Index {
 
     panning = false;
+    parentEl = null;
+    parentKey = null;
+    svgLayer = null;
+    circleLayer = null;
 
-	static handlePointerDown(e) {
-		props.root.setPointerCapture(e.pointerId);
-		if (!props.activePage) return;
+    static handlePointerDown(e) {
+        props.root.setPointerCapture(e.pointerId);
 
-		props.newLayer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        props.newLayer.setAttribute('fill', '#d9d9d9');
-        props.newLayer.setAttribute('data-svgshape', crypto.randomUUID());        
-		props.root.$id[`pageSvg${props.activePageKey}`].appendChild(props.newLayer);
-        this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
+        if (!this.parentEl) return;
+        if(!KIA.registry.tags.canHaveChildren(this.parentEl.nodeName)) {
+            this.parentEl = this.parentEl.parentElement;
+        }
+        this.parentKey = this.parentEl.dataset.layer || this.parentEl.dataset.page;
+ 
+        this.svgLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        this.svgLayer.classList.add('canvas-layer');
+        this.svgLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.svgLayer.setAttribute('draggable', false);
+        this.parentEl.append(this.svgLayer);
 
-        props.newLayer.cx.baseVal.value = this.cpsdXY.x;
-        props.newLayer.cy.baseVal.value = this.cpsdXY.y;
-	}
+        this.circleLayer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        this.circleLayer.setAttribute('fill', '#d9d9d9');
+        this.circleLayer.classList.add('canvas-layer');
+        this.circleLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.circleLayer.setAttribute('draggable', false);
+        this.svgLayer.append(this.circleLayer);
 
-	static handlePointerMove(e) {
-        if (!props.root.hasPointerCapture(e.pointerId)) return false;
-        if ((!props.newLayer)) return false;
+        this.cpsdXY = KIA.dom.read.getCanvasElementScaleCoords({ e, element: this.parentEl });
+    } 
 
-        this.cpsmXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+    static handlePointerMove(e) {
 
-        const left = Math.min(this.cpsdXY.x, this.cpsmXY.x);
-        const top = Math.min(this.cpsdXY.y, this.cpsmXY.y);
+        if (!props.root.hasPointerCapture(e.pointerId)) return false;        
+        if (!this.svgLayer) return false;
 
-        const r = Math.abs(this.cpsmXY.y - this.cpsdXY.y);
-        props.newLayer.r.baseVal.value = r;
-
-        const key = props.newLayer.dataset.svgshape;
-
-        KIA.actions.kiaCanvas.createLayer({ 
-            key,
-            pId: props.activePage.dataset.page,
-            nodeName: props.newLayer.nodeName.toLowerCase(),
-            attrs: {},
-            type: 'circlesvg',
-            css: {
-                top, left,
-                width: r + r, height: r + r, 
-            },
-            save: false,
-            scss: {},
-            sattrs: {},
-            stack: {},
-            assets: {},
-        });
-
+        this.cpsmXY = KIA.dom.read.getCanvasElementScaleCoords({ e, element: this.parentEl });
         
-        if(!this.panning) {            
-            const keys = new Set().add(key);
-            KIA.actions.share.setSelectionKeys(keys);
+        let dx = this.cpsmXY.x - this.cpsdXY.x;
+        let dy = this.cpsmXY.y - this.cpsdXY.y;
+
+        let left = Math.min(this.cpsdXY.x, this.cpsmXY.x);
+        let top = Math.min(this.cpsdXY.y, this.cpsmXY.y);
+
+        let width = Math.abs(dx);
+        let height = Math.abs(dy);
+
+        const size = Math.max(width, height);
+        width = size;
+        height = size;
+
+        if (dx < 0) left = this.cpsdXY.x - size;
+        if (dy < 0) top = this.cpsdXY.y - size;
+
+        const viewBox = `0 0 ${width} ${height}`;
+        
+        const svgStyle = {
+            left: left + 'px',
+            top: top + 'px',
+            width: width + 'px',
+            height: height + 'px',
+        };        
+
+        Object.assign(this.svgLayer.style, svgStyle);
+        this.svgLayer.setAttribute('viewBox', viewBox);
+
+        const cx = width / 2;
+        const cy = height / 2;
+        const r = width / 2;
+
+        this.circleLayer.setAttribute('cx', cx);
+        this.circleLayer.setAttribute('cy', cy);
+        this.circleLayer.setAttribute('r', r);
+
+        const svgid = this.svgLayer.dataset.layer;
+        const circleId = this.circleLayer.dataset.layer;
+
+        KIA.actions.kiaCanvas.creatingElements([
+            { 
+                id: svgid,
+                parent: this.parentKey,
+                nodeName: this.svgLayer.nodeName,
+                attributes: { viewBox },
+                style: svgStyle,
+                children: [],
+                instanceof: 'svg',
+                stack: [],
+            },
+            { 
+                id: circleId,
+                parent: svgid,
+                nodeName: this.circleLayer.nodeName,
+                attributes: {
+                    fill: '#d9d9d9',
+                    cx,
+                    cy,
+                    r,
+                },
+                style: {},
+                children: [circleId],
+                instanceof: 'svg',
+                stack: [],
+            }
+        ]);
+        
+        if (!this.panning) {            
+            const ids = new Set().add(circleId);
+            KIA.actions.share.setSelectionKeys(ids);
             this.panning = true;
         }
     }
-
+ 
     static handlePointerUp(e) {
         props.root.releasePointerCapture(e.pointerId);
-        this.panning = false;
+        this.panning = false;     
 
         if (props.isActualMove && props.activePage) {
-            const shapeRect = KIA.utils.dom.getRect(props.newLayer);
-            const viewBox = `${shapeRect.left} ${shapeRect.top} ${shapeRect.width} ${shapeRect.height}`;
-            const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svgEl.classList.add('canvas-layer');
-            svgEl.setAttribute('viewBox', viewBox);
-            svgEl.setAttribute('data-layer', props.newLayer.dataset.svgshape);  
-            svgEl.style.cssText = `top:${shapeRect.top}px;left:${shapeRect.left}px;width:${shapeRect.width}px;height:${shapeRect.height}px;`;
-            props.activePage.appendChild(svgEl);
-            svgEl.appendChild(props.newLayer);
 
-            // Layer Data
-            const newLayerObj = {
-                key: svgEl.dataset.layer,
-                pId: props.activePageKey,
-                nodeName: props.newLayer.nodeName.toLowerCase(),
-                attrs: {
-                    viewBox
-                }, 
-                type: 'circlesvg',
-                css: {
-                    visibility: 'visible',
-                    translate: 'none',
-                    top: shapeRect.top+'px',
-                    left: shapeRect.left+'px',
-                    width: shapeRect.width+'px',
-                    height: shapeRect.height+'px',
-                    'pointer-events': 'auto',
-                },  
-                sattrs: {
-                    cx: props.newLayer.cx.baseVal.value,
-                    cy: props.newLayer.cy.baseVal.value,
-                    r: props.newLayer.r.baseVal.value,
-                    fill: '#d9d9d9',
-                }, 
-                scss: {},
-                save: true,
-                stack: {},
-            assets: {},
-            };
+            const svgid = this.svgLayer.dataset.layer;
+            const circleId = this.circleLayer.dataset.layer;
 
-            KIA.actions.kiaCanvas.createLayer(newLayerObj);
-            const keys = new Set().add(newLayerObj.key);
-            KIA.actions.share.setSelectionKeys(keys);
-            
+            const svgElCss = KIA.utils.css.getElementCssProperty(
+                this.svgLayer, 
+                ['left','top','width','height']
+            );
+
+            const size = parseFloat(svgElCss.width); // width == height
+
+            const cx = size / 2;
+            const cy = size / 2;
+            const r = size / 2;
+
+            const newLayerObjs = [
+                {
+                    id: svgid,
+                    parent: this.parentKey,
+                    nodeName: this.svgLayer.nodeName,
+                    attributes: {
+                        viewBox: `0 0 ${size} ${size}`,
+                    },
+                    style: {                        
+                        ...svgElCss,
+                        translate: 'none',
+                    }, 
+                    children: [circleId],
+                    instanceof: 'svg',
+                    stack: [],
+                },
+                {
+                    id: circleId,
+                    parent: svgid,
+                    nodeName: this.circleLayer.nodeName,
+                    attributes: {
+                        fill: '#d9d9d9',
+                        cx,
+                        cy,
+                        r,
+                    },
+                    style: {}, 
+                    children: [],
+                    instanceof: 'svg',
+                    stack: [],
+                },                
+            ];   
+
+            KIA.canvasRefMap[svgid] = this.svgLayer;
+            KIA.canvasRefMap[circleId] = this.circleLayer;
+            KIA.actions.kiaCanvas.createElements(newLayerObjs);
+            const ids = new Set().add(circleId);
+            KIA.actions.share.setSelectionKeys(ids);
+
         } else {
-            props.newLayer?.remove();
-            props.newLayer = null;
-        }
+            this.svgLayer?.remove();
+            this.svgLayer = null;
+        }        
     }
-} 
+}
 
 export default Index;

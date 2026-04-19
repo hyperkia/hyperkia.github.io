@@ -5,7 +5,7 @@ const Index = {
 	},
 
 	loadData(){
-		KIA.dom.kiaCanvas.updateCanvasCss();
+		KIA.dom.kiaCanvas.updateCanvasStyle();
 		KIA.dom.kiaCssTypography.setProjectFontFamilyList();
 		KIA.dom.kiaCssTypography.setSelectedFontFamilyWeights();
 	},
@@ -15,8 +15,8 @@ const Index = {
 		KIA.dom.kiaCssTypography.setSelectedFontFamilyWeights();
 	},
 
-	setCss(){
-		KIA.dom.kiaCanvas.updateCanvasCss()
+	setStyle(){
+		KIA.dom.kiaCanvas.updateCanvasStyle()
 	}
 } 
 

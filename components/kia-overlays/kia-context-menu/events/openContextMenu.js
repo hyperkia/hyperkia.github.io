@@ -1,5 +1,6 @@
 
 import props from '../utils/props.js';
+import methods from '../utils/methods.js';
 import * as registry from '../registry/index.js';
 
 class Index {
@@ -7,13 +8,11 @@ class Index {
 	static handler(e){		
 		e.detail.e.preventDefault();
 		const eventObj = e.detail.e;
-		const target = eventObj.composedPath()[0];
-		const targetType = KIA.dom.read.resolveInteractionTarget(target);
-		const targetKey = KIA.dom.read.resolveInteractionTargetKey(target);
-		const keys = new Set().add(targetKey);
+		const target = methods.getClosestContextMenuTarget(eventObj.composedPath()[0]);
+		const keys = new Set().add(target.id);
         KIA.actions.share.setSelectionKeys(keys);
 
-		const menu = registry[targetType];
+		const menu = registry[target.type];
 		if(!menu) return;
 		for(let c of props.root.$id.menu.children) c.classList.add('hidden');
 		const required = menu.length - props.root.$id.menu.childElementCount;
@@ -43,7 +42,7 @@ class Index {
 		props.root.style.left = `${eventObj.clientX}px`;
 		props.root.style.top = `${eventObj.clientY}px`;
 		props.root.classList.add('show');
-		props.root.dataset.for = targetType;
+		props.root.dataset.for = target.type;
 	}
 
 }

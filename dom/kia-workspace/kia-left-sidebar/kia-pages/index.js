@@ -1,10 +1,10 @@
 
 import disablePageNameEdit from './disablePageNameEdit.js';
-import renderPageList from './renderPageList.js';
+import createPage from './createPage.js';
 import deleteSelectedPage from './deleteSelectedPage.js';
 
 export {
 	disablePageNameEdit,
-	renderPageList,
+	createPage,
 	deleteSelectedPage,
 };

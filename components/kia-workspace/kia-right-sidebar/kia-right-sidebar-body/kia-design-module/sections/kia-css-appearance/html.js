@@ -14,7 +14,7 @@ const html = `
 				<h6 part="module-col-title">Corner Radius</h6>			
 				<kia-prop-input class="border-radius-input" data-prop="border-radius" data-label-icon="crop_free" data-type="number" data-min="0" data-max="9999" data-unit="px"></kia-prop-input> 
 			</div>
-			<div class="corner-radius-lastbtn-col" part="module-col module-last-btn-col w16">				
+			<div class="corner-radius-allbtn-col" part="module-col module-last-btn-col w16">				
 				<kia-button data-event="toggleAllRadius" data-icon="crop_free-symbol"></kia-button>
 			</div>
 			<div class="single-border-radius" part="module-col">				

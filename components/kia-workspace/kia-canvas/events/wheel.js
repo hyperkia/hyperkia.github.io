@@ -4,7 +4,7 @@
 class Index {
 
     static handler(e){
-        if (KIA.state.ui.activeTool === 'zoom') KIA.actions.kiaCanvas.changeCanvasZoom(e);
+        if (KIA.state.ui.getProp('activeTool') === 'zoom') KIA.actions.kiaCanvas.changeCanvasZoom(e);
     }
 
     

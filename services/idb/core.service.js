@@ -50,7 +50,7 @@ const Index = {
         const createObjectStore = ['pages', 'layers', 'assets']
         createObjectStore.forEach((os) => {
             const objectStore = this.db.createObjectStore(os, {
-                keyPath: 'key',
+                keyPath: 'id',
             })
         })
 
@@ -65,7 +65,6 @@ const Index = {
     createObjectsVersion1() {},
 
     addObject(objectStore, obj) {
-
         let objects = null;
         if (Array.isArray(obj)) {
             objects = obj;
@@ -148,7 +147,7 @@ const Index = {
                 getAllRequest.onsuccess = () => {
                     const result = {};
                     getAllRequest.result.forEach((o) => {
-                        result[o.key] = o;
+                        result[o.id] = o;
                     })
 
                     resolve(result);
@@ -163,21 +162,21 @@ const Index = {
         })
     },
 
-    updateObject(objectStore, key, obj) {
+    updateObject(objectStore, id, obj) {
         if(!this.db) return;
         return new Promise((resolve, reject) => {
             if(!this.db.objectStoreNames.contains(objectStore)) resolve({});
             const transactionRequest = this.db.transaction([objectStore], 'readwrite');
             const objectStoreRequest = transactionRequest.objectStore(objectStore);
 
-            const getRequest = objectStoreRequest.get(key);
+            const getRequest = objectStoreRequest.get(id);
 
             getRequest.onsuccess = () => {
                 const getObj = getRequest.result;                
                 if(!getObj) return;
                 getObj.updatedAt = Date.now();
                 for (let prop in obj) {
-                    if (prop === 'key') continue;
+                    if (prop === 'id') continue;
                     if (typeof obj[prop] === 'string') {
                         if(!getObj[prop]) getObj[prop] = '';
                         getObj[prop] = obj[prop];
@@ -241,18 +240,32 @@ const Index = {
         });
     },
 
-    deleteObject(objectStore, key) { 
+    deleteObjects(objectStore, ids) {
         return new Promise((resolve, reject) => {
-            const transactionRequest = this.db.transaction([objectStore], 'readwrite');
-            const objectStoreRequest = transactionRequest.objectStore(objectStore);
+            ids = Array.isArray(ids) ? ids : [ids];
 
-            const deleteRequest = objectStoreRequest.delete(key);
+            const tx = this.db.transaction([objectStore], 'readwrite');
+            const store = tx.objectStore(objectStore);
 
-            deleteRequest.onsuccess = () => {
-                resolve(key);
+            const deletedIds = [];
+
+            ids.forEach(id => {
+                const req = store.delete(id);
+
+                req.onsuccess = () => {
+                    deletedIds.push(id);
+                };
+
+                req.onerror = (e) => {
+                    reject(e);
+                };
+            });
+
+            tx.oncomplete = () => {
+                resolve(deletedIds);
             };
 
-            deleteRequest.onerror = (e) => {
+            tx.onerror = (e) => {
                 reject(e);
             };
         });
@@ -293,7 +306,7 @@ const Index = {
             newObj.updatedAt = Date.now();
 
             // Ensure key remains same
-            const finalObj = { ...newObj, key: newObj.key };
+            const finalObj = { ...newObj, id: newObj.id };
 
             const request = store.put(finalObj);
 
@@ -301,6 +314,52 @@ const Index = {
             request.onerror = (e) => reject(e);
         });
     },
+
+    replaceObjectsByKey(objectStore, newObjs){
+        return new Promise((resolve, reject) => {
+            if(!this.db.objectStoreNames.contains(objectStore)) {
+                return resolve([]);
+            }
+
+            const tx = this.db.transaction([objectStore], 'readwrite');
+            const store = tx.objectStore(objectStore);
+
+            const results = [];
+
+            newObjs.forEach(obj => {
+                obj.updatedAt = Date.now();
+
+                const finalObj = { ...obj, id: obj.id };
+                const request = store.put(finalObj);
+
+                request.onsuccess = () => {
+                    results.push(finalObj);
+                };
+
+                request.onerror = (e) => {
+                    reject(e);
+                };
+            });
+
+            tx.oncomplete = () => resolve(results);
+            tx.onerror = (e) => reject(e);
+        });
+    },
+
+    clearAllStores() {
+      const storeNames = ['canvas', 'layers', 'pages', 'assets', 'options'];
+      return new Promise((resolve, reject) => {
+        const tx = this.db.transaction(storeNames, 'readwrite');
+
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = (e) => reject(e);
+
+        storeNames.forEach(storeName => {
+          const store = tx.objectStore(storeName);
+          store.clear(); // deletes all records in that store
+        });
+      });
+    }
 
 }
 

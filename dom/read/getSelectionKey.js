@@ -1,5 +1,5 @@
 function Index() {
-	return KIA.state.ui.selectionKeys.values().next().value;
+	return KIA.state.ui.getSelectionId();
 }
 
 export default Index;

@@ -2,35 +2,32 @@
 import props from '../utils/props.js';
 
 const Index = {
+
 	updateEffect(){
-		const layerKey = KIA.dom.read.getSelectionKey();
-		const stackKey = props.root.dataset.stack;
+		const layerId = KIA.state.ui.getSelectionId();
+		const stackId = props.root.dataset.stack;
 		const shadow = props.root.dataset.shadow;
+		const value = {};
 
-		const offsetX = (props.root.$id.offsetX.value || 0)+'px';
-		const offsetY = (props.root.$id.offsetY.value || 0)+'px';
-		const blurRadius = (props.root.$id.blurRadius.value || 0)+'px';
-		const color = props.root.$id.color.value || '#000';
-		
-		let spreadRadius = '';
-		let inset = '';
+		value.offsetX = props.root.$id.offsetX.value || 0;
+		value.offsetY = props.root.$id.offsetY.value || 0;
+		value.blur = props.root.$id.blurRadius.value || 0;
+		value.color = props.root.$id.color.value || '#000000';	
+				
 		if(shadow === 'box-shadow') {
-			spreadRadius = (props.root.$id.spreadRadius.value || 0)+'px';
-			inset = props.root.$id.inset.value === 'true' ? 'inset' : '';
-		} 
-
-		const value = `${offsetX} ${offsetY} ${blurRadius} ${spreadRadius} ${color} ${inset}`.replaceAll('  ',' ');
+			value.spread = props.root.$id.spreadRadius.value || 0;
+			value.inset = props.root.$id.inset.value === 'true' ? true : false;			
+		} 	
 
 		const layerNewObj = {
-			key: layerKey,
-			stack: {
-				[stackKey]: {
-					key: stackKey,
-		 			value,
-				}
+			id: layerId,
+			updateStack: {
+				id: stackId,
+				value,
 			}
-		};
-		KIA.actions.share.setLayerSelectionStack(layerNewObj);
+		};		
+
+		KIA.actions.share.updateLayerSelectionStack(layerNewObj);
 	},
 };
 

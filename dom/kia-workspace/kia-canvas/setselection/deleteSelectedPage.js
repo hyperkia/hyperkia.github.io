@@ -4,11 +4,9 @@ function Index() {
 
 	KIA.kiaCanvas.$id['page'+key].remove();
 	KIA.kiaCanvas.$id['pageName'+key].remove();
-	KIA.kiaCanvas.$id['pageSvg'+key].remove();
 
 	delete KIA.kiaCanvas.$id['page'+key];
 	delete KIA.kiaCanvas.$id['pageName'+key];
-	delete KIA.kiaCanvas.$id['pageSvg'+key];
 }
 
 export default Index;

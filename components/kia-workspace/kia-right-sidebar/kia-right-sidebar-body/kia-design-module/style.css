@@ -10,6 +10,7 @@ kia-right-header, kia-css-appearance, kia-css-appearance, kia-css-fill, kia-css-
 ::part(module-row) + ::part(module-row){margin-top: 8px;}
 ::part(module-col){width: 38%;}
 ::part(w16){width: 16%;}
+::part(w48){width: 48%;}
 ::part(w50){width: 50%;}
 ::part(w55){width: 55%;}
 ::part(w76){width: 76%;}

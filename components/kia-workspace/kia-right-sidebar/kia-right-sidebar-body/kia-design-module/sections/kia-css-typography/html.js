@@ -59,10 +59,14 @@ const html = `
 			<div part="module-col">																			
 				<kia-prop-input class="letter-spacing-input" data-prop="letter-spacing" data-unit="px" data-label-text="A" data-type="number" data-min="0" data-max="100"></kia-prop-input> 
 			</div>
-			<div part="module-col w55">
+			<div part="module-col w48">
 				<h6 part="module-col-title">Text Alignment</h6>								
 				<kia-prop-radios data-html="text-align"></kia-prop-radios>
-			</div> 
+			</div>
+			<div part="module-col w48">
+				<h6 part="module-col-title">Text Transform</h6>								
+				<kia-prop-radios data-html="text-transform"></kia-prop-radios>
+			</div>			
 		</div>
 	</section>
 `;

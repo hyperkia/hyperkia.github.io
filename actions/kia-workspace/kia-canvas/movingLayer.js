@@ -1,11 +1,20 @@
 
 let debounceTimeout = null;
 
-function Index(layerObj) {
-	KIA.state.layers.movingLayer(layerObj);
+function Index(newLayerObj) {
+	KIA.state.ui.setDirtyMap({
+		layer: {
+			id: newLayerObj.id,
+			style: Object.keys(newLayerObj.style),
+			flag: 'position',
+		}
+	});
+	KIA.state.layers.movingLayer(newLayerObj);
+	KIA.state.ui.resetDirtyMap();
 	clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
-		KIA.services.idb.core.updateObject('layers', layerObj.key, {css: layerObj.css});
+    	const layerObj = KIA.nodesMap[newLayerObj.id];
+		KIA.services.idb.core.replaceObjectByKey('layers', layerObj);
     }, 150);
 	
 }

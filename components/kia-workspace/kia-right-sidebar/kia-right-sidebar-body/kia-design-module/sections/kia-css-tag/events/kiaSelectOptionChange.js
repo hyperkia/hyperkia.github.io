@@ -9,13 +9,13 @@ class Index {
 	}
 
 	static changeNodeName(e){
-		const key = KIA.dom.read.getSelectionKey();
+		const id = KIA.state.ui.getSelectionId();
 		let nodeName = e.detail.source.value;
 		const layerNewObj = {
-			key,
+			id,
 			nodeName
 		};
-		KIA.actions.share.setLayerSelectionStringProperties(layerNewObj);		
+		KIA.actions.kiaLayers.setNodeName(layerNewObj);		
 	}
 
 }

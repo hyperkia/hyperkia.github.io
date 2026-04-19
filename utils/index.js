@@ -7,6 +7,7 @@ import color from "./color/index.js";
 import url from "./url/index.js";
 import obj from "./obj/index.js";
 import file from "./file/index.js";
+import pointer from "./pointer/index.js";
 
 KIA.utils = {
 	string,
@@ -17,5 +18,6 @@ KIA.utils = {
 	url,
 	obj,
 	file,
+	pointer,
 };
 

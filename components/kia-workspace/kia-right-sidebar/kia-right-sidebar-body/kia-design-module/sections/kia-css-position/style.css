@@ -3,10 +3,9 @@
 .align-items{margin-left: 3px;display: inline-flex;}
 
 /* Selection Capability */
-:host([data-selection-type="sectionhtml"]){display: block;}
-:host([data-selection-type="imghtml"]){display: block;}
-:host([data-selection-type="texthtml"]){display: block;}
-:host([data-selection-type$="svg"]){display: block;}
+:host([data-selection-type="container"]){display: block;}
+:host([data-selection-type="media"]){display: block;}
+:host([data-selection-type="text"]){display: block;}
 /*
 :host([data-selection-type="videohtml"]){display: block;}
 :host([data-selection-type="documenthtml"]){display: block;}

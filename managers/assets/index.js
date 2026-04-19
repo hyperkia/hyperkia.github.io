@@ -1,10 +1,10 @@
 function Index(assets){
 	if(!assets) return;
 	const result = {};
-    for (const [key, item] of Object.entries(assets)) {
+    for (const [id, item] of Object.entries(assets)) {
         const url = URL.createObjectURL(item.blob);
-        result[key] = {
-        	key,
+        result[id] = {
+        	id,
         	name: item.name,
         	size: item.size,
         	type: item.type,

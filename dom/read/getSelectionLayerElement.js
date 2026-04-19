@@ -1,6 +1,6 @@
 function Index() {
-	const key = KIA.state.ui.selectionKeys.values().next().value;
-	return KIA.kiaCanvas._qs(`[data-layer="${key}"]`);
+	const id = KIA.state.ui.getSelectionId();
+	return KIA.kiaCanvas._qs(`[data-layer="${id}"]`);
 }
 
 export default Index;

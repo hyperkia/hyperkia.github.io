@@ -10,7 +10,7 @@ class Index {
         
         if(e.button === 2) return;
 
-        let tool = KIA.state.ui.activeTool;
+        let tool = KIA.state.ui.getProp('activeTool');
         props.root.tools[tool].handlePointerUp(e);
 
         props.isActualMove = false;

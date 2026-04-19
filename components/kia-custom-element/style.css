@@ -18,7 +18,7 @@ h4{font-size:16px;}
 h5{font-size:13px;}
 h6{font-size:10px;}
 
-svg{width: 20px;height: 20px;}
+svg{width: var(--width, 20px);height: var(--height, 20px);}
 
 input,select,textarea{appearance: none;-moz-appearance: textfield;outline:none;font:inherit;color: #383838;}
 input::placeholder,select::placeholder,textarea::placeholder{color:#8e8e8e;opacity:1;}

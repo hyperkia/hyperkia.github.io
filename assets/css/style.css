@@ -11,3 +11,12 @@ body.loading::before{content:'';position: fixed;top:50%;left:50%;width: 50px;pad
 @keyframes body_loader {
     to{transform: rotate(1turn);}
 }
+
+
+/* Requirements */
+@media(max-width: 1023px) {
+    kia-app{display: none;}
+    body::before{display: none;}
+    body{position: relative;}    
+    body::after {content: '1024\00A0\00A0X \00A0 768';display: flex;justify-content: center;align-items: center;width: 100vw;height: 100vh;font-weight: 700;font-size: 40px;}
+}

@@ -6,19 +6,23 @@ import getElementPositionInScaledCanvasPage from './getElementPositionInScaledCa
 import getSelectionLayersElement from './getSelectionLayersElement.js';
 import getSelectionPageElement from './getSelectionPageElement.js';
 import getSelectionPageNameElement from './getSelectionPageNameElement.js';
-import getRelatedNodes from './getRelatedNodes.js';
 import getSelectionKey from './getSelectionKey.js';
 import getSelectionLayerElement from './getSelectionLayerElement.js';
 import getSelectionLayerObject from './getSelectionLayerObject.js';
 import getSelectionPageObject from './getSelectionPageObject.js';
 import getSelectionStoreType from './getSelectionStoreType.js';
-import getSelectionStackCss from './getSelectionStackCss.js';
-import getSelectionStackByKey from './getSelectionStackByKey.js';
-import resolveInteractionTarget from './resolveInteractionTarget.js';
-import resolveInteractionTargetKey from './resolveInteractionTargetKey.js';
-import getSelectionUiType from './getSelectionUiType.js';
+import getStackStyleById from './getStackStyleById.js';
+import getSelectionDesignUiType from './getSelectionDesignUiType.js';
 import getSelectionElement from './getSelectionElement.js';
 import getSelectionCssObject from './getSelectionCssObject.js';
+import getCanvasElementScaleCoords from './getCanvasElementScaleCoords.js';
+import getSelectionObject from './getSelectionObject.js';
+import getLayerTreeChildrensById from './getLayerTreeChildrensById.js';
+import normalizeAttributes from './normalizeAttributes.js';
+import getSelectionParentObject from './getSelectionParentObject.js';
+import resolveObjectById from './resolveObjectById.js';
+import resolveElementByIdInLayers from './resolveElementByIdInLayers.js';
+import resolveElementByIdInCanvas from './resolveElementByIdInCanvas.js';
 
 
 
@@ -31,18 +35,22 @@ export {
 	getSelectionLayersElement,
 	getSelectionPageElement,
 	getSelectionPageNameElement,
-	getRelatedNodes,
 	getSelectionKey,
 	getSelectionLayerElement,
 	getSelectionLayerObject,
 	getSelectionPageObject,
 	getSelectionStoreType,
-	getSelectionStackCss,
-	getSelectionStackByKey,
-	resolveInteractionTarget,
-	resolveInteractionTargetKey,
-	getSelectionUiType,
+	getStackStyleById,
+	getSelectionDesignUiType,
 	getSelectionElement,
 	getSelectionCssObject,
+	getCanvasElementScaleCoords,
+	getSelectionObject,
+	getLayerTreeChildrensById,
+	normalizeAttributes,
+	getSelectionParentObject,
+	resolveObjectById,
+	resolveElementByIdInLayers,
+	resolveElementByIdInCanvas,
 }
 

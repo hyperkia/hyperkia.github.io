@@ -1,124 +1,188 @@
-
 import props from '../utils/props.js';
 import methods from '../utils/methods.js';
 
 class Index {
-    
+
     panning = false;
+    parentEl = null;
+    parentKey = null;
+    svgLayer = null;
+    lineLayer = null;
 
-	static handlePointerDown(e) {
-		props.root.setPointerCapture(e.pointerId);
-		if (!props.activePage) return;
+    static handlePointerDown(e) {
+        props.root.setPointerCapture(e.pointerId);
+
+        this.parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
+        if (!this.parentEl) return;
+        if(!KIA.registry.tags.canHaveChildren(this.parentEl.nodeName)) {
+            this.parentEl = this.parentEl.parentElement;
+        }
+        this.parentKey = this.parentEl.dataset.layer || this.parentEl.dataset.page;
  
-		props.newLayer = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        props.newLayer.setAttribute('data-svgshape', crypto.randomUUID());        
-        props.root.$id[`pageSvg${props.activePageKey}`].appendChild(props.newLayer);
-        this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.svgLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        this.svgLayer.classList.add('canvas-layer');
+        this.svgLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.svgLayer.setAttribute('draggable', false);
+        this.parentEl.append(this.svgLayer);
 
-		props.newLayer.setAttribute('x1', this.cpsdXY.x);
-		props.newLayer.setAttribute('y1', this.cpsdXY.y);
-		props.newLayer.setAttribute('x2', this.cpsdXY.x);
-		props.newLayer.setAttribute('y2', this.cpsdXY.y);
-        props.newLayer.style.cssText = `stroke: #383838; stroke-width: 2px`;
-	}
+        this.lineLayer = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        this.lineLayer.setAttribute('stroke', '#d9d9d9');
+        this.lineLayer.setAttribute('stroke-width', 2);
+        this.lineLayer.classList.add('canvas-layer');
+        this.lineLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.lineLayer.setAttribute('draggable', false);
+        this.svgLayer.append(this.lineLayer);
 
-	static handlePointerMove(e) {
-        if (!props.root.hasPointerCapture(e.pointerId)) return false;
-        if ((!props.newLayer)) return false;
+        this.cpsdXY = KIA.dom.read.getCanvasElementScaleCoords({ e, element: this.parentEl });
+    } 
 
-        this.cpsmXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+    static handlePointerMove(e) {
+
+        if (!props.root.hasPointerCapture(e.pointerId)) return false;        
+        if (!this.svgLayer) return false;
+
+        this.cpsmXY = KIA.dom.read.getCanvasElementScaleCoords({ e, element: this.parentEl });
+        
+        const dx = this.cpsmXY.x - this.cpsdXY.x;
+        const dy = this.cpsmXY.y - this.cpsdXY.y;
 
         const left = Math.min(this.cpsdXY.x, this.cpsmXY.x);
         const top = Math.min(this.cpsdXY.y, this.cpsmXY.y);
-        const width = Math.abs(this.cpsmXY.x - this.cpsdXY.x);
+        const width = Math.abs(dx);
+        const height = Math.abs(dy);
 
-        props.newLayer.setAttribute('x2', this.cpsmXY.x);
-        props.newLayer.setAttribute('y2', this.cpsmXY.y);
-
-        const key = props.newLayer.dataset.svgshape;
-
-        KIA.actions.kiaCanvas.createLayer({ 
-            key,
-            pId: props.activePage.dataset.page,
-            nodeName: props.newLayer.nodeName.toLowerCase(),
-            type: 'linesvg',
-            attrs: {},
-            css: {
-                width, left, top
-            },
-            scss: {
-                stroke: '#383838',
-                'stroke-width': '2px',
-            },
-            save: false,
-            stack: {},
-            assets: {},
-        });
-
+        const viewBox = `0 0 ${width} ${height}`;
         
-        if(!this.panning) {            
-            const keys = new Set().add(key);
-            KIA.actions.share.setSelectionKeys(keys);
+        const svgStyle = {
+            left: left + 'px',
+            top: top + 'px',
+            width: width + 'px',
+            height: height + 'px',
+        };        
+
+        Object.assign(this.svgLayer.style, svgStyle);
+        this.svgLayer.setAttribute('viewBox', viewBox);
+
+        const x1 = dx >= 0 ? 0 : width;
+        const y1 = dy >= 0 ? 0 : height;
+        const x2 = dx >= 0 ? width : 0;
+        const y2 = dy >= 0 ? height : 0;
+
+        this.lineLayer.setAttribute('x1', x1);
+        this.lineLayer.setAttribute('y1', y1);
+        this.lineLayer.setAttribute('x2', x2);
+        this.lineLayer.setAttribute('y2', y2);
+
+        const svgid = this.svgLayer.dataset.layer;
+        const lineId = this.lineLayer.dataset.layer;
+
+        KIA.actions.kiaCanvas.creatingElements([
+            { 
+                id: svgid,
+                parent: this.parentKey,
+                nodeName: this.svgLayer.nodeName,
+                attributes: { viewBox },
+                style: svgStyle,
+                children: [],
+                instanceof: 'svg',
+                stack: [],
+            },
+            { 
+                id: lineId,
+                parent: svgid,
+                nodeName: this.lineLayer.nodeName,
+                attributes: {
+                    stroke: '#d9d9d9',
+                    'stroke-width': 2,
+                    x1,
+                    y1,
+                    x2,
+                    y2,
+                },
+                style: {},
+                children: [lineId],
+                instanceof: 'svg',
+                stack: [],
+            }
+        ]);
+        
+        if (!this.panning) {            
+            const ids = new Set().add(lineId);
+            KIA.actions.share.setSelectionKeys(ids);
             this.panning = true;
         }
     }
-
+ 
     static handlePointerUp(e) {
         props.root.releasePointerCapture(e.pointerId);
-        this.panning = false;
+        this.panning = false;     
 
         if (props.isActualMove && props.activePage) {
-            const shapeRect = KIA.utils.dom.getRect(props.newLayer);
-            const viewBox = `${shapeRect.left} ${shapeRect.top} ${shapeRect.width} ${shapeRect.height}`;
-            const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svgEl.classList.add('canvas-layer');
-            svgEl.setAttribute('viewBox', viewBox);
-            svgEl.setAttribute('data-layer', props.newLayer.dataset.svgshape);
-            svgEl.style.cssText = `top:${shapeRect.top}px;left:${shapeRect.left}px;width:${shapeRect.width}px;height:${shapeRect.height}px;`;
-            props.activePage.appendChild(svgEl);
-            svgEl.appendChild(props.newLayer);
 
-            // Layer Data
-            const newLayerObj = {
-                key: svgEl.dataset.layer,
-                pId: props.activePageKey,
-                nodeName: props.newLayer.nodeName.toLowerCase(),
-                attrs: {
-                    viewBox
-                },
-                type: 'linesvg',
-                css: {
-                    visibility: 'visible',
-                    translate: 'none',
-                    top: shapeRect.top+'px',
-                    left: shapeRect.left+'px',
-                    width: shapeRect.width+'px',
-                    height: shapeRect.height+'px',
-                    'pointer-events': 'auto',
-                }, 
-                sattrs: {
-                    x1: props.newLayer.x1.baseVal.value,                    
-                    y1: props.newLayer.y1.baseVal.value,                    
-                    x2: props.newLayer.x2.baseVal.value,                    
-                    y2: props.newLayer.y2.baseVal.value,                    
-                }, 
-                scss: {
-                    stroke: '#383838',
-                    'stroke-width': '2px',
-                },
-                save: true,
-                stack: {},
-            assets: {},
-            };
+            const svgid = this.svgLayer.dataset.layer;
+            const lineId = this.lineLayer.dataset.layer;
 
-            KIA.actions.kiaCanvas.createLayer(newLayerObj);
-            const keys = new Set().add(newLayerObj.key);
-            KIA.actions.share.setSelectionKeys(keys);
+            const svgElCss = KIA.utils.css.getElementCssProperty(
+                this.svgLayer, 
+                ['left','top','width','height']
+            );
+
+            const width = parseFloat(svgElCss.width);
+            const height = parseFloat(svgElCss.height);
+
+            const dx = this.cpsmXY.x - this.cpsdXY.x;
+            const dy = this.cpsmXY.y - this.cpsdXY.y;
+
+            const x1 = dx >= 0 ? 0 : width;
+            const y1 = dy >= 0 ? 0 : height;
+            const x2 = dx >= 0 ? width : 0;
+            const y2 = dy >= 0 ? height : 0;
+
+            const newLayerObjs = [
+                {
+                    id: svgid,
+                    parent: this.parentKey,
+                    nodeName: this.svgLayer.nodeName,
+                    attributes: {
+                        viewBox: `0 0 ${width} ${height}`,
+                    },
+                    style: {                        
+                        ...svgElCss,
+                        translate: 'none',                    
+                    }, 
+                    children: [lineId],
+                    instanceof: 'svg',
+                    stack: [],
+                },
+                {
+                    id: lineId,
+                    parent: svgid,
+                    nodeName: this.lineLayer.nodeName,
+                    attributes: {
+                        stroke: '#d9d9d9',
+                        'stroke-width': 2,
+                        x1,
+                        y1,
+                        x2,
+                        y2,
+                    },
+                    style: {}, 
+                    children: [],
+                    instanceof: 'svg',
+                    stack: [],
+                },                
+            ];   
+
+            KIA.canvasRefMap[svgid] = this.svgLayer;
+            KIA.canvasRefMap[lineId] = this.lineLayer;
+            KIA.actions.kiaCanvas.createElements(newLayerObjs);
+            const ids = new Set().add(lineId);
+            KIA.actions.share.setSelectionKeys(ids);
 
         } else {
-            props.newLayer?.remove();
-            props.newLayer = null;
-        }
+            this.svgLayer?.remove();
+            this.svgLayer = null;
+        }        
     }
 }
 

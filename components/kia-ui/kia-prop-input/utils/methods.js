@@ -37,7 +37,6 @@ const Methods = {
 		thisEl.shadowRoot.lastElementChild.insertAdjacentHTML('afterend', html);		
 		thisEl.$id.input = thisEl._qs('input');
 
-		if(!KIA.propInputs) KIA.propInputs = {};
 		KIA.propInputs[dataset.prop] = thisEl;
 	},
 

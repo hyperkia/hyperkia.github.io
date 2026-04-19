@@ -11,14 +11,6 @@ const Index = {
 			props.rafZoomingID = requestAnimationFrame(Index.updatePageNamePosition);
 		}
 	},
-
-	inputLayerInnerText: function(e) {
-		const innerText = props.eTarget.innerText;
-		KIA.actions.share.inputSelectionInnerText({
-			innerText, 
-			save: e.type==='keyup',
-		}); 
-	},
 }
 
 export default Index;

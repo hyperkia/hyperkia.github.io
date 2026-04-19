@@ -26,11 +26,8 @@ class KIA_Left_Sidebar extends KIACustomElement {
     }
 
     handleEvents(e){       
-        props.eTarget = e.composedPath()[0];
-        props.eTargetRoot = props.eTarget.getRootNode().host;        
-        props.eTEvent = props.eTarget.dataset.event;
-        props.eTREvent = props.eTargetRoot.dataset.event;
-         
+        Object.assign(props, props.root._resolveEventContext(e)); 
+
         // Throttle
         if(['pointermove','input', 'scroll'].includes(e.type)) {
             if (Date.now() - this.lastThrottle < 30) return; 

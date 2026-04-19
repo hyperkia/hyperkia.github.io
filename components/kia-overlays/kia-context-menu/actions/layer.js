@@ -32,7 +32,8 @@ const Index = {
     },
 
     delete() {
-        KIA.actions.share.deleteSelection();
+        const id = KIA.state.ui.getSelectionId();
+        KIA.actions.kiaLayers.deleteLayer(id);
         const keys = new Set().add('canvas');
         KIA.actions.share.setSelectionKeys(keys);
     },

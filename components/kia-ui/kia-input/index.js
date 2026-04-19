@@ -29,9 +29,9 @@ class KIA_Input extends KIACustomElement{
 		return this.$id.input.value;
 	}
 
-	set value(value) {		
+	set value(value) {
 		this.$id.input.value = value;
-		this.dispatchEvent(new CustomEvent('kiaPropInput', {
+		this.dispatchEvent(new CustomEvent('kiaInput', {
 		  bubbles: true,
 		  composed: true,
 		  detail: { source: this}

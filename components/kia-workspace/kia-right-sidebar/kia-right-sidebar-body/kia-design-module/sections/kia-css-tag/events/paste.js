@@ -6,7 +6,12 @@ class Index {
 
 	static handler(e){
 		if(props.eTEvent === 'tagInnerText') methods.inputInnerText(e); 
-		if(props.eTEvent === 'tagSrc') methods.inputSrc(e); 
+		if(props.eTEvent === 'tagSrc') this.inputSrc(); 
+	}
+
+	static inputSrc(){
+		const src = props.eTarget.value.trim();
+		methods.inputSrc(src);
 	}
 
 	

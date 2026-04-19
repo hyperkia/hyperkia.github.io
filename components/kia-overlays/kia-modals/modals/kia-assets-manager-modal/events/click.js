@@ -19,8 +19,8 @@ class Index {
     }
 
     static assetSelected(){
-        const key = props.eTarget.closest('[data-asset]').dataset.asset;
-        KIA.actions.kiaAssetsManagerModal.selectAsset(key);
+        const id = props.eTarget.closest('[data-asset]').dataset.asset;
+        KIA.actions.kiaAssetsManagerModal.selectAsset(id);
         props.root.close();
     }
 

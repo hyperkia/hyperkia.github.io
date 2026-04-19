@@ -112,7 +112,7 @@ const Index = {
             }
 
             obj.renderPagesAsMenu();
-            const firstPageKey = __HYPERKIA_PROJECT__.canvas.pagesOrder[0];
+            const firstPageKey = __HYPERKIA_PROJECT__.canvas.children[0];
             obj.renderPageByKey(firstPageKey);
             obj.pageRenderEvent();
             

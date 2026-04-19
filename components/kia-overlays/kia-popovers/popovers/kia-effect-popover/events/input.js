@@ -4,7 +4,7 @@ import methods from '../utils/methods.js';
 class Index {
 
     static handler(e) {
-        if (props.eTarget.getRootNode().host.matches('.effect-field-item-input')) methods.updateEffect();
+        if (e.target.matches('.effect-field-item-input')) methods.updateEffect();
     }
 
 }

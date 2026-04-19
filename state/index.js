@@ -1,9 +1,10 @@
-import pages from "./pages.state.js";
-import ui from "./ui.state.js";
-import layers from "./layers.state.js";
-import canvas from "./canvas.state.js";
-import assets from "./assets.state.js";
+import pages from "./pages/methods/index.js";
+import ui from "./ui/methods/index.js";
+import layers from "./layers/methods/index.js";
+import canvas from "./canvas/methods/index.js";
+import assets from "./assets/methods/index.js";
+import config from "./config/methods/index.js";
 
 KIA.state = {
-	pages, ui, layers, canvas, assets
+	pages, ui, layers, canvas, assets, config
 }

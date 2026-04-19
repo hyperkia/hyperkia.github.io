@@ -1,11 +1,12 @@
 
 import props from '../../../../props/index.js';
-import css from './css/index.js';
+import cssProps from './props/index.js';
 import collectAdditionalData from './collectAdditionalData.js';
 
 function Index() {
 
 	const l = props.activeParseLayer.layer;
+	console.log(l.name, l);
 	const obj = {
 		nodeName: 'img',
 		css: {},
@@ -15,7 +16,7 @@ function Index() {
 
 	obj.canvas = l.canvas || null;
 
-	for(let p in css) Object.assign(obj.css, css[p](l));
+	for(let p in cssProps) Object.assign(obj.css, cssProps[p](l));
  
 	collectAdditionalData(obj); 
 

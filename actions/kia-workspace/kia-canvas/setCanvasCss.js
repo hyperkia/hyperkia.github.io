@@ -1,12 +1,12 @@
 
 let debounceTimeout = null;
 
-function Index(cssObj){	
-	KIA.state.canvas.setCss(cssObj);
+function Index(style){	
+	KIA.state.canvas.setStyle(style);
 	clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
-    	const css = KIA.state.canvas.css;
-        KIA.services.idb.core.updateKeyValueObject('canvas', {css});		
+    	const style = KIA.state.canvas.getProp('style');
+        KIA.services.idb.core.updateKeyValueObject('canvas', {style});		
     }, 150);
 }
 

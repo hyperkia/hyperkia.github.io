@@ -1,6 +1,6 @@
 function Index(pageId) {
 
-	const layers = KIA.state.layers.map;
+	const layers = KIA.state.layers.getProp('map');
 	let zIndex = [0];
 
 	for(let lId in layers) {

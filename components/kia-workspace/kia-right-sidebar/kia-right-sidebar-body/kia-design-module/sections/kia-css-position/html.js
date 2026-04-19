@@ -6,13 +6,13 @@ const html = `
 		</header>
 
 		<div part="module-row">
-			<!--
+			
 			<div part="module-col w83">
 				<h6 part="module-col-title">Alignment</h6>
 				<kia-prop-radios class="justify-content" data-html="justify-content"></kia-prop-radios>
 				<kia-prop-radios class="align-items" data-html="align-items"></kia-prop-radios>
 			</div>
-			-->
+			
 
 			<div part="module-col">
 				<h6 part="module-col-title">Position</h6>
@@ -33,10 +33,12 @@ const html = `
 					<kia-prop-radios data-html="roateScale"></kia-prop-radios>				
 				</div>
 			</div>
+
+			<div part="module-col w50">	
+				<kia-prop-checkbox data-prop="overflow" data-label="Clip content"></kia-prop-checkbox>
+			</div>	
 		</div>
 	</section>
-	
-	
 `;
 
 export default html;

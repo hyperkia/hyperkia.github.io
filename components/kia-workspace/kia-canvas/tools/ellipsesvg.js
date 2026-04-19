@@ -1,123 +1,181 @@
-
 import props from '../utils/props.js';
 import methods from '../utils/methods.js';
 
 class Index {
 
     panning = false;
+    parentEl = null;
+    parentKey = null;
+    svgLayer = null;
+    ellipseLayer = null;
 
-	static handlePointerDown(e) {
-		props.root.setPointerCapture(e.pointerId);
-		if (!props.activePage) return;
+    static handlePointerDown(e) {
+        props.root.setPointerCapture(e.pointerId);
 
-		props.newLayer = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-        props.newLayer.setAttribute('fill', '#d9d9d9');
-        props.newLayer.setAttribute('data-svgshape', crypto.randomUUID());        
-		props.root.$id[`pageSvg${props.activePageKey}`].appendChild(props.newLayer);
-        this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
+        if (!this.parentEl) return;
+        if(!KIA.registry.tags.canHaveChildren(this.parentEl.nodeName)) {
+            this.parentEl = this.parentEl.parentElement;
+        }
+        this.parentKey = this.parentEl.dataset.layer || this.parentEl.dataset.page;
+ 
+        this.svgLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        this.svgLayer.classList.add('canvas-layer');
+        this.svgLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.svgLayer.setAttribute('draggable', false);
+        this.parentEl.append(this.svgLayer);
 
-        props.newLayer.cx.baseVal.value = this.cpsdXY.x;
-        props.newLayer.cy.baseVal.value = this.cpsdXY.y;
-	}
+        this.ellipseLayer = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+        this.ellipseLayer.setAttribute('fill', '#d9d9d9');
+        this.ellipseLayer.classList.add('canvas-layer');
+        this.ellipseLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.ellipseLayer.setAttribute('draggable', false);
+        this.svgLayer.append(this.ellipseLayer);
 
-	static handlePointerMove(e) {
-        if (!props.root.hasPointerCapture(e.pointerId)) return false;
-        if ((!props.newLayer)) return false;
+        this.cpsdXY = KIA.dom.read.getCanvasElementScaleCoords({ e, element: this.parentEl });
+    } 
 
-        this.cpsmXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+    static handlePointerMove(e) {
 
+        if (!props.root.hasPointerCapture(e.pointerId)) return false;        
+        if (!this.svgLayer) return false;
+
+        this.cpsmXY = KIA.dom.read.getCanvasElementScaleCoords({ e, element: this.parentEl });
+        
         const left = Math.min(this.cpsdXY.x, this.cpsmXY.x);
         const top = Math.min(this.cpsdXY.y, this.cpsmXY.y);
-        const rx = Math.abs(this.cpsmXY.x - this.cpsdXY.x);
-        const ry = Math.abs(this.cpsmXY.y - this.cpsdXY.y);
+        const width = Math.abs(this.cpsmXY.x - this.cpsdXY.x);
+        const height = Math.abs(this.cpsmXY.y - this.cpsdXY.y);
 
-        props.newLayer.rx.baseVal.value = rx;
-        props.newLayer.ry.baseVal.value = ry;
-
-        const key = props.newLayer.dataset.svgshape;
-
-        KIA.actions.kiaCanvas.createLayer({ 
-            key,
-            pId: props.activePage.dataset.page,
-            nodeName: props.newLayer.nodeName.toLowerCase(),
-            attrs: {},
-            type: 'ellipsesvg',
-            css: {
-                top, left,
-                width: rx, height: ry, 
-            },
-            save: false,
-            sattrs: {},
-            scss: {},
-            stack: {},
-            assets: {},
-        });
-
+        const viewBox = `0 0 ${width} ${height}`;
         
-        if(!this.panning) {            
-            const keys = new Set().add(key);
-            KIA.actions.share.setSelectionKeys(keys);
+        const svgStyle = {
+            left: left + 'px',
+            top: top + 'px',
+            width: width + 'px',
+            height: height + 'px',
+        };        
+
+        Object.assign(this.svgLayer.style, svgStyle);
+        this.svgLayer.setAttribute('viewBox', viewBox);
+
+        const cx = width / 2;
+        const cy = height / 2;
+        const rx = width / 2;
+        const ry = height / 2;
+
+        this.ellipseLayer.setAttribute('cx', cx);
+        this.ellipseLayer.setAttribute('cy', cy);
+        this.ellipseLayer.setAttribute('rx', rx);
+        this.ellipseLayer.setAttribute('ry', ry);
+
+        const svgid = this.svgLayer.dataset.layer;
+        const ellipseId = this.ellipseLayer.dataset.layer;
+
+        KIA.actions.kiaCanvas.creatingElements([
+            { 
+                id: svgid,
+                parent: this.parentKey,
+                nodeName: this.svgLayer.nodeName,
+                attributes: { viewBox },
+                style: svgStyle,
+                children: [ellipseId],
+                instanceof: 'svg',
+                stack: [],
+            },
+            { 
+                id: ellipseId,
+                parent: svgid,
+                nodeName: this.ellipseLayer.nodeName,
+                attributes: {
+                    fill: '#d9d9d9',
+                    cx,
+                    cy,
+                    rx,
+                    ry,
+                },
+                style: {},
+                children: [],
+                instanceof: 'svg',
+                stack: [],
+            }
+        ]);
+        
+        if (!this.panning) {            
+            const ids = new Set().add(ellipseId);
+            KIA.actions.share.setSelectionKeys(ids);
             this.panning = true;
         }
     }
-
+ 
     static handlePointerUp(e) {
         props.root.releasePointerCapture(e.pointerId);
-        this.panning = false;
+        this.panning = false;     
 
         if (props.isActualMove && props.activePage) {
-            const shapeRect = KIA.utils.dom.getRect(props.newLayer);
-            const viewBox = `${shapeRect.left} ${shapeRect.top} ${shapeRect.width} ${shapeRect.height}`;
-            const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svgEl.classList.add('canvas-layer');
-            svgEl.setAttribute('viewBox', viewBox);
-            svgEl.setAttribute('data-layer', props.newLayer.dataset.svgshape);
-            svgEl.style.cssText = `top:${shapeRect.top}px;left:${shapeRect.left}px;width:${shapeRect.width}px;height:${shapeRect.height}px;`;
-            props.activePage.appendChild(svgEl);
-            svgEl.appendChild(props.newLayer);
 
-            // Layer Data
-            const newLayerObj = {
-                key: svgEl.dataset.layer,
-                pId: props.activePageKey,
-                nodeName: props.newLayer.nodeName.toLowerCase(),
-                attrs: {
-                    viewBox
-                }, 
-                type: 'ellipsesvg',
-                css: {
-                    visibility: 'visible',
-                    translate: 'none',
-                    top: shapeRect.top+'px',
-                    left: shapeRect.left+'px',
-                    width: shapeRect.width+'px',
-                    height: shapeRect.height+'px',
-                    'pointer-events': 'auto',
-                },  
-                sattrs: {
-                    cx: props.newLayer.cx.baseVal.value,
-                    cy: props.newLayer.cy.baseVal.value,
-                    rx: props.newLayer.rx.baseVal.value,
-                    ry: props.newLayer.ry.baseVal.value,
-                    fill: '#d9d9d9',
-                }, 
-                scss: {
-                    
+            const svgid = this.svgLayer.dataset.layer;
+            const ellipseId = this.ellipseLayer.dataset.layer;
+
+            const svgElCss = KIA.utils.css.getElementCssProperty(
+                this.svgLayer, 
+                ['left','top','width','height']
+            );
+
+            const width = parseFloat(svgElCss.width);
+            const height = parseFloat(svgElCss.height);
+
+            const cx = width / 2;
+            const cy = height / 2;
+            const rx = width / 2;
+            const ry = height / 2;
+
+            const newLayerObjs = [
+                {
+                    id: svgid,
+                    parent: this.parentKey,
+                    nodeName: this.svgLayer.nodeName,
+                    attributes: {
+                        viewBox: `0 0 ${width} ${height}`,
+                    },
+                    style: {                        
+                        ...svgElCss,
+                        translate: 'none',                        
+                    }, 
+                    children: [ellipseId],
+                    instanceof: 'svg',
+                    stack: [],
                 },
-                save: true,
-                stack: {},
-            assets: {},
-            };
+                {
+                    id: ellipseId,
+                    parent: svgid,
+                    nodeName: this.ellipseLayer.nodeName,
+                    attributes: {
+                        fill: '#d9d9d9',
+                        cx,
+                        cy,
+                        rx,
+                        ry,
+                    },
+                    style: {}, 
+                    children: [],
+                    instanceof: 'svg',
+                    stack: [],
+                },                
+            ];   
 
-            KIA.actions.kiaCanvas.createLayer(newLayerObj);
-            const keys = new Set().add(newLayerObj.key);
-            KIA.actions.share.setSelectionKeys(keys);
-            
+            KIA.canvasRefMap[svgid] = this.svgLayer;
+            KIA.canvasRefMap[ellipseId] = this.ellipseLayer;
+            KIA.actions.kiaCanvas.createElements(newLayerObjs);
+
+            const ids = new Set().add(ellipseId);
+            KIA.actions.share.setSelectionKeys(ids);
+
         } else {
-            props.newLayer?.remove();
-            props.newLayer = null;
-        }
+            this.svgLayer?.remove();
+            this.svgLayer = null;
+        }        
     }
-} 
+}
 
 export default Index;

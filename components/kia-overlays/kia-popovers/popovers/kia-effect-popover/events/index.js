@@ -6,7 +6,7 @@ import editEffect from './editEffect.js';
 import input from './input.js';
 import kiaSelectOptionChange from './kiaSelectOptionChange.js';
 import changeColorPickerValue from './changeColorPickerValue.js';
-import kiaPropInput from './kiaPropInput.js';
+import kiaInput from './kiaInput.js';
 
 
 export { 
@@ -18,5 +18,5 @@ export {
 	input,
 	kiaSelectOptionChange,
 	changeColorPickerValue,
-	kiaPropInput,
+	kiaInput,
 }

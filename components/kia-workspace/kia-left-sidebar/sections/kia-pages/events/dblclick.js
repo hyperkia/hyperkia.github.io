@@ -5,13 +5,14 @@ import methods from '../utils/methods.js';
 class Index {
 
 	static handler(e){			
-		if(props.eTEvent === 'editPageName' || props.eTarget.matches('.page-item')) this.enablePageNameEdit();
+		if(props.eTAction === 'editPageName' || props.eTarget.matches('.page-item')) this.enablePageNameEdit();
 	}
 
 	static enablePageNameEdit(){
-		const editElement = KIA.kiaPages._qs(`[data-page="${props.pageKey}"] .page-name`);
-		const keys = new Set().add(props.pageKey);
-        KIA.actions.share.setSelectionKeys(keys);
+		const id = props.eTarget.closest('[data-page]').dataset.page;
+		const editElement = KIA.kiaPages._qs(`[data-page="${id}"] .page-name`);
+		const ids = new Set().add(id);
+        KIA.actions.share.setSelectionKeys(ids);
 		KIA.utils.dom.enableEditingAndFocusEnd(editElement);
 	}
 

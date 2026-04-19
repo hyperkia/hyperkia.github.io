@@ -2,7 +2,6 @@
 class Index {
 
 	static handler(e){
-		
 	}
 
 	

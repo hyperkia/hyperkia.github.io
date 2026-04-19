@@ -13,7 +13,6 @@ const Methods = {
 		tempEl.remove();
 		thisEl.$id.details = thisEl._qs('details');
 
-		if(!KIA.propInputs) KIA.propInputs = {};
 		KIA.propInputs[thisEl.dataset.prop] = thisEl;
 	},
 
@@ -33,7 +32,7 @@ const Methods = {
 			[props.eRootNode.dataset.prop]: value,			
 		};
 
-        KIA.managers.css.propsInputToSelection(css);
+        KIA.managers.style.propsInputToSelection(css);
 		
 		props.eRootNode.dispatchEvent(new CustomEvent('kiaSelectOptionChange', {
 		  bubbles: true,

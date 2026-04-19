@@ -22,7 +22,12 @@ const html = `
 	
 	<div data-id="canvas-selection" class="canvas-selection"></div>	
 	<svg class="active-layers-outline-svg">
-		<path class="active-layers-outline" data-id="active-layers-outline" vector-effect="non-scaling-stroke" shape-rendering="crispEdges"></path>
+	  <defs>
+	    <clipPath id="active-layers-outline-clippath">
+	      <path d="M50 50 H150 V150 H50 Z" data-id="active-layers-outline-mask" />
+	    </clipPath>
+	  </defs>
+		<path clip-path="url(#active-layers-outline-clippath)" class="active-layers-outline" data-id="active-layers-outline" data-selection="0" vector-effect="non-scaling-stroke" shape-rendering="crispEdges"></path>
 	</svg>
 
 

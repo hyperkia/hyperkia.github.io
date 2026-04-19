@@ -8,9 +8,9 @@ const scale = {
 function Index(e) {	
     e.preventDefault();
 
-    scale.pagesX = KIA.state.ui.pagesX;
-    scale.pagesY = KIA.state.ui.pagesY;
-    scale.zoom = KIA.state.ui.canvasZoom;
+    scale.pagesX = KIA.state.ui.getProp('pagesX');
+    scale.pagesY = KIA.state.ui.getProp('pagesY');
+    scale.zoom = KIA.state.ui.getProp('canvasZoom');
 
     const canvasRect = KIA.utils.dom.getRect(KIA.kiaCanvas);
 

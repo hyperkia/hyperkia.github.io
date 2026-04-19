@@ -3,7 +3,7 @@ class Index {
   
     static handler(e) {        
         const css = KIA.utils.dom.controlToCss(e.target);
-        KIA.managers.css.propsInputToSelection(css);
+        KIA.managers.style.propsInputToSelection(css);
     } 
 
 }

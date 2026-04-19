@@ -4,11 +4,14 @@ import props from '../utils/props.js';
 class Index {
 
 	static handler(e){
-		if(props.eTarget.matches('.texthtml')) this.enableTextLayerEdit();
+		if(props.eTarget.childElementCount === 0) this.textContentLayer();
 	}
 
-	static enableTextLayerEdit(){
-		KIA.utils.dom.enableEditingAndFocusEnd(props.eTarget);
+	static textContentLayer(){
+		const t = props.eTarget;
+		const id = t.dataset.layer;
+		const isTextContent = KIA.state.layers.map[id].textContent;
+		isTextContent && KIA.utils.dom.enableEditingAndFocusEnd(t);
 	}
 
 	

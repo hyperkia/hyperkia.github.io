@@ -1,11 +1,13 @@
-import addNewPage from './addNewPage.js';
-import pageNameChange from './pageNameChange.js';
+import createPage from './createPage.js';
+import setTitle from './setTitle.js';
+import setStyle from './setStyle.js';
 import changePageVisiblility from './changePageVisiblility.js';
 import changePagePointerLock from './changePagePointerLock.js';
 
 export {
-	addNewPage,
-	pageNameChange,
+	createPage,
+	setTitle,
+	setStyle,
 	changePageVisiblility,
 	changePagePointerLock,
 };

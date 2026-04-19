@@ -13,22 +13,19 @@ class Index {
         props.root.classList.add('show');
         const layerObj = KIA.dom.read.getSelectionLayerObject();
 
-        const stackKey = e.detail.stackKey;
-        props.root.dataset.stack = stackKey;
-        const stackObj = layerObj.stack[stackKey];
-        props.root.dataset.shadow = stackObj.name;
-        const value = stackObj.value.split(' ');
+        const stackId = e.detail.stackId;
+        props.root.dataset.stack = stackId;
+        const stackObj = layerObj.stack.find(s => s.id===stackId);
 
-        props.root.$id.offsetX.value = parseInt(value[0]);
-        props.root.$id.offsetY.value = parseInt(value[1]);
-        props.root.$id.blurRadius.value = parseInt(value[2]);
-        let color = value[3];
-        if (stackObj.name === 'box-shadow') {
-            props.root.$id.spreadRadius.value = parseInt(value[3]);
-            color = value[4];
-            props.root.$id.inset.value = value[5] === 'inset' ? 'true' : 'false';
-        }
-        props.root.$id.color.value = color;
+        props.root.dataset.shadow = stackObj.type;
+        const value = stackObj.value;
+
+        props.root.$id.offsetX.value = stackObj.value.offsetX;
+        props.root.$id.offsetY.value = stackObj.value.offsetY;
+        props.root.$id.blurRadius.value = stackObj.value.blur;
+        props.root.$id.spreadRadius.value = stackObj.value.spread;
+        props.root.$id.inset.value = stackObj.value.inset;
+        props.root.$id.color.value = stackObj.value.color;
     }
 }
 

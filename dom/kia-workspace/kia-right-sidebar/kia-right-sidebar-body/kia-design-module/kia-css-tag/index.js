@@ -1,5 +1,5 @@
-import setSelectionInnerText from './setSelectionInnerText.js';
+import updateDirtyLayerTextContent from './updateDirtyLayerTextContent.js';
 
 export {
-	setSelectionInnerText,
+	updateDirtyLayerTextContent,
 };

@@ -13,7 +13,7 @@ function Index(pageKey) {
 			'background-color': '#ffffffff',
 			'pointer-events': 'auto',
             visibility: 'visible',
-            order: Object.keys(KIA.state.pages.map).length+1,
+            order: Object.keys(KIA.state.pages.getProp('map')).length+1,
 		},			
         layers: [],
 		source: 'psd',

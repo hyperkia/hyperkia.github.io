@@ -5,37 +5,48 @@ import methods from '../utils/methods.js';
 class Index {
 
 	static handler(e){
-		this.clickPageItemEl = props.eTarget.closest('.page-item') || props.eRTarget.closest('.page-item');
-		this.clickLayerItemEl = props.eTarget.closest('.layer-item');
-
-		if(this.clickPageItemEl) this.pageItemClick();
-		if(props.eTAction === 'layerVisible') this.changeLayerVisiblility();
-		if(props.eTAction === 'layerLock') this.changePagePointerLock();
-
-		this.clickPageItemEl = null;
-		this.clickLayerItemEl = null;
+		if(props.eTarget.closest('.node')) this.setSelectionKey();
+		if(props.eTarget.closest('.show-children-btn')) this.renderChildrens();
+		if(props.eTarget.closest('.item-visible')) this.changeLayerVisiblility();
+		if(props.eTarget.closest('.item-lock')) this.changePagePointerLock();
 	}
 
-	static pageItemClick(){
-		const pageDataset = this.clickPageItemEl.dataset;
-		this.clickPageItemEl.classList.toggle('show');		
-		const keys = new Set().add(pageDataset.page);
-        KIA.actions.share.setSelectionKeys(keys);
-		KIA.dom.kiaLayers.renderLayers();
+	static renderChildrens(){
+		const nodeEl = props.eTarget.closest('.node');
+		nodeEl.classList.toggle('show');
+		KIA.dom.kiaLayers.updateLayersPanel();
+	}
+
+	static setSelectionKey(){
+		const nodeEl = props.eTarget.closest('.node');		
+		const id = nodeEl.dataset.item;
+		const ids = new Set().add(id);
+        KIA.actions.share.setSelectionKeys(ids, {source: props.root});
+        methods.activeSelection();
 	}
 
 	static changeLayerVisiblility(){
-		const key = this.clickLayerItemEl.dataset.layer;
-		KIA.actions.kiaLayers.changeLayerVisiblility(key);
-		const layerObj = KIA.state.layers.map[key];
-		this.clickLayerItemEl.querySelector('[data-visiblity]').dataset.visiblity = layerObj.css.visibility;
+		const nodeEl = props.eTarget.closest('.node');
+		const id = nodeEl.dataset.item;
+		const layerObj = KIA.state.layers.getProp('map')[id];
+		let visibility = layerObj.style.visibility || 'inherit';
+		visibility = visibility === 'inherit' ? 'hidden' : 'inherit';		
+		KIA.managers.style.propsInputToSelection({visibility});		
+		nodeEl.dataset.visibility = visibility;
+		const ids = new Set().add('canvas');
+        KIA.actions.share.setSelectionKeys(ids, {source: props.root});
 	}
 
 	static changePagePointerLock(){
-		const key = this.clickLayerItemEl.dataset.layer;
-		KIA.actions.kiaLayers.changeLayerPointerLock(key);
-		const layerObj = KIA.state.layers.map[key];
-		this.clickLayerItemEl.querySelector('[data-lock]').dataset.lock = layerObj.css['pointer-events'];
+		const nodeEl = props.eTarget.closest('.node');
+		const id = nodeEl.dataset.item;
+		const layerObj = KIA.state.layers.getProp('map')[id];
+		let pointerEvents = layerObj.style['pointer-events'] || 'inherit';
+		pointerEvents = pointerEvents === 'none' ? 'inherit' : 'none';
+		KIA.managers.style.propsInputToSelection({'pointer-events': pointerEvents});		
+		nodeEl.dataset.lock = pointerEvents;
+		const ids = new Set().add('canvas');
+        KIA.actions.share.setSelectionKeys(ids, {source: props.root});
 	}
 
 }

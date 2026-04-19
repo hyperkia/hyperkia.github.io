@@ -7,6 +7,8 @@ import '../../state/index.js';
 import '../../observer/index.js';
 import '../../managers/index.js';
 import '../../registry/index.js';
+
+import shortcuts from '../../shortcuts/index.js';
  
 import KIACustomElement from '../kia-custom-element/index.js';
 import html from './html.js';
@@ -35,6 +37,7 @@ class KIA_App extends KIACustomElement {
         this._defaultSetup();
         this.props.root = this;       
         this._eventsSetup(Events); 
+        this.documentEvents();
     }
 
     handleEvents(e){
@@ -68,12 +71,19 @@ class KIA_App extends KIACustomElement {
         window.addEventListener('error', (e) => {
             console.log(window.APP_STATE);            
             console.log(e);
+            alert(e);
         });
 
         window.addEventListener('load', () => {
             KIA.actions.kiaApp.appLoaded();
             document.body.classList.remove('loading');
             KIA.actions.runtime.updateRuntime({ finishedAt: Date.now() });
+        });
+    }
+
+    documentEvents(){
+        document.addEventListener('keyup', (e) => {
+            shortcuts(e);
         });
     }
 

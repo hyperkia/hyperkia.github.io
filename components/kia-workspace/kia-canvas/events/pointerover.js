@@ -11,7 +11,7 @@ class Index {
 	}
 
 	static layerPointerOver(){
-		if(KIA.state.ui.activeTool === 'triangle') {			
+		if(KIA.state.ui.getProp('activeTool') === 'triangle') {			
 			props.root._qs('.hover-layer')?.classList.remove('hover-layer');
 			props.activeLayer.classList.add('hover-layer');		
 			KIA.dom.kiaCanvas.createSelectionLayersOutline();

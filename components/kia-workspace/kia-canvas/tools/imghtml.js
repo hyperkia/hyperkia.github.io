@@ -4,96 +4,104 @@ import methods from '../utils/methods.js';
 class Index {
 
     panning = false;
+    parentEl = null;
+    parentKey = null;
+    imageEl = null;
 
     static handlePointerDown(e) {
         props.root.setPointerCapture(e.pointerId);
+        this.panning = false;
 
-        if (!props.activePage) return;
+        this.parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
+        if (!this.parentEl) return;
+        if(!KIA.registry.tags.canHaveChildren(this.parentEl.nodeName)) {
+            this.parentEl = this.parentEl.parentElement;
+        }
+        this.parentKey = this.parentEl.dataset.layer || this.parentEl.dataset.page;
+ 
+        this.imageEl = document.createElement('img');       
 
-        props.newLayer = document.createElement('img');       
+        this.imageEl.classList.add('canvas-layer');
+        this.imageEl.setAttribute('data-layer', crypto.randomUUID());
+        this.imageEl.setAttribute('draggable', false);
+        this.imageEl.setAttribute('src', '');
+        this.parentEl.append(this.imageEl);
 
-        props.newLayer.classList.add('canvas-layer', 'imghtml');
-        props.newLayer.setAttribute('data-layer', crypto.randomUUID());
-        props.newLayer.setAttribute('draggable', false);
-        props.newLayer.setAttribute('src', '');        
-        props.activePage.append(props.newLayer);
+        this.cpsdXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
+    } 
 
-        this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
-    }
+    static handlePointerMove(e) {        
 
-    static handlePointerMove(e) {
+        if (!props.root.hasPointerCapture(e.pointerId)) return false;        
+        if ((!this.imageEl)) return false;
 
-        if (!props.root.hasPointerCapture(e.pointerId)) return false;
-        if ((!props.newLayer)) return false;
-
-        this.cpsmXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.cpsmXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
         
-        const left = parseInt(Math.min(this.cpsdXY.x, this.cpsmXY.x));
-        const top = parseInt(Math.min(this.cpsdXY.y, this.cpsmXY.y));
-        const width = parseInt(Math.abs(this.cpsmXY.x - this.cpsdXY.x));
-        const height = parseInt(Math.abs(this.cpsmXY.y - this.cpsdXY.y));
+        const left = parseInt(Math.min(this.cpsdXY.x, this.cpsmXY.x))+'px';
+        const top = parseInt(Math.min(this.cpsdXY.y, this.cpsmXY.y))+'px';
+        const width = parseInt(Math.abs(this.cpsmXY.x - this.cpsdXY.x))+'px';
+        const height = parseInt(Math.abs(this.cpsmXY.y - this.cpsdXY.y))+'px';
         
-        Object.assign(props.newLayer.style, {
-            left: left+'px',
-            top: top+'px',
-            width: width+'px',
-            height: height+'px',
-        })
+        Object.assign(this.imageEl.style, {left,top,width,height,});
 
-        KIA.actions.kiaCanvas.createLayer({ 
-            key: props.newLayer.dataset.layer,
-            pId: props.activePage.dataset.page,
-            nodeName: props.newLayer.nodeName.toLowerCase(),
-            attrs: {},
-            type: 'imghtml',
-            css: {
-                width, height, left, top
+        const id = this.imageEl.dataset.layer;
+
+        KIA.actions.kiaCanvas.creatingElement({ 
+            id,
+            parent: this.parentKey,
+            nodeName: this.imageEl.nodeName,
+            attributes: {
+                src: '',
             },
-            save: false,
-            stack: {},
-            assets: {},
+            style: {
+                width, height, left, top,
+                'background-color': '#687787',                
+            },
+            children: [],
+            instanceof: 'html',
+            stack: [],
         });
         
-        if(!this.panning) {  
-            const keys = new Set().add(props.newLayer.dataset.layer);
-            KIA.actions.share.setSelectionKeys(keys);
+        if(!this.panning) {            
+            const ids = new Set().add(id);
+            KIA.actions.share.setSelectionKeys(ids);
             this.panning = true;
         }
     }
  
     static handlePointerUp(e) {
-
         props.root.releasePointerCapture(e.pointerId);
-        this.panning = false;              
+        this.panning = false;     
 
-        if (props.isActualMove && props.activePage) {
+        if (props.isActualMove && this.parentEl) {
+            const id = this.imageEl.dataset.layer;
+            const secElCss = KIA.utils.css.getElementCssProperty(this.imageEl, ['left','top','width','height']);
             const newLayerObj = {
-                key: props.newLayer.dataset.layer,
-                pId: props.activePage.dataset.page,
-                nodeName: props.newLayer.nodeName.toLowerCase(),
-                attrs: {},
-                type: 'imghtml',
-                css: {
-                    visibility: 'visible',
-                    top: props.newLayer.style.top,
-                    left: props.newLayer.style.left,
-                    width: props.newLayer.style.width,
-                    height: props.newLayer.style.height,
-                    translate: 'none',
-                    'pointer-events': 'auto',
+                id,
+                parent: this.parentKey,
+                nodeName: this.imageEl.nodeName,
+                attributes: {
+                    src: '',
+                    loading: "lazy"
                 },
-                save: true,
-                stack: {},
-            assets: {},
+                style: {                    
+                    ...secElCss,
+                    translate: 'none',                    
+                    'background-color': '#687787',
+                }, 
+                children: [],
+                instanceof: 'html',
+                stack: [],
             };
-            
-            KIA.actions.kiaCanvas.createLayer(newLayerObj);
-            const keys = new Set().add(newLayerObj.key);
+
+            KIA.canvasRefMap[id] = this.imageEl;
+            KIA.actions.kiaCanvas.createElement(newLayerObj);
+            const keys = new Set().add(id);
             KIA.actions.share.setSelectionKeys(keys);
         } else {
-            props.newLayer?.remove();
-            props.newLayer = null;
-        }
+            this.imageEl?.remove();
+            this.imageEl = null;
+        }        
     }
 }
 

@@ -5,20 +5,21 @@ import methods from '../utils/methods.js';
 class Index {
 
 	static handler(e){
-		const layerKey = KIA.dom.read.getSelectionKey();
+		const layerId = KIA.state.ui.getSelectionId();
 		const inputEl = e.target;
-		const name = inputEl.dataset.prop.replace('filter-','');
-		const stackKey = inputEl.dataset.stack;
-        const layerNewObj = {
-        	key: layerKey,
-        	stack: {
-        		[stackKey]: {
-        			key: stackKey,
-	        		value: inputEl.value+inputEl.dataset.unit,
-        		}	        	
-        	}
+		const type = inputEl.dataset.prop.replace('filter-','');
+		const stackId = inputEl.dataset.stack;
+		const layerNewObj = {
+        	id: layerId,
+        	updateStack: {
+				id: stackId,
+	        	value: {
+	        		amount: inputEl.value,
+	        	}
+			}
 		};
-        KIA.actions.share.setLayerSelectionStack(layerNewObj); 
+
+        KIA.actions.kiaLayers.updateStack(layerNewObj);
 	}
 
 }

@@ -13,11 +13,11 @@ function Index(){
 
 	let html = '';
 	let i = 0;
-	for(let k in assets) {
+	for(let id in assets) {
 		if(i>100) break;
-		const a = assets[k];
+		const a = assets[id];
 		html += `
-			<div class="medialibrary-item" title="${a.name}" data-asset="${k}">
+			<div class="medialibrary-item" title="${a.name}" data-asset="${id}">
 				<img src="${a.url}" alt="${a.name}">
 			</div>
 		`;

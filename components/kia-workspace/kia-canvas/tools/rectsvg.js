@@ -1,121 +1,162 @@
-
 import props from '../utils/props.js';
 import methods from '../utils/methods.js';
 
 class Index {
 
     panning = false;
+    parentEl = null;
+    parentKey = null;
+    svgLayer = null;
+    rectLayer = null;
 
-	static handlePointerDown(e) {
-		props.root.setPointerCapture(e.pointerId);
-		if (!props.activePage) return;
+    static handlePointerDown(e) {
+        props.root.setPointerCapture(e.pointerId);
 
-		props.newLayer = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        props.newLayer.setAttribute('fill', '#d9d9d9');
-        props.newLayer.setAttribute('data-svgshape', crypto.randomUUID());        
-		props.root.$id[`pageSvg${props.activePageKey}`].appendChild(props.newLayer);
-        this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
-	}
+        this.parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
+        if (!this.parentEl) return;
+        if(!KIA.registry.tags.canHaveChildren(this.parentEl.nodeName)) {
+            this.parentEl = this.parentEl.parentElement;
+        }
+        this.parentKey = this.parentEl.dataset.layer || this.parentEl.dataset.page;
+ 
+        this.svgLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        this.svgLayer.classList.add('canvas-layer');
+        this.svgLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.svgLayer.setAttribute('draggable', false);
+        this.parentEl.append(this.svgLayer);
 
-	static handlePointerMove(e) {
-        if (!props.root.hasPointerCapture(e.pointerId)) return false;
-        if ((!props.newLayer)) return false;
+        this.rectLayer = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        this.rectLayer.setAttribute('fill', '#d9d9d9');
+        this.rectLayer.classList.add('canvas-layer');
+        this.rectLayer.setAttribute('data-layer', crypto.randomUUID());
+        this.rectLayer.setAttribute('draggable', false);
+        this.svgLayer.append(this.rectLayer);
 
-        this.cpsmXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.cpsdXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
+    } 
 
-        const left = Math.min(this.cpsdXY.x, this.cpsmXY.x);
-        const top = Math.min(this.cpsdXY.y, this.cpsmXY.y);
-        const width = Math.abs(this.cpsmXY.x - this.cpsdXY.x);
-        const height = Math.abs(this.cpsmXY.y - this.cpsdXY.y);
+    static handlePointerMove(e) {
 
-        props.newLayer.setAttribute('x', left);
-        props.newLayer.setAttribute('y', top);
-        props.newLayer.setAttribute('width', width);
-        props.newLayer.setAttribute('height', height);
+        if (!props.root.hasPointerCapture(e.pointerId)) return false;        
+        if ((!this.svgLayer)) return false;
 
-        const key = props.newLayer.dataset.svgshape;
+        this.cpsmXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
+        
+        const left = parseInt(Math.min(this.cpsdXY.x, this.cpsmXY.x));
+        const top = parseInt(Math.min(this.cpsdXY.y, this.cpsmXY.y));
+        const width = parseInt(Math.abs(this.cpsmXY.x - this.cpsdXY.x));
+        const height = parseInt(Math.abs(this.cpsmXY.y - this.cpsdXY.y));
+        const viewBox = `0 0 ${width} ${height}`;
+        
+        const svgStyle = {
+            left: left+'px',
+            top: top+'px',
+            width: width+'px',
+            height: height+'px',            
+        };        
+        Object.assign(this.svgLayer.style, svgStyle);
+        this.svgLayer.setAttribute('viewBox', viewBox);
 
-        KIA.actions.kiaCanvas.createLayer({ 
-            key,
-            pId: props.activePage.dataset.page,
-            nodeName: props.newLayer.nodeName.toLowerCase(),
-            attrs: {},
-            type: 'rectsvg',
-            css: {
-                width, height, left, top
+        this.rectLayer.setAttribute('x', 0);
+        this.rectLayer.setAttribute('y', 0);
+        this.rectLayer.setAttribute('width', width);
+        this.rectLayer.setAttribute('height', height);
+
+        const svgid = this.svgLayer.dataset.layer;
+        const rectId = this.rectLayer.dataset.layer;
+
+        KIA.actions.kiaCanvas.creatingElements([
+            { 
+                id: svgid,
+                parent: this.parentKey,
+                nodeName: this.svgLayer.nodeName,
+                attributes: {
+                    viewBox,
+                },
+                style: svgStyle,
+                children: [rectId],
+                instanceof: 'svg',
+                stack: [],
             },
-            sattrs: {},
-            scss: {},
-            save: false,
-            stack: {},
-            assets: {},
-        });
-
+            { 
+                id: rectId,
+                parent: svgid,
+                nodeName: this.rectLayer.nodeName,
+                attributes: {
+                    fill: '#d9d9d9',
+                    x: 0,
+                    y: 0,
+                    width,
+                    height,
+                },
+                style: {},
+                children: [],
+                instanceof: 'svg',
+                stack: [],
+            }
+        ]);
         
         if(!this.panning) {            
-            const keys = new Set().add(key);
-            KIA.actions.share.setSelectionKeys(keys);
+            const ids = new Set().add(rectId);
+            KIA.actions.share.setSelectionKeys(ids);
             this.panning = true;
         }
     }
-
+ 
     static handlePointerUp(e) {
         props.root.releasePointerCapture(e.pointerId);
-        this.panning = false;
+        this.panning = false;     
 
         if (props.isActualMove && props.activePage) {
-            const shapeRect = KIA.utils.dom.getRect(props.newLayer);
-            const viewBox = `${shapeRect.left} ${shapeRect.top} ${shapeRect.width} ${shapeRect.height}`;
-            const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svgEl.classList.add('canvas-layer');
-            svgEl.setAttribute('viewBox', viewBox);
-            svgEl.setAttribute('data-layer', props.newLayer.dataset.svgshape);
-            svgEl.style.cssText = `top:${shapeRect.top}px;left:${shapeRect.left}px;width:${shapeRect.width}px;height:${shapeRect.height}px;`;
-            props.activePage.appendChild(svgEl);
-            svgEl.appendChild(props.newLayer);
+            const svgid = this.svgLayer.dataset.layer;
+            const rectId = this.rectLayer.dataset.layer;
+            const svgElCss = KIA.utils.css.getElementCssProperty(this.svgLayer, ['left','top','width','height']);
 
-            // Layer Data
-            const newLayerObj = {
-                key: svgEl.dataset.layer,
-                pId: props.activePageKey,
-                nodeName: props.newLayer.nodeName.toLowerCase(),
-                attrs: {
-                    viewBox
+            const newLayerObjs = [
+                {
+                    id: svgid,
+                    parent: this.parentKey,
+                    nodeName: this.svgLayer.nodeName,
+                    attributes: {
+                        viewBox: `0 0 ${(svgElCss.width).replace('px','')} ${(svgElCss.height).replace('px','')}`,
+                    },
+                    style: {                        
+                        ...svgElCss,
+                        translate: 'none',                       
+                    }, 
+                    children: [rectId],
+                    instanceof: 'svg',
+                    stack: [],
                 },
-                type: 'rectsvg',
-                css: {
-                    visibility: 'visible',
-                    translate: 'none',
-                    top: shapeRect.top+'px',
-                    left: shapeRect.left+'px',
-                    width: shapeRect.width+'px',
-                    height: shapeRect.height+'px',
-                    'pointer-events': 'auto',
-                }, 
-                sattrs: {
-                    x: shapeRect.left,
-                    y: shapeRect.top,
-                    width: shapeRect.width,
-                    height: shapeRect.height,
-                    fill: '#d9d9d9',
-                }, 
-                scss: {
-                    
-                },
-                save: true,
-                stack: {},
-            assets: {},
-            };
+                {
+                    id: rectId,
+                    parent: svgid,
+                    nodeName: this.rectLayer.nodeName,
+                    attributes: {
+                        fill: '#d9d9d9',
+                        x: 0,
+                        y: 0,
+                        width: (svgElCss.width).replace('px',''),
+                        height: (svgElCss.height).replace('px',''),
+                        translate: 'none',
+                    },
+                    style: {}, 
+                    children: [],
+                    instanceof: 'svg',
+                    stack: [],
+                },                
+            ];   
 
-            KIA.actions.kiaCanvas.createLayer(newLayerObj);
-            const keys = new Set().add(newLayerObj.key);
-            KIA.actions.share.setSelectionKeys(keys);
-            
+            KIA.canvasRefMap[svgid] = this.svgLayer;
+            KIA.canvasRefMap[rectId] = this.rectLayer;
+            KIA.actions.kiaCanvas.createElements(newLayerObjs);
+            const ids = new Set().add(rectId);
+            KIA.actions.share.setSelectionKeys(ids);
         } else {
-            props.newLayer?.remove();
-            props.newLayer = null;
-        }
+            this.svgLayer?.remove();
+            this.svgLayer = null;
+        }        
     }
-} 
+}
 
 export default Index;

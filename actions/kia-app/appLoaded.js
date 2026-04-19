@@ -1,19 +1,20 @@
 
 function createDefaultPage() {
 	const pageObject = {
-	    key: crypto.randomUUID(),
-	    name: 'Page 1',
-	    css: {
+	    id: crypto.randomUUID(),
+	    title: 'Page 1',
+	    style: {
 	        'background-color': '#ffffffff',
 	        width: '1920px',
 	        height: '6000px',
 	        'pointer-events': 'auto',
-	        visibility: 'visible',	            
+	        visibility: 'visible',
 	    },
-	    layers: [],       
+	    children: [],
+	    instanceof: 'document',
 	}
 
-	KIA.actions.kiaPages.addNewPage(pageObject);
+	KIA.actions.kiaPages.createPage(pageObject);
 }
 
 function Index() {
@@ -27,7 +28,7 @@ function Index() {
 		KIA.state.assets.loadData(KIA.managers.assets(response.assets));
 		KIA.state.canvas.loadData(response.canvas);
 		KIA.state.pages.loadPages(response.pages);
-		KIA.state.layers.renderLayers(response.layers);
+		KIA.state.layers.loadLayers(response.layers);
 		if(Object.keys(response.pages).length === 0) createDefaultPage();
 	});
 } 

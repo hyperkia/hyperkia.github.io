@@ -1,10 +1,11 @@
-function Index(keys) {
+function Index(ids, detail={}) {
 
-	KIA.state.ui.setSelectionKeys(keys);
+	KIA.state.ui.setSelectionKeys(ids);
 
 	KIA.kiaApp.dispatchEvent(new CustomEvent('selectionChange', {
 	  bubbles: true,
 	  composed: true,
+	  detail,
 	}));
 
 }

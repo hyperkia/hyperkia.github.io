@@ -53,21 +53,21 @@ const Index = {
 		<span class="input-wrapper">
 			<input type="radio" name="align-items" value="flex-start" title="Vertical top" data-prop="align-items" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
-				<use href="assets/images/svg-icons.svg#align_justify_flex_start-symbol"></use>
+				<use href="assets/images/svg-icons.svg#align_vertical_top-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
 			<input type="radio" name="align-items" value="center" title="Vertical center" data-prop="align-items" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
-				<use href="assets/images/svg-icons.svg#align_justify_center-symbol"></use>
+				<use href="assets/images/svg-icons.svg#align_vertical_center-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
 			<input type="radio" name="align-items" value="flex-end" title="Vertical bottom" data-prop="align-items" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
-				<use href="assets/images/svg-icons.svg#align_justify_flex_end-symbol"></use>
+				<use href="assets/images/svg-icons.svg#align_vertical_bottom-symbol"></use>
 			</svg>
 		</span>
 	`,
@@ -92,6 +92,25 @@ const Index = {
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align-vertical-symbol"></use>
 			</svg>
+		</span>
+	`,
+
+	'text-transform': `
+		<span class="input-wrapper">
+			<input type="radio" name="text-transform" value="uppercase" title="Uppercase" data-prop="text-transform" />
+			<span>AB</span>
+		</span>
+		<span class="input-wrapper">
+			<input type="radio" name="text-transform" value="lowercase" title="Lowercase" data-prop="text-transform" />
+			<span>ab</span>
+		</span>
+		<span class="input-wrapper">
+			<input type="radio" name="text-transform" value="capitalize" title="Capitalize" data-prop="text-transform" />
+			<span>Ab</span>
+		</span>
+		<span class="input-wrapper">
+			<input type="radio" name="text-transform" value="none" title="Original" data-prop="text-transform" />
+			<span>Aa</span>
 		</span>
 	`,
 };

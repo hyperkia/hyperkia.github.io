@@ -6,79 +6,66 @@ const Index = {
 	},
 
 	renderLayers() {
-		KIA.dom.kiaCanvas.renderPagesLayers();
-		KIA.dom.kiaLayers.renderLayersPage();
+		KIA.dom.kiaCanvas.renderLayers();		
 	},
 
 	importLayers(){
 		KIA.dom.kiaCanvas.renderPagesLayers();
 	},
 
-	movingLayer() {},
+	setLayerDirtyFlagToPropField() {
+		KIA.dom.share.setLayerDirtyFlagToPropField();
+	},
 
 	setCssPropToLayer(){
 		KIA.dom.share.setCssPropToLayer();
 	},
 
-	setSelectionInnerText(){
-		KIA.dom.kiaCanvas.setSelectionInnerText();
-		KIA.dom.kiaCssTag.setSelectionInnerText();
+	setTextContent(){
+		KIA.dom.kiaCanvas.updateDirtyLayerTextContent();
+		KIA.dom.kiaCssTag.updateDirtyLayerTextContent();
 	},
 
-	setSelectionSrc(){
-		KIA.dom.kiaCanvas.setSelectionSrc();
+	setNodeName(){
+		KIA.dom.kiaCanvas.updateDirtyLayerNodeName();
 	},
 
-	setSelectionNodeName(){
-		KIA.dom.kiaCanvas.setSelectionNodeName();
-	},
-
-	deleteSelectedLayer(){
-		KIA.dom.kiaCanvas.deleteSelectedLayer();
-	},
-
-	changeLayerVisiblility(){
-		KIA.dom.kiaCanvas.updateLayerVisiblility();		
-	},
-
-	changelayerPointerLock(){
-		KIA.dom.kiaCanvas.updateLayerPointerLock();
+	deleteLayers(){
+		KIA.dom.kiaLayers.updateNodeChildrenLength();
+		KIA.dom.kiaCanvas.deleteDirtyLayer();
+		KIA.dom.kiaLayers.updateLayersPanel();
 	},
 
 	setSelectionZIndex(){
 		KIA.dom.kiaCanvas.updateSelectionZIndex();
 	},
 
-	createdLayer(){		
-		KIA.dom.kiaLayers.renderLayers();
+	addLayerToParent(){
+		KIA.dom.kiaLayers.updateNodeChildrenLength();
+		KIA.dom.kiaLayers.updateLayersPanel();
 	},
 
+	setAttributes(){
+		KIA.dom.kiaCanvas.updateDirtyLayerAttributes();
+	}, 
 
-
-	setSelectionStringProperties(){
-		KIA.dom.kiaCanvas.updateLayerSelectionStringProperties();	
-	},
-
-	setSelectionAttributes(){
-		KIA.dom.kiaCanvas.updateLayerSelectionAttributes();
-	},
-
-	setSelectionCss(){
-		KIA.dom.kiaCanvas.updateLayerSelectionCss();
+	setStyle(){
+		KIA.dom.kiaCanvas.updateDirtyLayerStyle();
 	},
 
 	setSelectionSCss(){
 		KIA.dom.kiaCanvas.updateLayerSelectionSCss();
 	},
 
-	setSelectionAssets(){
-		KIA.dom.kiaCanvas.updateLayerSelectionAssets();
+	renderPsdLayers(){
+		KIA.dom.kiaCanvas.renderPsdLayers();
 	},
 
-	updatePsdLayers(){
-		KIA.dom.kiaCanvas.updatePsdLayers();
-	}
-
+	moveLayerInTree(){
+		KIA.dom.kiaLayers.moveLayerInTree();
+		KIA.dom.kiaCanvas.moveLayerInTree();
+		KIA.dom.kiaLayers.updateNodeChildrenLength();
+	},
 } 
 
 export default Index;

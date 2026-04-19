@@ -33,6 +33,8 @@ class KIACustomElement extends HTMLElement{
 		for(const event in Events) {			
 			if(['pointerover','pointerout','transitionstart','transitionend','change','input','click'].includes(event)) {
 				this.shadowRoot.addEventListener(event, this.handleEvents);
+			} else if (['toggle',].includes(event)) {
+				this.shadowRoot.addEventListener(event, this.handleEvents, true);
 			} else {
 				this.addEventListener(event, this.handleEvents);
 			}

@@ -218,9 +218,9 @@ const Index = {
     },
 
     normalizeCanvas(data){
-        const pagesOrder = data.canvas.pagesOrder;
-        pagesOrder.forEach((oldKey, i)=>{
-            pagesOrder[i] = data.pagesKeyMap[oldKey];
+        const canvasChildren = data.canvas.children;
+        canvasChildren.forEach((oldKey, i)=>{
+            canvasChildren[i] = data.pagesKeyMap[oldKey];
         })
     },
 }

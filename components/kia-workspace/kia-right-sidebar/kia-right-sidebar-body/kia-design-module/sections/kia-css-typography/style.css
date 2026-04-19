@@ -31,6 +31,6 @@
 
 
 /* Selection Capability */
-:host([data-selection-type="texthtml"]){display: block;}
+:host([data-selection-type="text"]){display: block;}
 :host([data-selection-type="page"]){display: block;}
 :host([data-selection-type="canvas"]){display: block;}

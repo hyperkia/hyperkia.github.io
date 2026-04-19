@@ -15,7 +15,7 @@ class Index {
         props.activeLayerCSS = props.activeLayer ? window.getComputedStyle(props.activeLayer) : null;
         props.activeLayerKey = props.activeLayer?.dataset.layer;
         
-        if(KIA.state.ui.activeTool === 'triangle') {
+        if(KIA.state.ui.getProp('activeTool') === 'triangle') {
 	        let keys = new Set();
 	        const currentTarget = props.root.shadowRoot.elementFromPoint(e.clientX, e.clientY) || props.root;
 	        if(currentTarget.closest('[data-layer]')) {
@@ -25,13 +25,14 @@ class Index {
 	        } else if(currentTarget.closest('kia-canvas')) {
 	        	keys.add('canvas');
 	        } else if (currentTarget.matches('.canvas-selection')) {
-	        	keys = KIA.state.ui.selectionKeys;
+	        	keys = KIA.state.ui.getSelectionId();
 	        }
 
 	        KIA.actions.share.setSelectionKeys(keys); 
 	    }
 
-	    let tool = KIA.state.ui.activeTool;	    
+
+	    let tool = KIA.state.ui.getProp('activeTool');	    
         props.root.tools[tool].handlePointerDown(e);
 	}
 	

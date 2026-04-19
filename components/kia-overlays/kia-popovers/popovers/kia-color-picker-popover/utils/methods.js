@@ -5,7 +5,8 @@ const Methods = {
 
     // API
     uiStateColorPickerValueToUI() {
-        const hexa = KIA.state.ui.colorPicker.value;        
+        const hexa = KIA.state.ui.getProp('colorPicker').value;
+        if(!hexa) return;
         props.rgba = KIA.utils.color.hexaToRgbaObj(hexa);
         this.updateSVBoxBaseColor();
         this.updateSVBoxPointer();

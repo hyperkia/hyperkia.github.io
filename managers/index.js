@@ -1,8 +1,8 @@
-import css from './css/index.js';
+import style from './style/index.js';
 import assets from './assets/index.js';
 
 
 KIA.managers = {
-	css,
+	style,
 	assets,
 };

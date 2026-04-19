@@ -11,72 +11,66 @@ class Index {
 	}
 
 	static addFilter(){
-		const layerKey = KIA.dom.read.getSelectionKey();
-		const name = props.root.$id.filterOptions.value;
+		const layerId = KIA.state.ui.getSelectionId();
+		const type = props.root.$id.filterOptions.value;
 		const rowEl = props.root.$id.filterItemsRow;
-		const attrsString = (rowEl.dataset.activeFilters || '') + `--${name}`;
+		const attrsString = (rowEl.dataset.activeFilters || '') + `--${type}`;
 		rowEl.dataset.activeFilters = attrsString;
-		const inputEl = props.root._qs(`[data-prop="filter-${name}"]`);
+		const inputEl = props.root._qs(`[data-prop="filter-${type}"]`);		
 		rowEl.querySelector(`[data-filter-visible]`).dataset.filterVisible = true;
-		const stackKey = crypto.randomUUID();
-		const layerNewObj = {
-			key: layerKey,
-			stack: {				
-				[stackKey]: {
-					key: stackKey,
-					name,
-					type: 'filter',
-					status: true,
-					value: inputEl.dataset.default,
-					trash: false,
+		const stackId = crypto.randomUUID();
+		const newLayerObj = {
+			id: layerId,
+			newStack: {
+				id: stackId,
+				type,
+				enable: true,
+				value: {
+					amount: inputEl.dataset.default,
+					unit: inputEl.dataset.unit,
 				}
 			}
 		};
-		
-		KIA.actions.share.setLayerSelectionStack(layerNewObj);
-		inputEl.dataset.stack = stackKey;
+
+		KIA.actions.kiaLayers.addStack(newLayerObj);
+		inputEl.dataset.stack = stackId;
 		inputEl.value = inputEl.dataset.default;
 		inputEl.focus();
+		methods.setNonActiveFilterAsDefault();
 	}
 
 	static removeFilter(){
-		const layerKey = KIA.dom.read.getSelectionKey();
-		const name = props.eTarget.closest('[data-filter]').dataset.filter;
-		const inputEl = props.root._qs(`[data-prop="filter-${name}"]`);
+		const layerId = KIA.state.ui.getSelectionId();
+		const type = props.eTarget.closest('[data-filter]').dataset.filter;
+		const inputEl = props.root._qs(`[data-prop="filter-${type}"]`);
 		const rowEl = KIA.kiaCssFilter.$id.filterItemsRow;
-		rowEl.dataset.activeFilters = rowEl.dataset.activeFilters.replace(`--${name}`,'');
-		const stackKey = inputEl.dataset.stack;
-		const layerNewObj = {
-			key: layerKey,
-			stack: {
-				[stackKey]: {
-					key: stackKey,
-	        		trash: true,
-				}
-	        	
-			}
+		rowEl.dataset.activeFilters = rowEl.dataset.activeFilters.replace(`--${type}`,'');
+		const stackId = inputEl.dataset.stack;
+
+		const newLayerObj = {
+			id: layerId,
+			stackId,
 		};
-        KIA.actions.share.setLayerSelectionStack(layerNewObj); 
+
+        KIA.actions.kiaLayers.removeStack(newLayerObj);
+        methods.setNonActiveFilterAsDefault();
 	}
  
 	static filterVisible(){
-		const layerKey = KIA.dom.read.getSelectionKey();
-		const name = props.eTarget.closest('[data-filter]').dataset.filter;
-		const inputEl = props.root._qs(`[data-prop="filter-${name}"]`);
-		const status = props.eTarget.dataset.filterVisible === 'true' ? false : true;;
-		const stackKey = inputEl.dataset.stack;
-		const layerNewObj = {
-        	key: layerKey,
-        	stack: {
-				[stackKey]: {
-					key: stackKey,
-	        		status,
-				}
-	        	
+		const layerId = KIA.state.ui.getSelectionId();
+		const type = props.eTarget.closest('[data-filter]').dataset.filter;
+		const inputEl = props.root._qs(`[data-prop="filter-${type}"]`);
+		const enable = props.eTarget.dataset.filterVisible === 'true' ? false : true;;
+		const stackId = inputEl.dataset.stack;
+		const newLayerObj = {
+        	id: layerId,
+        	updateStack: {
+				id: stackId,
+	        	enable,	        	
 			}
 		};
-		props.eTarget.dataset.filterVisible = status;
-        KIA.actions.share.setLayerSelectionStack(layerNewObj);
+		props.eTarget.dataset.filterVisible = enable;
+        KIA.actions.kiaLayers.updateStack(newLayerObj);
 	}
 
 }

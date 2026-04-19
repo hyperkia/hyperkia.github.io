@@ -13,12 +13,11 @@
 
 /* Selection Capability */
 .padding-design-module, .padding-proportional-col{display: none;}
-:host([data-selection-type="sectionhtml"]){display: block;}
-:host([data-selection-type="imghtml"]){display: block;}
-:host([data-selection-type="texthtml"]){display: block;}
+:host([data-selection-type="container"]){display: block;}
+:host([data-selection-type="media"]){display: block;}
+:host([data-selection-type="text"]){display: block;}
 :host([data-selection-type="page"]){display: block;}
 :host([data-selection-type="page"]) :where(.dimension-proportional-button-colm){--display: none;}
-:host([data-selection-type$="svg"]){display: block;}
 /*
 :host([data-selection-type="documenthtml"]){display: block;}
 :host([data-selection-type="audiohtml"]){display: block;}*/

@@ -5,8 +5,8 @@ import methods from '../utils/methods.js';
 class Index {
 	static handlePointerDown(e) {
 		props.root.setPointerCapture(e.pointerId);
-		this.startX = e.clientX - KIA.state.ui.pagesX;
-		this.startY = e.clientY - KIA.state.ui.pagesY;
+		this.startX = e.clientX - KIA.state.ui.getProp('pagesX');
+		this.startY = e.clientY - KIA.state.ui.getProp('pagesY');
 		this.panning = true;
 		KIA.dom.kiaCanvas.setCanvasCurrentAction({action: 'downHandTool'});
 	}

@@ -5,36 +5,32 @@ const Index = {
 	},
 
 	renderPageList() {
-		KIA.dom.kiaPages.renderPageList();
-		KIA.dom.kiaCanvas.renderPageList();
-		KIA.dom.kiaCanvas.renderPageNameList();
+		KIA.dom.kiaPages.createPage();
+		KIA.dom.kiaLayers.createPage();
+		KIA.dom.kiaCanvas.createPage();
+		KIA.dom.kiaCanvas.createPageName();
 		KIA.dom.kiaCanvas.setPageNamePosition();
 	},
 
-	pageNameChange() {
-		KIA.dom.kiaCanvas.pageNameChange();
+	setTitle() {
+		KIA.dom.kiaCanvas.setSelectionPageTitle();
+		KIA.dom.kiaLayers.setSelectionPageTitle();
 	},
 
-	deleteSelectedPage(){
+	deleteLayers(){
 		KIA.dom.kiaCanvas.deleteSelectedPage();
 		KIA.dom.kiaPages.deleteSelectedPage();
+		KIA.dom.kiaLayers.updateNodeChildrenLength();
 		KIA.dom.kiaCanvas.setPageNamePosition();
 	},
 
-	changePageVisiblility(){
-		KIA.dom.kiaCanvas.changePageVisiblility();
-		// KIA.dom.kiaPages.changePageVisiblility();
-		// KIA.dom.kiaLayers.changePageVisiblility();
+	setStyle(){
+		KIA.dom.kiaCanvas.updatePageSelectionStyle();
 	},
 
-	changePagePointerLock(){
-		KIA.dom.kiaCanvas.updatePagePointerLock();
-		// KIA.dom.kiaPages.changePageVisiblility();
-		// KIA.dom.kiaLayers.changePageVisiblility();
-	},
-
-	setSelectionCss(){
-		KIA.dom.kiaCanvas.updatePageSelectionCss();
+	addLayerToParent(){
+		KIA.dom.kiaLayers.updateNodeChildrenLength();
+		KIA.dom.kiaLayers.updateLayersPanel();
 	}
 } 
 

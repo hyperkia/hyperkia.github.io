@@ -4,60 +4,72 @@ import methods from '../utils/methods.js';
 class Index {
 
     panning = false;
+    parentEl = null;
+    parentKey = null;
+    textEl = null;
 
     static handlePointerDown(e) {
+
+        props.root._qs('[contenteditable="true"]')?.removeAttribute('contenteditable');
+
+        if(KIA.registry.tags.isText(props.eTarget.nodeName)) {
+            props.eTarget.setAttribute('contenteditable', true);
+            const ids = new Set().add(props.eTarget.dataset.layer);
+            KIA.actions.share.setSelectionKeys(ids);
+            return;
+        }
+
         props.root.setPointerCapture(e.pointerId);
         this.panning = false;
 
-        if (!props.activePage) return;
+        this.parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
+        if (!this.parentEl) return;
+        if(!KIA.registry.tags.canHaveChildren(this.parentEl.nodeName)) {
+            this.parentEl = this.parentEl.parentElement;
+        }
+        this.parentKey = this.parentEl.dataset.layer || this.parentEl.dataset.page;
 
-        props.newLayer = document.createElement('p');       
+        this.textEl = document.createElement('p');       
 
-        props.newLayer.classList.add('canvas-layer', 'texthtml');        
-        props.newLayer.setAttribute('data-layer', crypto.randomUUID());
-        props.newLayer.setAttribute('draggable', false);
-        props.activePage.append(props.newLayer);
+        this.textEl.classList.add('canvas-layer', 'texthtml');        
+        this.textEl.setAttribute('data-layer', crypto.randomUUID());
+        this.textEl.setAttribute('draggable', false);
+        this.parentEl.append(this.textEl);
 
-        this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.cpsdXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
     }
 
     static handlePointerMove(e) {
 
         if (!props.root.hasPointerCapture(e.pointerId)) return false;
-        if ((!props.newLayer)) return false;
+        if ((!this.textEl)) return false;
 
-        this.cpsmXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.cpsmXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
         
-        const left = parseInt(Math.min(this.cpsdXY.x, this.cpsmXY.x));
-        const top = parseInt(Math.min(this.cpsdXY.y, this.cpsmXY.y));
-        const width = parseInt(Math.abs(this.cpsmXY.x - this.cpsdXY.x));
-        const height = parseInt(Math.abs(this.cpsmXY.y - this.cpsdXY.y));
+        const left = parseInt(Math.min(this.cpsdXY.x, this.cpsmXY.x))+'px';
+        const top = parseInt(Math.min(this.cpsdXY.y, this.cpsmXY.y))+'px';
+        const width = parseInt(Math.abs(this.cpsmXY.x - this.cpsdXY.x))+'px';
+        const height = parseInt(Math.abs(this.cpsmXY.y - this.cpsdXY.y))+'px';
         
-        Object.assign(props.newLayer.style, {
-            left: left+'px',
-            top: top+'px',
-            width: width+'px',
-            height: height+'px',
-        })
+        Object.assign(this.textEl.style, { left,top,width,height })
 
-
-        KIA.actions.kiaCanvas.createLayer({ 
-            key: props.newLayer.dataset.layer,
-            pId: props.activePage.dataset.page,
-            nodeName: props.newLayer.nodeName.toLowerCase(),
-            attrs: {},
-            type: 'texthtml',
-            css: {
+        const id = this.textEl.dataset.layer;
+        KIA.actions.kiaCanvas.creatingElement({
+            id,
+            parent: this.parentKey,
+            nodeName: this.textEl.nodeName,
+            attributes: {},
+            style: {
                 width, height, left, top
             },
-            save: false,
-            stack: {},
-            assets: {},
+            children: [],
+            instanceof: 'html',
+            stack: [],
         });      
         
         if(!this.panning) {            
-            const keys = new Set().add(props.newLayer.dataset.layer);
-            KIA.actions.share.setSelectionKeys(keys);
+            const ids = new Set().add(id);
+            KIA.actions.share.setSelectionKeys(ids);
             this.panning = true;
             KIA.dom.kiaCanvas.setCanvasCurrentAction({action: 'downTextTool'});
         }
@@ -68,35 +80,33 @@ class Index {
         props.root.releasePointerCapture(e.pointerId);        
         this.panning = false; 
 
-        if (props.isActualMove && props.activePage) {
+        if (props.isActualMove && this.parentEl) {
+            const textElCss = KIA.utils.css.getElementCssProperty(this.textEl, ['left','top','width','height']);
+            const id = this.textEl.dataset.layer;
+
             const newLayerObj = {
-                key: props.newLayer.dataset.layer,
-                pId: props.activePage.dataset.page,
-                nodeName: props.newLayer.nodeName.toLowerCase(),
-                attrs: {},
-                type: 'texthtml',
-                css: {
-                    visibility: 'visible',
-                    top: props.newLayer.style.top,
-                    left: props.newLayer.style.left,
-                    width: props.newLayer.style.width,
-                    height: props.newLayer.style.height,
-                    translate: 'none',
-                    'pointer-events': 'auto',
+                id,
+                parent: this.parentKey,
+                nodeName: this.textEl.nodeName,
+                attributes: {},                
+                style: {                    
+                    ...textElCss,
+                    translate: 'none',                    
                 },
-                save: true,
-                stack: {},
-            assets: {},
+                children: [],
+                instanceof: 'html',
+                stack: [],
             };   
         
-            KIA.actions.kiaCanvas.createLayer(newLayerObj);
-            const keys = new Set().add(newLayerObj.key);
-            KIA.actions.share.setSelectionKeys(keys);
-            props.newLayer.setAttribute('contenteditable', true);
-            props.newLayer.focus();
+            KIA.canvasRefMap[id] = this.textEl;            
+            KIA.actions.kiaCanvas.createElement(newLayerObj);
+            const ids = new Set().add(id);
+            KIA.actions.share.setSelectionKeys(ids);
+            this.textEl.setAttribute('contenteditable', true);
+            this.textEl.focus();
         } else {
-            props.newLayer?.remove();
-            props.newLayer = null;
+            this.textEl?.remove();
+            this.textEl = null;
         }        
     }
 }

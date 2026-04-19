@@ -25,14 +25,9 @@ class KIA_Pages extends KIACustomElement {
         this._eventsSetup(Events);
     }
 
-    handleEvents(e){       
-        props.eTarget = e.composedPath()[0];
-        props.eTargetRoot = props.eTarget.getRootNode().host;        
-        props.eTEvent = props.eTarget.dataset.event;
-        props.eTREvent = props.eTargetRoot.dataset.event;
-        props.pageEl = props.eTarget.closest('[data-page]');
-        props.pageKey = props.pageEl?.dataset.page;
-    
+    handleEvents(e){
+
+        Object.assign(props, props.root._resolveEventContext(e)); 
 
         // Throttle
         if(['pointermove','input', 'scroll'].includes(e.type)) {

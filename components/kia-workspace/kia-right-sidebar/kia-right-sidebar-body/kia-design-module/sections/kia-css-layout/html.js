@@ -34,8 +34,6 @@ const html = `
 			</div>
 		</div>
 	</section>
-	
-	
 `;
 
 export default html;

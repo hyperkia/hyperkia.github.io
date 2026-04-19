@@ -3,9 +3,9 @@ import props from '../utils/props.js';
 
 const Index = {
 	init(){
-		const projectFonts = KIA.state.canvas.projectFonts;
+		const projectFonts = KIA.state.canvas.getProp('projectFonts');
 		const missingFonts = new Set();		
-		const layers = KIA.state.layers.map;
+		const layers = KIA.state.layers.getProp('map');
 		for(let k in layers) {
 			const layerFont = layers[k].css['font-family'];
 			if(!projectFonts[layerFont] && layerFont) missingFonts.add(layerFont);

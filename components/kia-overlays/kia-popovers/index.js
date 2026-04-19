@@ -49,7 +49,7 @@ class KIA_Popovers extends KIACustomElement {
 
     openPopover(){
         this.classList.add('show');
-        KIA[KIA.state.ui.openModal].classList.add('show');
+        KIA[KIA.state.ui.getProp('openModal')].classList.add('show');
     }
 
     closePopover(){

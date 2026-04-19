@@ -2,14 +2,14 @@
 import props from './props.js';
 
 function Index() {	
-	const key = KIA.state.ui.selectionKeys.values().next().value;
+	const id = KIA.state.ui.getSelectionId();
 
-	if(key === 'canvas') return 'canvas';
+	if(id === 'canvas') return 'canvas';
 
-	const isPage = KIA.state.pages.map[key];
+	const isPage = KIA.state.pages.map[id];
 	if(isPage) return 'page';
 
-	const l = KIA.state.layers.map[key];
+	const l = KIA.state.layers.map[id];
 	const n = l?.nodeName;
 
 	if(l && l.scss) return 'svg';

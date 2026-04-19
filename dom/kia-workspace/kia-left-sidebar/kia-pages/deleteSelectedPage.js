@@ -1,6 +1,6 @@
 function Index() {
-	const key = KIA.dom.read.getSelectionKey();
-	const pageEl = KIA.kiaPages._qs(`[data-page="${key}"]`);
+	const id = KIA.state.ui.getSelectionId();
+	const pageEl = KIA.kiaPages._qs(`[data-page="${id}"]`);
 	pageEl.remove();
 }
 

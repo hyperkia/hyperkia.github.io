@@ -1,28 +1,31 @@
 const html = `
 	<section class="section">
-		<header class="header">
-			<h5>Layers </h5>			
+		<header>
+			<h5>Layers</h5>			
 		</header> 
 		<article class="layers scroll-design" data-id="layers">
-
-			<template data-id="page-item-template">
-				<div class="page-item">
-					<span class="page-name">Layer 1</span>
-					<kia-button class="arrow-button" data-icon="angle-right-solid-full-symbol"></kia-button>
-				</div>
+			
+			<template data-id="node-template">
+				<div class="node" data-item="">
+				    <div class="header" data-children=""></div>
+				    <div class="childrens"></div>
+			    </div>			
 			</template>
 
-			<template data-id="layer-item-template">
-				<div class="layer-item">
-					<kia-button class="layer-icon" data-icon="code-solid-full-symbol"></kia-button>
-					<span class="layer-name">Layer 1</span>
-					<span class="layer-visible mask-image" data-visiblity="visible" data-event="layerVisible"></span>
-					<span class="layer-lock mask-image" data-lock="auto" data-event="layerLock"></span>
-				</div>
-			</template>
-						
+			
+			<div class="item-content" data-id="itemContent">
+				<span class="show-children-btn"></span>
+				<span class="title">Page 1</span>
+				<span class="item-visible"></span>
+				<span class="item-lock"></span>
+			</div>
+
+			<div class="drag-node-ghost" data-id="dragNodeGhost">Header</div>
+							
 		</article>		
 	</section>
 `;
 
 export default html;
+
+

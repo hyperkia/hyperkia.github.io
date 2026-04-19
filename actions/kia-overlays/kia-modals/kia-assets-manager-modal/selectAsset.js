@@ -1,9 +1,9 @@
-function Index(key){
-	KIA.state.assets.selectAsset(key);
+function Index(id){
+	KIA.state.assets.selectAsset(id);
 	KIA.kiaApp.dispatchEvent(new CustomEvent('assetSelected', {
         bubbles: true,
         composed: true,
-        detail: { source: 'kiaAssetsManagerModal', key }
+        detail: { source: 'kiaAssetsManagerModal', id }
     }));
 }
 

@@ -1,13 +1,13 @@
 function Index() {
-	const key = KIA.state.ui.selectionKeys.values().next().value;
+	const id = KIA.state.ui.getSelectionId();
 
-	const layerEl = KIA.kiaCanvas._qs(`[data-layer="${key}"]`);
+	const layerEl = KIA.kiaCanvas._qs(`[data-layer="${id}"]`);
 	if(layerEl) return layerEl;
 
-	const pageEl = KIA.kiaCanvas._qs(`[data-page="${key}"]`);
+	const pageEl = KIA.kiaCanvas._qs(`[data-page="${id}"]`);
 	if(pageEl) return pageEl;
 
-	if(key === 'canvas') return KIA.kiaCanvas;
+	if(id === 'canvas') return KIA.kiaCanvas;
 }
 
 export default Index;

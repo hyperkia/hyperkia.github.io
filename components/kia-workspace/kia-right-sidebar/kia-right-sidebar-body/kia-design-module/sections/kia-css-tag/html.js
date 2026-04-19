@@ -8,26 +8,26 @@ const html = `
 		<div part="module-row">
 			
 			<div part="module-col w100">
-				<kia-select class="switch-tag" data-name="changeNodeName" data-id="switch-tag">
+				<kia-select class="switch-tag" data-name="changeNodeName" data-id="switch-tag" data-node-group="">
 					<details part="details" class="select-wrapper">
 						<summary part="summary" class="select-trigger">Section</summary>
-						<ul class="select-options scroll-design" style="width: 100%;top: calc(100% + 5px);transform: none;">						
-						  <li class="select-option" part="selection-option section" value="div">div</li>
-						  <li class="select-option selected" part="selection-option section" value="section">section</li>
-						  <li class="select-option" part="selection-option section" value="header">header</li>
-						  <li class="select-option" part="selection-option section" value="footer">footer</li>
-						  <li class="select-option" part="selection-option section" value="main">main</li>
-						  <li class="select-option" part="selection-option section" value="article">article</li>
+						<ul class="select-options scroll-design" part="select-options" style="width: 100%;top: calc(100% + 5px);transform: none;">						
+						  <li class="select-option" part="selection-option container" value="DIV">div</li>
+						  <li class="select-option selected" part="selection-option container" value="SECTION">section</li>
+						  <li class="select-option" part="selection-option container" value="HEADER">header</li>
+						  <li class="select-option" part="selection-option container" value="FOOTER">footer</li>
+						  <li class="select-option" part="selection-option container" value="MAIN">main</li>
+						  <li class="select-option" part="selection-option container" value="ARTICLE">article</li>
 
-						  <li class="select-option" part="selection-option text" value="p">p</li>
-						  <li class="select-option" part="selection-option text" value="span">span</li>
-						  <li class="select-option" part="selection-option text" value="h1">h1</li>
-						  <li class="select-option" part="selection-option text" value="h2">h2</li>
-						  <li class="select-option" part="selection-option text" value="h3">h3</li>
-						  <li class="select-option" part="selection-option text" value="small">small</li>
-						  <li class="select-option" part="selection-option text" value="strong">strong</li>
-						  <li class="select-option" part="selection-option text" value="em">em</li>
-						  <li class="select-option" part="selection-option text" value="a">a</li>
+						  <li class="select-option" part="selection-option text" value="P">p</li>
+						  <li class="select-option" part="selection-option text" value="SPAN">span</li>
+						  <li class="select-option" part="selection-option text" value="H1">h1</li>
+						  <li class="select-option" part="selection-option text" value="H2">h2</li>
+						  <li class="select-option" part="selection-option text" value="H3">h3</li>
+						  <li class="select-option" part="selection-option text" value="SMALL">small</li>
+						  <li class="select-option" part="selection-option text" value="STRONG">strong</li>
+						  <li class="select-option" part="selection-option text" value="EM">em</li>
+						  <li class="select-option" part="selection-option text" value="A">a</li>
 						  
 						  <li class="select-option" part="selection-option others" value="others"></li>
 						</ul>

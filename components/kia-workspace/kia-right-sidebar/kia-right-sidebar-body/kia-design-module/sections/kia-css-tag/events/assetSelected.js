@@ -6,11 +6,7 @@ class Index {
 
 	static handler(e){
 		const d = e.detail;
-		props.eTarget.dataset.source = 'assets';
-		const assetObj = KIA.state.assets.map[d.key];
-		const inputEl = props.root.$id.tagSrc;
-		inputEl.value = assetObj.url;
-		methods.inputSrc(e);			
+		methods.inputSrc(d.id);			
 	}
 
 }

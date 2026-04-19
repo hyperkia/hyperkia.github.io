@@ -1,5 +1,5 @@
 function Index() {
-	const fonts = KIA.state.canvas.projectFonts;
+	const fonts = KIA.state.canvas.getProp('projectFonts');
 	if(!fonts) return;
 	const selectEl = KIA.kiaCssTypography.$id.fontFamilySelect;
 	const optionsEl = selectEl._qs('.select-options');	

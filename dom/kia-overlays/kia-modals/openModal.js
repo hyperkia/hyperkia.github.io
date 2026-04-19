@@ -1,5 +1,5 @@
 function Index() {
-	const name = KIA.state.ui.openModal;
+	const name = KIA.state.ui.getProp('openModal');
 	KIA.kiaModals.classList.add('show');
     if(!KIA[name]) {
     	const nodeName = KIA.utils.string.camelToKebab(name);

@@ -4,94 +4,97 @@ import methods from '../utils/methods.js';
 class Index {
 
     panning = false;
+    parentEl = null;
+    parentKey = null;
+    sectionEl = null;
 
     static handlePointerDown(e) {
         props.root.setPointerCapture(e.pointerId);
+        this.panning = false;
 
-        if (!props.activePage) return;
+        this.parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
+        if (!this.parentEl) return;
+        if(!KIA.registry.tags.canHaveChildren(this.parentEl.nodeName)) {
+            this.parentEl = this.parentEl.parentElement;
+        }
+        this.parentKey = this.parentEl.dataset.layer || this.parentEl.dataset.page;
+ 
+        this.sectionEl = document.createElement('section');       
 
-        props.newLayer = document.createElement('section');       
+        this.sectionEl.classList.add('canvas-layer');
+        this.sectionEl.setAttribute('data-layer', crypto.randomUUID());
+        this.sectionEl.setAttribute('draggable', false);
+        this.sectionEl.style.backgroundColor = '#d9d9d9';
+        this.parentEl.append(this.sectionEl);
 
-        props.newLayer.classList.add('canvas-layer');
-        props.newLayer.setAttribute('data-layer', crypto.randomUUID());
-        props.newLayer.setAttribute('draggable', false);
-        props.activePage.append(props.newLayer);
-
-        this.cpsdXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
-    }
+        this.cpsdXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
+    } 
 
     static handlePointerMove(e) {        
 
         if (!props.root.hasPointerCapture(e.pointerId)) return false;        
-        if ((!props.newLayer)) return false;
+        if ((!this.sectionEl)) return false;
 
-        this.cpsmXY = KIA.dom.read.getCanvasPageScaleCoords({e, activePage: props.activePage});
+        this.cpsmXY = KIA.dom.read.getCanvasElementScaleCoords({e, element : this.parentEl});
         
-        const left = parseInt(Math.min(this.cpsdXY.x, this.cpsmXY.x));
-        const top = parseInt(Math.min(this.cpsdXY.y, this.cpsmXY.y));
-        const width = parseInt(Math.abs(this.cpsmXY.x - this.cpsdXY.x));
-        const height = parseInt(Math.abs(this.cpsmXY.y - this.cpsdXY.y));
+        const left = parseInt(Math.min(this.cpsdXY.x, this.cpsmXY.x))+'px';
+        const top = parseInt(Math.min(this.cpsdXY.y, this.cpsmXY.y))+'px';
+        const width = parseInt(Math.abs(this.cpsmXY.x - this.cpsdXY.x))+'px';
+        const height = parseInt(Math.abs(this.cpsmXY.y - this.cpsdXY.y))+'px';
         
-        Object.assign(props.newLayer.style, {
-            left: left+'px',
-            top: top+'px',
-            width: width+'px',
-            height: height+'px',
-        })
+        Object.assign(this.sectionEl.style, {left,top,width,height,});
 
-        KIA.actions.kiaCanvas.createLayer({ 
-            key: props.newLayer.dataset.layer,
-            pId: props.activePage.dataset.page,
-            nodeName: props.newLayer.nodeName.toLowerCase(),
-            attrs: {},
-            type: 'sectionhtml',
-            css: {
-                width, height, left, top
+        const id = this.sectionEl.dataset.layer;
+
+        KIA.actions.kiaCanvas.creatingElement({ 
+            id,
+            parent: this.parentKey,
+            nodeName: this.sectionEl.nodeName,
+            attributes: {},
+            style: {
+                width, height, left, top,
+                'background-color': '#d9d9d9',                
             },
-            
-            save: false,
-            stack: {},
-            assets: {},
+            children: [],
+            instanceof: 'html',
+            stack: [],
         });
         
         if(!this.panning) {            
-            const keys = new Set().add(props.newLayer.dataset.layer);
-            KIA.actions.share.setSelectionKeys(keys);
+            const ids = new Set().add(id);
+            KIA.actions.share.setSelectionKeys(ids);
             this.panning = true;
         }
     }
  
     static handlePointerUp(e) {
-
         props.root.releasePointerCapture(e.pointerId);
         this.panning = false;     
 
-        if (props.isActualMove && props.activePage) {
+        if (props.isActualMove && this.parentEl) {
+            const id = this.sectionEl.dataset.layer;
+            const secElCss = KIA.utils.css.getElementCssProperty(this.sectionEl, ['left','top','width','height']);
             const newLayerObj = {
-                key: props.newLayer.dataset.layer,
-                pId: props.activePage.dataset.page,
-                nodeName: props.newLayer.nodeName.toLowerCase(),
-                attrs: {},
-                type: 'sectionhtml',
-                css: {
-                    visibility: 'visible',
-                    top: props.newLayer.style.top,
-                    left: props.newLayer.style.left,
-                    width: props.newLayer.style.width,
-                    height: props.newLayer.style.height,
+                id,
+                parent: this.parentKey,
+                nodeName: this.sectionEl.nodeName,
+                attributes: {},
+                style: {
+                    ...secElCss,
                     translate: 'none',
-                    'pointer-events': 'auto',
+                    'background-color': '#d9d9d9',
                 }, 
-                save: true,
-                stack: {},
-            assets: {},
-            };   
-            KIA.actions.kiaCanvas.createLayer(newLayerObj);
-            const keys = new Set().add(newLayerObj.key);
+                children: [],
+                instanceof: 'html',
+                stack: [],
+            };
+            KIA.canvasRefMap[id] = this.sectionEl;
+            KIA.actions.kiaCanvas.createElement(newLayerObj);
+            const keys = new Set().add(id);
             KIA.actions.share.setSelectionKeys(keys);
         } else {
-            props.newLayer?.remove();
-            props.newLayer = null;
+            this.sectionEl?.remove();
+            this.sectionEl = null;
         }        
     }
 }

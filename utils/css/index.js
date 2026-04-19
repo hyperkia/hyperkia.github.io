@@ -5,6 +5,7 @@ import cssToObject from './cssToObject.js';
 import objectToCss from './objectToCss.js';
 import shadowStackToValueObject from './shadowStackToValueObject.js';
 import rgbaObjectToCss from './rgbaObjectToCss.js';
+import getElementCssProperty from './getElementCssProperty.js';
 
 
 export default {
@@ -14,4 +15,5 @@ export default {
 	cssToObject,
 	shadowStackToValueObject,
 	rgbaObjectToCss,
+	getElementCssProperty,
 };

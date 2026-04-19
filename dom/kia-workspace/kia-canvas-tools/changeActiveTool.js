@@ -5,7 +5,7 @@ const svgTools = ['rectsvg','linesvg','circlesvg','ellipsesvg','pathsvg','moresv
 
 function Index() {
 
-	const tool = KIA.state.ui.activeTool;
+	const tool = KIA.state.ui.getProp('activeTool');
 	KIA.kiaCanvasTools._qs('.activetool').classList.remove('activetool');	
 
 	let dropdownEl = null;
