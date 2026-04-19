@@ -7,7 +7,8 @@ function Index() {
         const pageEl = KIA.kiaLayers._qs(`[data-item="${id}"]`);
         if(pageEl) return;
 
-        const p = KIA.nodesMap[id];           
+        const p = KIA.nodesMap[id];
+        if(!p) return;
         const itemTemplate = KIA.kiaLayers.$id.nodeTemplate.content.cloneNode(true);
         const nodeEl = itemTemplate.querySelector('.node');
         const headerEl = nodeEl.querySelector('.header');
