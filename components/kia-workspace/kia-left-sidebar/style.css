@@ -1,0 +1,10 @@
+:host{display: flex;flex-direction: column;}
+kia-left-header, kia-assets, kia-pages, kia-layers{border-bottom: 1px solid #e6e6e6;}
+
+
+/* Dark Theme */
+:host([data-theme="dark"]) kia-left-header, 
+:host([data-theme="dark"]) kia-assets, 
+:host([data-theme="dark"]) kia-pages, 
+:host([data-theme="dark"]) kia-layers{border-color: #444444;}
+

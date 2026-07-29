@@ -1,0 +1,10 @@
+:host{display: inline-flex;}
+button{display:inline-flex;justify-content: center; align-items: center;padding:5px; background:transparent; border:none;border-radius:4px; width:26px;height:26px;overflow:hidden;appearance: none;position:relative;overflow:hidden;}
+button:hover{background-color:#f5f5f5;}
+svg{position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);color: var(--button--icon-color);width: var(--width, 20px);height: var(--height, 20px);max-height: var(--max-height, 20px);}
+
+
+/* Dark Theme */
+:host([data-theme="dark"]) {background: inherit;}
+:host([data-theme="dark"]) svg{color: #fff;color: #fff;}
+:host([data-theme="dark"]) button:hover{background: #383838;}

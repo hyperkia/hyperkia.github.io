@@ -1,0 +1,40 @@
+:host{display: none;}
+.add-font-family::part(svg){width: 17px;height: 17px;}
+.line-height-input::part(label){font-style: normal;font-size: 12px;border-top: 1px solid currentColor;width: 13px;height: 16px;border-bottom: 1px solid currentColor;text-align: center;line-height: 13px;}
+.letter-spacing-input::part(label){font-style: normal;font-size: 12px;border-right: 1px solid currentColor;width: 13px;height: 16px;border-left: 1px solid currentColor;text-align: center;line-height: 13px;}
+.prop-color::part(label-svg){border:1px solid #383838;background-color: var(--value, inherit);}
+.font-family::part(summary){font-size: 0px;}
+.font-family::part(summary)::before{content: var(--selection--font-family);font-size: 12px;}
+
+.font-weight-select::part(select-option){display: none;}
+
+.font-weight-select[data-iweights*="1"]::part(i1) { display: block; }
+.font-weight-select[data-iweights*="2"]::part(i2) { display: block; }
+.font-weight-select[data-iweights*="3"]::part(i3) { display: block; }
+.font-weight-select[data-iweights*="4"]::part(i4) { display: block; }
+.font-weight-select[data-iweights*="5"]::part(i5) { display: block; }
+.font-weight-select[data-iweights*="6"]::part(i6) { display: block; }
+.font-weight-select[data-iweights*="7"]::part(i7) { display: block; }
+.font-weight-select[data-iweights*="8"]::part(i8) { display: block; }
+.font-weight-select[data-iweights*="9"]::part(i9) { display: block; }
+
+.font-weight-select[data-nweights*="1"]::part(n1) { display: block; }
+.font-weight-select[data-nweights*="2"]::part(n2) { display: block; }
+.font-weight-select[data-nweights*="3"]::part(n3) { display: block; }
+.font-weight-select[data-nweights*="4"]::part(n4) { display: block; }
+.font-weight-select[data-nweights*="5"]::part(n5) { display: block; }
+.font-weight-select[data-nweights*="6"]::part(n6) { display: block; }
+.font-weight-select[data-nweights*="7"]::part(n7) { display: block; }
+.font-weight-select[data-nweights*="8"]::part(n8) { display: block; }
+.font-weight-select[data-nweights*="9"]::part(n9) { display: block; }
+
+
+
+/* Selection Capability */
+:host([data-selection-type="text"]){display: block;}
+:host([data-selection-type="page"]){display: block;}
+:host([data-selection-type="canvas"]){display: block;}
+
+
+/* Dark Theme */
+:host([data-theme="dark"]) .prop-color::part(label-svg){border-color: #fff;}

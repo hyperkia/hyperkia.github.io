@@ -1,0 +1,10 @@
+:host{position: fixed;top: 0;left: 0;z-index: -1;width: 100vw;height: 100vh;pointer-events: none;visibility: hidden;opacity: 0;display: block;}
+:host(.show){pointer-events: auto;z-index: 3;visibility: visible;opacity: 1;}
+
+:host .popover{visibility: hidden;opacity: 0;pointer-events: none;box-shadow: 0px 0px 13px 0 rgba(0,0,0,0.4);}
+.popover.show{visibility: visible;opacity: 1;pointer-events: auto;}
+
+
+/* Header */
+::part(popover-header){padding: 6px 10px !important;display: flex;align-items: center;justify-content: space-between;border-bottom: 1px solid #e6e6e6 !important;cursor: move;border-bottom: 1px solid var(--color--e6e6e6);}
+::part(popover-title){pointer-events: none;margin-bottom: 0 !important;user-select: none;}
