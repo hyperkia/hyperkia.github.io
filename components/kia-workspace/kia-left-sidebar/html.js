@@ -5,7 +5,7 @@ import "./sections/kia-pages/index.js";
 
 const html = `
 	<kia-left-header></kia-left-header>
-	<kia-assets></kia-assets>
+	<kia-assets class="hidden"></kia-assets>
 	<kia-pages></kia-pages>
 	<kia-layers></kia-layers>	
 `;

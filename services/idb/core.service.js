@@ -1,7 +1,8 @@
 const Index = {
     db: null,
+    DB_NAME: 'hyperkia',
 
-    initDatabase() {
+    initDatabase() {        
         return this.openDatabase().then((success) => {
             this.db = success;            
             return this.collectData();
@@ -17,11 +18,10 @@ const Index = {
                 return false;
             }
 
-            const requestDB = indexedDB.open('hyperkia');
+            const requestDB = indexedDB.open(this.DB_NAME);
             requestDB.addEventListener('upgradeneeded', (e) => {
                 this.db = e.target.result;
-                if (e.oldVersion === 0) this.createObjectsVersion0();
-                if (e.oldVersion === 1) this.createObjectsVersion1();
+                this.createObjectsVersion0();
 
             })
 
@@ -43,6 +43,7 @@ const Index = {
         data.canvas = await this.getKeyValueObject('canvas');
         data.options = await this.getKeyValueObject('options');
         data.assets = await this.getKeyValueObject('assets');
+        this.deleteOldDatabaseStructure(data);        
         return data;        
     },
 
@@ -60,6 +61,8 @@ const Index = {
         const nowTime = Date.now();
         canvasObject.add(nowTime, 'createdAt');
         canvasObject.add(nowTime, 'updatedAt');
+        canvasObject.add('DOM - v2', 'dataStructure');
+        canvasObject.add(structuredClone(KIA.state.config.getProp('defaultProjectFont')), 'projectFonts');
     },
 
     createObjectsVersion1() {},
@@ -94,7 +97,7 @@ const Index = {
             })
 
             addTransaction.oncomplete = (e) => resolve(storeobjects);
-            addTransaction.onerror = (e) => reject(e);
+            addTransaction.onerror = (e) => reject(e.target.error);
 
         })
     },
@@ -215,14 +218,14 @@ const Index = {
             const store = tx.objectStore(objectStore);
 
             objs.forEach(obj => {
-                const getReq = store.get(obj.key);                
+                const getReq = store.get(obj.id);                
 
                 getReq.onsuccess = () => {
                     const record = getReq.result;
                     if (!record) return;
 
                     for (const prop in obj) {
-                        if (prop === 'key') continue;
+                        if (prop === 'id') continue;
                         if (typeof obj[prop] === 'object' && obj[prop] !== null) {
                             record[prop] ??= {};
                             Object.assign(record[prop], obj[prop]);
@@ -346,7 +349,7 @@ const Index = {
         });
     },
 
-    clearAllStores() {
+    DONT_USE_CLEAN_DB() {
       const storeNames = ['canvas', 'layers', 'pages', 'assets', 'options'];
       return new Promise((resolve, reject) => {
         const tx = this.db.transaction(storeNames, 'readwrite');
@@ -359,6 +362,27 @@ const Index = {
           store.clear(); // deletes all records in that store
         });
       });
+    },
+
+    deleteOldDatabaseStructure(data) {
+        if(data.canvas.dataStructure === 'DOM - v2') return;
+
+        this.db.close()
+
+        const deleteReq = indexedDB.deleteDatabase("hyperkia");
+
+        deleteReq.onsuccess = () => {
+            console.log("Old DB deleted");
+            location.reload();
+        };
+
+        deleteReq.onerror = () => {
+            console.error("DB delete failed");
+        };
+
+        deleteReq.onblocked = () => {
+            console.warn("Close other tabs using this app");
+        };
     }
 
 }

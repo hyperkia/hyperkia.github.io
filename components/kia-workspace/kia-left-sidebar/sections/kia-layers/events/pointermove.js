@@ -32,8 +32,8 @@ class Index {
 		props.dropInfo.dropTarget = props.root.shadowRoot.elementFromPoint(e.clientX, e.clientY)?.closest('.layer-node');
 		if(!props.dropInfo.dropTarget) return;
 		if (props.dropInfo.dropTarget === props.dropInfo.dragTarget) return;
-		const dropTargetNodeName = KIA.state.layers.map[props.dropInfo.dropTarget.dataset.item].nodeName;
-		const isDropTargetcanHaveChildren = KIA.registry.tags.canHaveChildren(dropTargetNodeName);
+		const dropTargetTagName = KIA.nodesMap[props.dropInfo.dropTarget.dataset.item].tagName;
+		const isDropTargetcanHaveChildren = KIA.registry.tags.canHaveChildren(dropTargetTagName);
 
 		const mouseX = e.clientX;
 		const mouseY = e.clientY;

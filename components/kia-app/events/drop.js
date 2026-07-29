@@ -5,11 +5,33 @@ class Index {
 
     static handler(e) {
         e.preventDefault();
-        if(props.eTarget.closest('[data-page]')) this.uploadFileOnPage(e);        
+        if(props.eTarget.closest('[data-page]')) this.uploadFileOnPage(e);
+        this.importUploadedFile(e);
+    }
+
+    static async importUploadedFile(e){
+        const file = await KIA.utils.dom.getDropFile(e);
+        const psdMime = KIA.state.config.getProp('PSD_MIME_TYPES');
+        let parsedData = null;
+
+        const isPSD = file.name.toLowerCase().endsWith(".psd") || file.type === "image/vnd.adobe.photoshop";
+        const isZIP = file.name.toLowerCase().endsWith(".zip") || file.type === "application/zip";
+
+        try {            
+            if(isZIP) {
+                parsedData = await KIA.transformer.fflateZip.zipToProject(file);
+            } else if (isPSD) {
+                parsedData = await KIA.transformer.psdToObject(file);
+            }
+        } catch(error) {           
+            console.log(error);
+        }
+        
+        if(parsedData) KIA.actions.kiaFileImportModal.importProject(parsedData);
     }
 
     static async uploadFileOnPage(e){
-    	const file = await KIA.utils.dom.getDropFile(e);
+    	const file = await KIA.utils.dom.getDropFile(e);        
         const acceptedFormats = KIA.state.config.getProp('acceptedFormats');
     	if(!acceptedFormats.includes(file.type)) return;
         if(['image/png','image/jpeg'].includes(file.type)) this.createImg(e, file);
@@ -32,7 +54,7 @@ class Index {
         const layerId = crypto.randomUUID();
         let parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
         if (!parentEl) return;
-        if(!KIA.registry.tags.canHaveChildren(parentEl.nodeName)) {
+        if(!KIA.registry.tags.canHaveChildren(parentEl.tagName)) {
             parentEl = parentEl.parentElement;
         }
         
@@ -45,7 +67,7 @@ class Index {
         const newLayerObj = {
             id: layerId,
             parent: parentId,
-            nodeName: 'IMG',
+            tagName: 'IMG',
             attributes: {
                 src: assetObj.id,
             },                        
@@ -55,9 +77,10 @@ class Index {
                 width: imageData.width+'px',
                 height: imageData.height+'px',
                 translate: 'none',
-            },            
+            },
             stack: [],
             children: [],
+            instanceof: 'html',
         };
 
         const imgEl = document.createElement('img');
@@ -70,7 +93,7 @@ class Index {
         KIA.canvasRefMap[newLayerObj.id] = imgEl;
         KIA.actions.kiaCanvas.createElement(newLayerObj);
         const ids = new Set().add(newLayerObj.id);
-        KIA.actions.share.setSelectionKeys(ids);
+        KIA.actions.share.setSelectionIds(ids);
     }
 
     static async createSvg(e, file){
@@ -100,7 +123,7 @@ class Index {
         // const layerId = crypto.randomUUID();
         // let parentEl = props.eTarget.closest('[data-layer]') || props.eTarget.closest('[data-page]');
         // if (!parentEl) return;
-        // if(!KIA.registry.tags.canHaveChildren(parentEl.nodeName)) {
+        // if(!KIA.registry.tags.canHaveChildren(parentEl.tagName)) {
         //     parentEl = parentEl.parentElement;
         // }
         
@@ -111,7 +134,7 @@ class Index {
         // const newLayerObj = {
         //     id: layerId,
         //     parent: parentKey,
-        //     nodeName: "svg",
+        //     tagName: "svg",
         //     attrs: {
         //         viewBox: svgElViewbox,
         //     },
@@ -143,7 +166,7 @@ class Index {
 
         // KIA.actions.kiaCanvas.createLayer(newLayerObj);
         // const keys = new Set().add(newLayerObj.key);
-        // KIA.actions.share.setSelectionKeys(keys);
+        // KIA.actions.share.setSelectionIds(keys);
     }
 
 

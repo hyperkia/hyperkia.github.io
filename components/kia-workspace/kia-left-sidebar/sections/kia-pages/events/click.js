@@ -12,48 +12,36 @@ class Index {
 	}
 
 	static setSelectionKey(){
+		methods.activeSelectionInUI();
 		const id = props.eTarget.closest('[data-page]').dataset.page;
 		const ids = new Set().add(id);
-        KIA.actions.share.setSelectionKeys(ids, {source: props.root});
+        KIA.actions.share.setSelectionIds(ids, {source: props.root});
 	}
 
-	static changePageVisiblility(){
-		const pageEl = props.eTarget.closest('[data-page]');
+	static changePageVisiblility(){		
+        const pageEl = props.eTarget.closest('[data-page]');
 		const id = pageEl.dataset.page;
-		KIA.actions.kiaPages.changePageVisiblility(id);
-		const pageObj = KIA.nodesMap[id];
-		pageEl.querySelector('[data-visiblity]').dataset.visiblity = pageObj.style.visibility;
-		const ids = new Set().add('canvas');
-        KIA.actions.share.setSelectionKeys(ids, {source: props.root});
+		KIA.actions.kiaPages.changeVisibility(id);
+		const pageVisibility = KIA.nodesMap[id].style.visibility;
+		pageEl.querySelector('.page-visible').dataset.visibility = pageVisibility;		
 	}
 
 	static changePagePointerLock(){
-		KIA.actions.kiaPages.changePagePointerLock(props.pageKey);
-		const pageObj = KIA.state.pages.getProp('map')[props.pageKey];
-		props.pageEl.querySelector('[data-lock]').dataset.lock = pageObj.css['pointer-events'];
+        const pageEl = props.eTarget.closest('[data-page]');
+		const id = pageEl.dataset.page;
+		KIA.actions.kiaPages.changeLock(id);
+		const pageLock = KIA.nodesMap[id].style['pointer-events'];
+		pageEl.querySelector('.page-lock').dataset.lock = pageLock;
 	}
 
 	static addNewPage(){
-		const pageObject = {
-	        id: crypto.randomUUID(),
-	        title: 'Page 1',
-	        style: {
-	            'background-color': '#ffffffff',
-	            width: '1920px',
-	            height: '6000px',
-	            'pointer-events': 'auto',
-	            visibility: 'visible',	            
-	        },
-	        children: [],
-	        instanceof: 'document',
-	        createdAt: Date.now(),            
-	    }
-
+		const pageObject = structuredClone(KIA.state.config.getProp('newPageObject'));
+		pageObject.id = crypto.randomUUID();
 		KIA.actions.kiaPages.createPage(pageObject);
 		const editElement = KIA.kiaPages._qs(`[data-page="${pageObject.id}"] .page-name`);
 		KIA.utils.dom.enableEditingAndFocusEnd(editElement);
 		const ids = new Set().add(pageObject.id);
-		KIA.actions.share.setSelectionKeys(ids);
+		KIA.actions.share.setSelectionIds(ids);
 	}
 
 }

@@ -9,8 +9,9 @@ import openContextMenu from './openContextMenu.js';
 import dragover from './dragover.js';
 import drop from './drop.js';
 import assetSelected from './assetSelected.js';
-
-
+import changePressedKey from './changePressedKey.js';
+import wheel from './wheel.js';
+import appSelectionChange from './appSelectionChange.js';
 
 export { 
 	uiLeftSidebarCollapseChange,
@@ -23,4 +24,7 @@ export {
 	dragover,
 	drop,
 	assetSelected,
+	changePressedKey,
+	wheel,
+	appSelectionChange,
 }

@@ -8,6 +8,9 @@ import url from "./url/index.js";
 import obj from "./obj/index.js";
 import file from "./file/index.js";
 import pointer from "./pointer/index.js";
+import clipboard from "./clipboard/index.js";
+import svg from "./svg/index.js";
+import font from "./font/index.js";
 
 KIA.utils = {
 	string,
@@ -19,5 +22,7 @@ KIA.utils = {
 	obj,
 	file,
 	pointer,
+	clipboard,
+	svg,
+	font,
 };
-

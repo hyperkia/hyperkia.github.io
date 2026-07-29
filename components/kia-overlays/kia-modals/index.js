@@ -9,7 +9,7 @@ class KIA_Modals extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-overlays/kia-modals/style.css'};
+    customizer = {styleHref: `/components/kia-overlays/kia-modals/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();

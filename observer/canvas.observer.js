@@ -4,7 +4,7 @@ const Index = {
 		this[payload]();
 	},
 
-	loadData(){
+	loadCanvas(){
 		KIA.dom.kiaCanvas.updateCanvasStyle();
 		KIA.dom.kiaCssTypography.setProjectFontFamilyList();
 		KIA.dom.kiaCssTypography.setSelectedFontFamilyWeights();

@@ -1,35 +1,39 @@
-
+ 
 function createDefaultPage() {
-	const pageObject = {
-	    id: crypto.randomUUID(),
-	    title: 'Page 1',
-	    style: {
-	        'background-color': '#ffffffff',
-	        width: '1920px',
-	        height: '6000px',
-	        'pointer-events': 'auto',
-	        visibility: 'visible',
-	    },
-	    children: [],
-	    instanceof: 'document',
-	}
-
+	const pageObject = structuredClone(KIA.state.config.getProp('newPageObject'));
+	pageObject.id = crypto.randomUUID();
 	KIA.actions.kiaPages.createPage(pageObject);
+}
+
+function loadUserSettings(){
+	const theme = localStorage.getItem('preference-theme');
+	KIA.actions.kiaLeftHeader.switchTheme(theme);
 }
 
 function Index() {
 	KIA.kiaApp.dispatchEvent(new CustomEvent('appLoaded', {
 	  bubbles: true,
 	  composed: true,
-	  detail: { source: this.cryptoId}
 	})); 
-	KIA.actions.kiaCanvas.canvasScaleOnLoad();		
-	KIA.services.idb.core.initDatabase().then((response)=>{
-		KIA.state.assets.loadData(KIA.managers.assets(response.assets));
-		KIA.state.canvas.loadData(response.canvas);
+
+	KIA.actions.kiaCanvas.canvasScaleOnLoad();
+	loadUserSettings();
+	KIA.services.idb.core.initDatabase().then((response)=>{		
+		KIA.state.assets.loadAssets(KIA.managers.assets(response.assets));
+		KIA.state.canvas.loadCanvas(response.canvas);
 		KIA.state.pages.loadPages(response.pages);
 		KIA.state.layers.loadLayers(response.layers);
-		if(Object.keys(response.pages).length === 0) createDefaultPage();
+		if(Object.keys(response.pages).length === 0) createDefaultPage();		
+
+		KIA.kiaApp.dispatchEvent(new CustomEvent('appLoaded', {
+		  bubbles: true,
+		  composed: true,
+		  detail: {}
+		})); // double for canvas data
+
+		KIA.managers.garbage();
+	}).catch((err)=>{
+		console.log(err);
 	});
 } 
 

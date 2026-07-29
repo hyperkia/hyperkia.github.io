@@ -26,9 +26,14 @@ const Index = {
 		KIA.dom.kiaColorPickerPopover.openColorPickerPopover();
 	},
 
-	setSelectionKeys(){
+	setSelectionIds(){
 		KIA.managers.style.selectionToPropsInput();
+		KIA.dom.kiaCanvas.selectionLayerResizeController();
 	},
+
+	setPreferenceTheme(){
+		KIA.dom.share.setPreferenceTheme();
+	}
 }
 
 export default Index;

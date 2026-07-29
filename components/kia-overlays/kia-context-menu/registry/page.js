@@ -25,7 +25,36 @@ const Index = [
 			name: 'clone-solid-full',
 			fill: 'currentColor',
 		},
-		shortcut: 'Ctrl + D'
+		shortcut: 'Ctrl + D',
+	},
+
+	{
+		action: 'paste',
+		title: 'Paste',
+		icon: {
+			name: 'paste-solid-full',
+			fill: 'currentColor',
+		},
+		shortcut: 'Ctrl + V'
+	},
+	{
+		action: 'openPreview',
+		title: 'Preview in New Window',
+		icon: {
+			name: 'arrow-up-right-from-square-solid-full',
+			fill: 'currentColor',
+		},
+		shortcut: ''
+	},
+
+	{
+		action: 'rename',
+		title: 'Rename',
+		icon: {
+			name: 'pen-solid-full',
+			fill: 'currentColor',
+		},
+		shortcut: ''
 	},
 
 	{

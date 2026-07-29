@@ -4,7 +4,7 @@ const Index = {
 		this[payload]();
 	},
 
-	renderPageList() {
+	loadPages() { 
 		KIA.dom.kiaPages.createPage();
 		KIA.dom.kiaLayers.createPage();
 		KIA.dom.kiaCanvas.createPage();
@@ -13,24 +13,29 @@ const Index = {
 	},
 
 	setTitle() {
-		KIA.dom.kiaCanvas.setSelectionPageTitle();
-		KIA.dom.kiaLayers.setSelectionPageTitle();
-	},
-
-	deleteLayers(){
-		KIA.dom.kiaCanvas.deleteSelectedPage();
-		KIA.dom.kiaPages.deleteSelectedPage();
-		KIA.dom.kiaLayers.updateNodeChildrenLength();
-		KIA.dom.kiaCanvas.setPageNamePosition();
+		KIA.dom.kiaCanvas.updateDirtyPageTitle();
+		KIA.dom.kiaLayers.updateDirtyPageTitle();
 	},
 
 	setStyle(){
-		KIA.dom.kiaCanvas.updatePageSelectionStyle();
+		KIA.dom.kiaCanvas.updateDirtyPageStyle();
+		KIA.dom.kiaPages.updateDirtyLayerLockVisibility();
 	},
-
+ 
 	addLayerToParent(){
 		KIA.dom.kiaLayers.updateNodeChildrenLength();
 		KIA.dom.kiaLayers.updateLayersPanel();
+	},
+
+	updateChildrenOrder(){
+		KIA.dom.kiaLayers.updateChildrenOrder();
+	},
+
+	deletePage(){
+		KIA.dom.kiaCanvas.deleteDirtyPage();
+		KIA.dom.kiaPages.deleteDirtyPage();
+		KIA.dom.kiaLayers.deleteDirtyPage();
+		KIA.dom.kiaCanvas.setPageNamePosition();
 	}
 } 
 

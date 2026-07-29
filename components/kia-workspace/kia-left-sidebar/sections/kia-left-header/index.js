@@ -10,7 +10,7 @@ class KIA_Left_Header extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-workspace/kia-left-sidebar/sections/kia-left-header/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-left-sidebar/sections/kia-left-header/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -46,6 +46,17 @@ class KIA_Left_Header extends KIACustomElement {
         }
 
         Events[e.type]?.handler?.(e);      
+    }
+
+    close(){
+        props.root.$id.nav.classList.remove('show');
+        const menuItems = props.root._qsAll('.menu-item.hover');
+        menuItems.forEach(mi => mi.classList.remove('hover'));
+    }
+
+    appSelectionChange(event){
+        if(event.detail.host?.dataset.event === 'toggleMenuVisibility') return;
+        this.close();
     }
 
 }

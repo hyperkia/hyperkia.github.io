@@ -11,7 +11,7 @@ class KIA_Assets extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-workspace/kia-left-sidebar/sections/kia-assets/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-left-sidebar/sections/kia-assets/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -27,10 +27,8 @@ class KIA_Assets extends KIACustomElement {
     }
 
     handleEvents(e){
-        props.eTarget = e.composedPath()[0];
-        props.eTargetRoot = props.eTarget.getRootNode().host;        
-        props.eTEvent = props.eTarget.dataset.event;
-        props.eTREvent = props.eTargetRoot.dataset.event;
+
+        Object.assign(props, props.root._resolveEventContext(e));
          
         // Throttle
         if(['pointermove','input', 'scroll'].includes(e.type)) {

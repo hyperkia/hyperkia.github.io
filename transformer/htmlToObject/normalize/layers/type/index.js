@@ -12,7 +12,7 @@ import props from '../../../utils/props.js';
 
 function Index(){
 	const l = props.activeParseLayer.layer;
-	const n = l.nodeName;
+	const n = l.tagName;
 
 	if(n === 'AUDIO') return audio();
 	if(n === 'IFRAME') return iframe();

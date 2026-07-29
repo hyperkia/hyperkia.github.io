@@ -4,16 +4,17 @@ function Index(layerObj) {
     KIA.state.layers.createElement(layerObj);
 
     const parentKey = layerObj.parent;
+    const parentObjectStore = KIA.dom.read.getObjectStoreNameById(parentKey);
 
     // Page
-    if(KIA.state.pages.getProp('map')[parentKey]) {
+    if(parentObjectStore === 'pages') {
         KIA.state.pages.addLayerToParent(layerObj);
         const parentObj = KIA.nodesMap[parentKey];
         KIA.services.idb.core.replaceObjectByKey('pages', parentObj);
     }
 
     // Layer
-    if(KIA.state.layers.getProp('map')[parentKey]) {
+    if(parentObjectStore === 'layers') {
         KIA.state.layers.addLayerToParent(layerObj);  
         const parentObj = KIA.nodesMap[parentKey];
         KIA.services.idb.core.replaceObjectByKey('layers', parentObj);

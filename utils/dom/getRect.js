@@ -1,5 +1,5 @@
 function Index(element) {
-    if (element instanceof HTMLElement || element.nodeName === 'svg') {
+    if (element instanceof HTMLElement || element.tagName === 'svg') {
         // HTML
         const rect = element.getBoundingClientRect();
         return {

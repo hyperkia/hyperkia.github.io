@@ -9,7 +9,7 @@ class KIA_Popovers extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-overlays/kia-popovers/style.css'};
+    customizer = {styleHref: `/components/kia-overlays/kia-popovers/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -48,14 +48,11 @@ class KIA_Popovers extends KIACustomElement {
     }
 
     openPopover(){
-        this.classList.add('show');
-        KIA[KIA.state.ui.getProp('openModal')].classList.add('show');
+
     }
 
     closePopover(){
-        console.log(this);
-        this.$class.modal.forEach( m => m.classList.remove('show'));        
-        this.classList.remove('show');
+        
     }
 
 }

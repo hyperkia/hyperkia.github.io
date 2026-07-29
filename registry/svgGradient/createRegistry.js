@@ -7,15 +7,9 @@ const registry = new Map();
 let counter = 0;
 
   
-function Index(stack) {
-  let gradientStack = null;
-  for(let [sKet, sObj] of Object.entries(stack)) {
-    if(sObj.type === 'gradient' && sObj.source === 'psd') gradientStack = sObj;
-  }
+function Index(gStack) {
 
-  if(!gradientStack) return;
-
-  const normalized = normalize(gradientStack);
+  const normalized = normalize(gStack);
   const key = createKey(normalized);
 
   if (registry.has(key)) {
@@ -29,7 +23,6 @@ function Index(stack) {
   
   if(!gradientElement) return;
   KIA.kiaCanvas.$id.gradientRegistryDefs.appendChild(gradientElement);
-  
   return id;
 }
 

@@ -12,7 +12,20 @@ class Index {
 	}
 
 	static toggleMenuVisibility(){
-		props.root.$id.nav.classList.toggle('show');
+		const navEl = props.root.$id.nav;
+		navEl.classList.toggle('show');
+		const isShow = navEl.classList.contains('show');
+		if(isShow) {
+			KIA.actions.ui.shortcutsKey.pushEscapeStack({
+	            close: props.root.close,
+	            id: 'kiaLeftHeader',
+	        });
+		}
+
+		if(!isShow) {			
+			const menuItems = props.root._qsAll('.menu-item.hover');
+			menuItems.forEach(mi => mi.classList.remove('hover'));
+		}
 	}
 
 	static menuAction(){

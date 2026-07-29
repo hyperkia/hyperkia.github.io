@@ -5,8 +5,8 @@ import methods from '../utils/methods.js';
 class Index {
 
 	static handler(e){		
-		if(props.eTREvent === 'showSearch') this.toggleSearch('show');
-		if(props.eTREvent === 'hideSearch') this.toggleSearch('show');
+		if(props.eRTAction === 'showSearch') this.toggleSearch('show');
+		if(props.eRTAction === 'hideSearch') this.toggleSearch('show');
 	}
 
 	static toggleSearch(className){

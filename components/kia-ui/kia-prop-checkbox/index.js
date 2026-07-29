@@ -9,7 +9,7 @@ class KIA_Prop_Checkbox extends KIACustomElement{
 
 	methods = methods;
 	props = props;
-	customizer = {styleHref: '/components/kia-ui/kia-prop-checkbox/style.css'};
+	customizer = {styleHref: `/components/kia-ui/kia-prop-checkbox/style.css?v=${cacheVersion}`};
 
 	constructor(){
 		super();

@@ -4,7 +4,7 @@ import html from './html.js';
 
 class KIA_Right_Sidebar extends KIACustomElement {
 
-    customizer = {styleHref: '/components/kia-workspace/kia-right-sidebar/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-right-sidebar/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();

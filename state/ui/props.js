@@ -3,7 +3,8 @@ const Index = {
 	pagesX: 1,
 	pagesY: 1,
 	activeTool: 'triangle',
-	selectionKeys: new Set().add('canvas'),
+	selectionKeys: null,
+	preferenceTheme: 'system',
 	openModal: null,
 	colorPicker: {
 	  open: false,
@@ -24,6 +25,14 @@ const Index = {
 		layer: {},
 		page: {}
 	},
+	escapeStack: [],
+	activePressedkeyCode: null,
+	copy: {
+		layer: null,
+		page: null,
+		effects: null,
+	},
+	
 };
 
 export default Index;

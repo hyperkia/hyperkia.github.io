@@ -7,6 +7,7 @@ class KIACustomElement extends HTMLElement{
 		const tagName = KIA.utils.string.underScoreToCamelCase(this.tagName.replace('WBTR-','').toLowerCase());
 		KIA[tagName] = this;			
 		this.cryptoId = crypto.randomUUID();
+		if(document.body.dataset.theme) this.dataset.theme = document.body.dataset.theme;
 	}
 
 	_setComponentHTMLCSS(){
@@ -25,13 +26,13 @@ class KIACustomElement extends HTMLElement{
 
 		this.$class = {};
 		this._qsAll('[data-class]').forEach((el)=>{			
-			this.$class[KIA.utils.string.underScoreToCamelCase(el.dataset.class)] = this._qsAll(`[data-class="${el.dataset.class}"]`);
+			this.$class[KIA.utils.string.underScoreToCamelCase(el.dataset.class)] = [...this._qsAll(`[data-class="${el.dataset.class}"]`)];
 		})
 	}
 
 	_eventsSetup(Events) {
 		for(const event in Events) {			
-			if(['pointerover','pointerout','transitionstart','transitionend','change','input','click'].includes(event)) {
+			if(['pointerover','pointerout','transitionstart','transitionend','change','input','click','focusout'].includes(event)) {
 				this.shadowRoot.addEventListener(event, this.handleEvents);
 			} else if (['toggle',].includes(event)) {
 				this.shadowRoot.addEventListener(event, this.handleEvents, true);

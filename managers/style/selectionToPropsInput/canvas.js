@@ -3,8 +3,8 @@ import propHandler from '../propsHandler/index.js';
 
 function Index() {
 	
-	const style = Object.assign({}, KIA.state.canvas.style);
-		
+	const style = Object.assign({}, KIA.state.canvas.getProp('style'));
+
 	style['font-size'] = parseInt(style['font-size']) || '';
 	style['font-weight'] = parseInt(style['font-weight']) || '';
 	style['letter-spacing'] = parseInt(style['letter-spacing']) || '';

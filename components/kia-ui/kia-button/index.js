@@ -4,7 +4,7 @@ import html from './html.js';
 
 class KIA_Button extends KIACustomElement {
 
-    customizer = {styleHref: '/components/kia-ui/kia-button/style.css'};
+    customizer = {styleHref: `/components/kia-ui/kia-button/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();

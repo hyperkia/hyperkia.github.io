@@ -1,9 +1,10 @@
 const Index = {
-	style: {},
-	children: [],
-	fonts: {},
-	createdAt: '',
-	updatedAt: '',
+    style: {},
+    children: [],
+    fonts: {},
+    createdAt: '',
+    updatedAt: '',
+    projectFonts: {},
 };
 
 export default Index;

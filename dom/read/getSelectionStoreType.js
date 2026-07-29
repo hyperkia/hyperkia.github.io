@@ -1,7 +1,10 @@
 function Index() {
 	const id = KIA.state.ui.getSelectionId();
-	if(KIA.state.layers.getProp('map')?.[id]) return 'layers';
-	if(KIA.state.pages.getProp('map')?.[id]) return 'pages';
+	const selectionObj = KIA.nodesMap[id];
+
+	if(selectionObj && ['html','svg'].includes(selectionObj.instanceof)) return 'layers';
+	if(selectionObj && selectionObj.instanceof === 'document') return 'pages';
+
 	return 'canvas';
 }
 

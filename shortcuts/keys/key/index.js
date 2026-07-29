@@ -1,9 +1,10 @@
 
 import keyMap from './keyMap/index.js';
 
-function Index(key){
-	key = key.toLowerCase();
-	keyMap[key]?.();
+function Index(keyCode){
+	keyCode = keyCode.toLowerCase();
+	if(keyCode === 'delete') keyCode = 'keydelete';
+	keyMap[keyCode]?.();
 }
 
 export default Index;

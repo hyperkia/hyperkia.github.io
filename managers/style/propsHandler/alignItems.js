@@ -1,36 +1,42 @@
+const Index = {
+  prop: 'align-items',
 
-function Index(source, result) {
+  inputTo(result) {
+    
+  },
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;
-		const parentObj = KIA.dom.read.getSelectionParentObject();
-		const selectionObj = KIA.dom.read.getSelectionObject();
+  selectionTo(result) {
+    
+  },
 
-		const parentHeight = parseInt(parentObj.style.height);
-		const elementHeight = parseInt(selectionObj.style.height);
+  computedTo(result) {
+    const inputStyle = result.inputStyle;
+    const parentObj = KIA.dom.read.getSelectionParentObject();
+    const selectionObj = KIA.dom.read.getSelectionObject();
 
-		let top = 0;
+    const parentHeight = parseInt(parentObj.style.height);
+    const elementHeight = parseInt(selectionObj.style.height);
 
-		switch (inputStyle['align-items']) {
-			case 'flex-start':
-				top = 0;
-				break;
+    let top = 0;
 
-			case 'flex-end':
-				top = parentHeight - elementHeight;
-				break;
+    switch (inputStyle['align-items']) {
+      case 'flex-start':
+        top = 0;
+        break;
 
-			case 'center':
-				top = (parentHeight - elementHeight) / 2;
-				break;
-		}
+      case 'flex-end':
+        top = parentHeight - elementHeight;
+        break;
 
-		result.style.top = top+'px';
-	}
+      case 'center':
+        top = (parentHeight - elementHeight) / 2;
+        break;
+    }
 
-}
+    top = Math.round(top);
+    result.style.top = top+'px';
+  }
+};
+
 
 export default Index;
-
-
-

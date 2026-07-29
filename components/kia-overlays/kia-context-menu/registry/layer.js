@@ -6,7 +6,7 @@ const Index = [
 		icon: {
 			name: 'bring-to-front',
 		},
-		shortcut: '['
+		shortcut: ']'
 	},
 
 	{
@@ -15,7 +15,7 @@ const Index = [
 		icon: {
 			name: 'send-to-back',
 		},
-		shortcut: ']'
+		shortcut: '['
 	},
 
 	{
@@ -24,7 +24,7 @@ const Index = [
 		icon: {
 			name: 'lock',
 		},
-		shortcut: 'Ctrl + L'
+		shortcut: 'Ctrl + Shift + L'
 	},
 
 	{
@@ -33,7 +33,7 @@ const Index = [
 		icon: {
 			name: 'eye',
 		},
-		shortcut: 'Ctrl + H'
+		shortcut: 'Ctrl + Shift + H'
 	},
 
 	{
@@ -53,6 +53,26 @@ const Index = [
 			name: 'copy',
 		},
 		shortcut: 'Ctrl + C'
+	},
+
+	{
+		action: 'rename',
+		title: 'Rename',
+		icon: {
+			name: 'pen-solid-full',
+			fill: 'currentColor',
+		},
+		shortcut: ''
+	},
+
+	{
+		action: 'group',
+		title: 'Group',
+		icon: {
+			name: 'layer-group-solid-full',
+			fill: 'currentColor',
+		},
+		shortcut: 'Ctrl + G',
 	},
 
 	{

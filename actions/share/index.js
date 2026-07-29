@@ -1,16 +1,14 @@
 
-import setSelectionKeys from './setSelectionKeys.js';
+import setSelectionIds from './setSelectionIds.js';
 import openColorPicker from './openColorPicker.js';
 import moveLayerInTree from './moveLayerInTree.js';
-
-
-
+import resetSelectionId from './resetSelectionId.js';
 
 
 export {
-	setSelectionKeys,
+	setSelectionIds,
 	openColorPicker,
 	moveLayerInTree,
-
+	resetSelectionId,
 
 };

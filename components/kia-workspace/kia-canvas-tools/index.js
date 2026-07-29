@@ -9,7 +9,7 @@ class KIA_Canvas_Tools extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-workspace/kia-canvas-tools/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-canvas-tools/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();

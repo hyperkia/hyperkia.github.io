@@ -9,7 +9,7 @@ class KIA_File_Import_Modal extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-overlays/kia-modals/modals/kia-file-import-modal/style.css'};
+    customizer = {styleHref: `/components/kia-overlays/kia-modals/modals/kia-file-import-modal/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -47,7 +47,14 @@ class KIA_File_Import_Modal extends KIACustomElement {
         Events[e.type]?.handler?.(e);      
     }
 
-    close(){
+    open(){
+        KIA.actions.ui.shortcutsKey.pushEscapeStack({
+            close: props.root.close,
+            id: 'kiaFileImportModal',
+        });
+    }
+
+    close(){        
         props.root.classList.remove('show');
     }
 

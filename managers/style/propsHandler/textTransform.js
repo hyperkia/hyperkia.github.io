@@ -1,11 +1,21 @@
 
-const prop = 'text-transform';
+const Index = {
 
-function Index(source, result) {
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;	
-		result.style[prop] = inputStyle[prop];
-	}
-}
+  prop: 'text-transform',
+
+  inputTo(result) {
+    const inputStyle = result.inputStyle;	
+	result.style[this.prop] = inputStyle[this.prop];
+  },
+
+  selectionTo(result) {
+    
+  },
+
+  computedTo(result) {   
+    
+  }
+};
+
 
 export default Index;

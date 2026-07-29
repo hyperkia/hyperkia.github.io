@@ -5,10 +5,22 @@ const Index = {
 	init(){
 		const projectFonts = KIA.state.canvas.getProp('projectFonts');
 		const missingFonts = new Set();		
-		const layers = KIA.state.layers.getProp('map');
-		for(let k in layers) {
-			const layerFont = layers[k].css['font-family'];
+		const layers = KIA.state.layers.getLayers();
+		for(let [id,lObj] of Object.entries(layers)) {			
+			const layerFont = lObj.style['font-family'];
 			if(!projectFonts[layerFont] && layerFont) missingFonts.add(layerFont);
+
+			const nesredEls = KIA.utils.dom.getNodesFromHTML(lObj.textContent);
+			nesredEls.forEach((el)=>{
+				const ff = el.style['font-family'];
+
+				if(!projectFonts[ff] && ff) missingFonts.add(ff);
+			})
+		}
+
+		if(missingFonts.size === 0) {
+			props.root.close();
+			return;
 		}
 
 		let fontListHtml = '';

@@ -10,7 +10,7 @@ class KIA_Select extends KIACustomElement{
 	detailsEl = null;
 	methods = methods;
 	props = props;
-	customizer = {styleHref: '/components/kia-ui/kia-select/style.css'};
+	customizer = {styleHref: `/components/kia-ui/kia-select/style.css?v=${cacheVersion}`};
 
 	constructor(){
 		super();
@@ -47,7 +47,11 @@ class KIA_Select extends KIACustomElement{
 		return this._qs('.select-option.selected');
 	}
 
-
+	appSelectionChange(event){
+		if(!props.currentOpenedDropdown) return;
+		if(event.detail.host.tagName === 'KIA-SELECT') return;		
+		methods.close();
+	}
 }
 
 if(!customElements.get('kia-select')){

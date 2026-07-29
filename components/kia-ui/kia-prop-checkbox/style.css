@@ -7,3 +7,7 @@ label::after {content: '';position: absolute;top: 45%;left: 5px;width: 4px;heigh
 label:has(input:checked)::before{background-color: #0d99ff;border-color: #0d99ff;}
 label:has(input:checked)::after{display: inline-block;}
 label span{user-select: none;}
+
+
+:host([data-theme="dark"]) label::before{border-color: #fff;}
+:host([data-theme="dark"]) label:has(input:checked)::before{background-color: transparent;border-color: #fff;}

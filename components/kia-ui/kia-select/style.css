@@ -14,3 +14,8 @@ details:has(.select-trigger.disable){cursor: not-allowed;}
 
 /* Select Options */
 :host([prop="font-weight"]) .select-options{width: 160px;}
+
+
+/* Dark Theme */
+:host([data-theme="dark"]) .select-trigger{background: #383838;color: #fff;}
+:host([data-theme="dark"]) .select-options {background-color: #383838;}

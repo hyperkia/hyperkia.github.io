@@ -44,7 +44,7 @@ function Index(id, gradientData) {
   stops.forEach(stop => {
     const s = document.createElementNS(svgNS, "stop");
 
-    const { location, rgb, opacity = 1 } = stop;
+    const { location, rgb, opacity = 1, hexa } = stop;
 
     // clamp (PSD sometimes gives weird floats)
     const offset = Math.min(1, Math.max(0, location));
@@ -52,7 +52,7 @@ function Index(id, gradientData) {
     s.setAttribute("offset", `${offset * 100}%`);
     s.setAttribute(
       "stop-color",
-      `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+      `${hexa}`
     );
     s.setAttribute("stop-opacity", opacity);
 

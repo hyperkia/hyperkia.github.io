@@ -1,7 +1,7 @@
 const html = `
 	<section class="section">
 		<header>
-			<h5>Layers</h5>			
+			<h5>Layers</h5>
 		</header> 
 		<article class="layers scroll-design" data-id="layers">
 			

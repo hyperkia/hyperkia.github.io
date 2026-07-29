@@ -7,8 +7,6 @@ import '../../state/index.js';
 import '../../observer/index.js';
 import '../../managers/index.js';
 import '../../registry/index.js';
-
-import shortcuts from '../../shortcuts/index.js';
  
 import KIACustomElement from '../kia-custom-element/index.js';
 import html from './html.js';
@@ -23,7 +21,7 @@ class KIA_App extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-app/style.css'};
+    customizer = {styleHref: `/components/kia-app/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -32,12 +30,12 @@ class KIA_App extends KIACustomElement {
     }
  
     connectedCallback() {
-        this.windowEvents();
+        methods.windowEvents();
         this.attachShadow({ mode: 'open' });
         this._defaultSetup();
         this.props.root = this;       
         this._eventsSetup(Events); 
-        this.documentEvents();
+        methods.documentEvents();
     }
 
     handleEvents(e){
@@ -61,30 +59,6 @@ class KIA_App extends KIACustomElement {
         }
 
         Events[e.type]?.handler?.(e);      
-    }
-
-    windowEvents() {        
-        window.addEventListener('DOMContentLoaded', (e) => {
-            KIA.actions.runtime.updateRuntime({ startedAt: Date.now() });
-        });
-        
-        window.addEventListener('error', (e) => {
-            console.log(window.APP_STATE);            
-            console.log(e);
-            alert(e);
-        });
-
-        window.addEventListener('load', () => {
-            KIA.actions.kiaApp.appLoaded();
-            document.body.classList.remove('loading');
-            KIA.actions.runtime.updateRuntime({ finishedAt: Date.now() });
-        });
-    }
-
-    documentEvents(){
-        document.addEventListener('keyup', (e) => {
-            shortcuts(e);
-        });
     }
 
 }

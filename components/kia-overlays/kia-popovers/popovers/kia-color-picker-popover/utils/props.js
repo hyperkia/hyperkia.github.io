@@ -15,8 +15,8 @@ const props = {
 
     id: {},
 
-    svBoxWidth: 0,
-    svBoxHeight: 0,
+    svBoxWidth: 250,
+    svBoxHeight: 250,
 
 }
 

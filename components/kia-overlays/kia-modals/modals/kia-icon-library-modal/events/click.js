@@ -18,12 +18,7 @@ class Index {
         props.root.close();
     }
 
-    static closeModal() {
-        KIA.kiaApp.dispatchEvent(new CustomEvent('iconLibraryIconSelected', {
-            bubbles: true,
-            composed: true,
-            detail: { source: 'kiaIconLibrary', iconName: '' }
-        }));
+    static closeModal() {        
         props.root.close();
     }
 

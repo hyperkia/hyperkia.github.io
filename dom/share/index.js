@@ -1,5 +1,11 @@
-import setLayerDirtyFlagToPropField from './setLayerDirtyFlagToPropField.js';
+import setDirtyComputedToPropFields from './setDirtyComputedToPropFields.js';
+import updateDirtyLayerPropFields from './updateDirtyLayerPropFields.js';
+import removeDisConnectedDomNodes from './removeDisConnectedDomNodes.js';
+import setPreferenceTheme from './setPreferenceTheme.js';
 
 export {
-	setLayerDirtyFlagToPropField
+	setDirtyComputedToPropFields,
+	updateDirtyLayerPropFields,
+	removeDisConnectedDomNodes,
+	setPreferenceTheme,
 };

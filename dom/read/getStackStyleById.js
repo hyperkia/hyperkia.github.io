@@ -2,7 +2,6 @@
 
 function Index(id) {
 	const layerObj = KIA.nodesMap[id];
-	const filterTypes = KIA.state.config.getProp('filterTypes');
 	
 	const style = {
 		filter: [],
@@ -12,16 +11,24 @@ function Index(id) {
 
 	layerObj.stack.forEach((s)=>{
 		if(!s.enable) return;
+		
+		if(s.type === 'filter') style.filter.push(`${s.name}(${s.value.amount}${s.value.unit})`);
 
-		if(filterTypes.includes(s.type)) style.filter.push(`${s.type}(${s.value.amount}${s.value.unit})`);
-		if(s.type === 'text-shadow') {
+		if(s.name === 'text-shadow') {
 			style['text-shadow'].push(
-				`${s.value.offsetX}px ${s.value.offsetY}px ${s.value.blur}px ${s.value.color}`
+				`${s.value.offsetX}px ${s.value.offsetY}px ${s.value.blurRadius}px ${s.value.color}`
 			);
 		}
-		if(s.type === 'box-shadow') {
+
+		if(s.name === 'box-shadow') {
 			style['box-shadow'].push(
-				`${s.value.inset ? 'inset ' : ''}${s.value.offsetX}px ${s.value.offsetY}px ${s.value.blur}px ${s.value.spread}px ${s.value.color}`
+				`${s.value.inset ? 'inset ' : ''}${s.value.offsetX}px ${s.value.offsetY}px ${s.value.blurRadius}px ${s.value.spreadRadius}px ${s.value.color}`
+			);
+		}
+
+		if(s.name === 'drop-shadow') {			
+			style.filter.push(
+				`${s.name}(${s.value.offsetX}px ${s.value.offsetY}px ${s.value.blurRadius}px ${s.value.color})`
 			);
 		}
 	})

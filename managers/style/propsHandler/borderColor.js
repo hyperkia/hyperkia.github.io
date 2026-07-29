@@ -1,24 +1,27 @@
+const Index = {
+  prop: 'border-color',
 
-let prop = 'border-color';
+  inputTo(result) {
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
+    
+    const inputStyle = result.inputStyle;
+    if(!inputStyle['border-color']) return;
+    if(layerObj.instanceof === 'svg') result.attributes.stroke = inputStyle['border-color'];
+    if(layerObj.instanceof === 'html') result.style['border-color'] = inputStyle['border-color']; 
+  },
 
-function Index(source, result) {
-		
-	const layerObj = KIA.dom.read.getSelectionLayerObject();
+  selectionTo(result) {
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
+    
+    if(layerObj.instanceof === 'svg') result['border-color'] = layerObj.attributes.stroke;
+    if(layerObj.instanceof === 'html') result['border-color'] = layerObj.style['border-color'];
+    if(!result['border-color']) result['border-color'] = '';
+  },
 
-	if(source === 'SelectionToPropsInput') {
-		if(layerObj.instanceof === 'svg') result['border-color'] = layerObj.attributes.stroke;
-		if(layerObj.instanceof === 'html') result['border-color'] = layerObj.style['border-color'];
-		if(!result['border-color']) result['border-color'] = '';
-	}
+  computedTo(result) {
+    
+  }
+};
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;
-		if(!inputStyle['border-color']) return;
-		if(layerObj.instanceof === 'svg') result.attributes.stroke = inputStyle['border-color'];
-		if(layerObj.instanceof === 'html') result.style['border-color'] = inputStyle['border-color'];	
-	}
-
-
-}
 
 export default Index;

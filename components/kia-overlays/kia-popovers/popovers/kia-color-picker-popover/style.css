@@ -44,3 +44,8 @@
 .cpicker-inputs-hex .cpicker-input{text-align: left;}
 .cpicker-input-alpha{width:35px;flex-grow: 0;}
 
+
+/* Dark Theme */
+:host([data-theme="dark"]) {background: #2c2c2c;}
+:host([data-theme="dark"]) * {color: #fff;}
+:host([data-theme="dark"]) .cpicker-inputs .cpicker-input{background: #383838;}

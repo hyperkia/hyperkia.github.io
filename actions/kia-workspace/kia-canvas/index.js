@@ -9,6 +9,8 @@ import changeCanvasZoom from './changeCanvasZoom.js';
 import canvasScaleOnLoad from './canvasScaleOnLoad.js';
 import moveCanvas from './moveCanvas.js';
 import setCanvasCss from './setCanvasCss.js';
+import resizeLayer from './resizeLayer.js';
+
 
 export {
 	createElement,
@@ -22,4 +24,5 @@ export {
 	canvasScaleOnLoad,
 	moveCanvas,
 	setCanvasCss,
+	resizeLayer,
 };

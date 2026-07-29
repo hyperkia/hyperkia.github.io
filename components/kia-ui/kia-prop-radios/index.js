@@ -9,7 +9,7 @@ class KIA_Prop_Radios extends KIACustomElement{
 
 	methods = methods;
 	props = props;
-	customizer = {styleHref: '/components/kia-ui/kia-prop-radios/style.css'};
+	customizer = {styleHref: `/components/kia-ui/kia-prop-radios/style.css?v=${cacheVersion}`};
 
 	constructor(){
 		super();

@@ -5,7 +5,7 @@ function Index() {
     const l = props.activeParseLayer.layer;
     const lRect = l.getBoundingClientRect();
     const layerObj = {
-        nodeName: l.nodeName.toLowerCase(),
+        tagName: l.tagName,
         attrs: {},
         css: {
             top: KIA.utils.number.cleanNumber(lRect.top) + 'px',

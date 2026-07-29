@@ -6,7 +6,9 @@ function Index(newLayerObj) {
 		layer: {
 			id: newLayerObj.id,
 			style: Object.keys(newLayerObj.style),
-			flag: 'position',
+			flag: 'style',
+			flagType: 'moving',
+			source: newLayerObj.source
 		}
 	});
 	KIA.state.layers.movingLayer(newLayerObj);

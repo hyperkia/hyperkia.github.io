@@ -20,7 +20,7 @@ function Index(hex) {
 
   // With alpha → return rgba
   if (hex.length === 8) {
-    rgba.a = (parseInt(hex.slice(6, 8), 16) / 255).toFixed(3);
+    rgba.a = +((parseInt(hex.slice(6, 8), 16) / 255).toFixed(3));
     return rgba;
   }
 

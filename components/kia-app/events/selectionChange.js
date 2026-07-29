@@ -3,12 +3,11 @@ class Index {
 
 	static components = [
 		'kiaDesignModule', 'kiaCssTag', 'kiaCanvas', 'kiaCssTypography', 
-		'kiaLayers', 'kiaCssFilter', 'kiaCssEffect'
+		'kiaLayers', 'kiaCssFilter', 'kiaCssEffect', 'kiaCodeModule', 'kiaPages', 
 	];
 
-	static handler(e){		
-		Index.components.forEach((c)=>{
-			if(e.detail.source === KIA[c]) return;
+	static handler(e){
+		Index.components.forEach((c)=>{			
 			KIA[c]?.handleEvents(e);
 		})
 	}

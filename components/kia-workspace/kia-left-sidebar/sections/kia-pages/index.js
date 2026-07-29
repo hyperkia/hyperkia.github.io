@@ -10,7 +10,7 @@ class KIA_Pages extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-workspace/kia-left-sidebar/sections/kia-pages/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-left-sidebar/sections/kia-pages/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();

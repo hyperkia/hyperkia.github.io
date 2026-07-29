@@ -4,8 +4,8 @@ const html = `
 			<h4 class="title">Import</h2>
 			<kia-button data-icon="x-solid-symbol" data-event="closeModal"></kia-button>
 		</header>
-		<article class="tab">
-			<div class="tabmenu">													
+		<article class="tab" data-id="tab">
+			<div class="tabmenu hidden">													
 				<span class="tabmenu-item active" data-target="uploadfile" data-class="tabmenu-item">Upload File</span>
 				<span class="tabmenu-item" data-target="fromurl" data-class="tabmenu-item">From URL</span>
 			</div> 
@@ -32,6 +32,7 @@ const html = `
 				</div>				
 			</div>
 		</article>
+		<span class="import-loader" data-id="importLoader"></span>
 	</section>
 `;
 

@@ -11,7 +11,7 @@ function Index(l) {
 	// clippath
 	if(l.clipPath) {
 		l.clipPath.forEach((c)=>{
-			if(c.nodeName === 'path') clipPart += `<path  data-name="${c.name}" d="${c.d}"></path>`;
+			if(c.tagName === 'path') clipPart += `<path  data-name="${c.name}" d="${c.d}"></path>`;
 		})
 		uiPart = `<path data-name="${l.name}" ${shapeAttrs} d="${l.sattrs.d}" clip-path="url(#${l.key}-arrow)"></path>`;
 	}

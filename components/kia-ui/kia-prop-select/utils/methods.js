@@ -16,7 +16,14 @@ const Methods = {
 		KIA.propInputs[thisEl.dataset.prop] = thisEl;
 	},
 
-	setDropdownPosition(){},  
+	setDropdownPosition(thisEl){
+		this.close();
+		props.currentOpenedDropdown = thisEl;
+		KIA.actions.ui.shortcutsKey.pushEscapeStack({
+            close: this.close,
+            id: 'kiaPropSelect',
+        });
+	}, 
 
 	dropDownItemSelected(){
 		const dEl = props.eRootNode.$id.details;
@@ -50,6 +57,10 @@ const Methods = {
 		dEl.querySelector('.select-option.selected')?.classList.remove('selected');
 		optionEl.classList.add('selected');
 		dEl.querySelector('.select-trigger').innerText = optionEl.textContent.trim();		
+	},
+
+	close(){
+		props.currentOpenedDropdown?.$id.details.removeAttribute('open');
 	}
 
 }

@@ -17,9 +17,15 @@ class Index {
         this.pagesX = +(e.clientX - this.startX).toFixed(0);
         this.pagesY = +(e.clientY - this.startY).toFixed(0);
         KIA.actions.kiaCanvas.moveCanvas({pagesX: this.pagesX, pagesY: this.pagesY});
+        KIA.dom.kiaCanvas.setCanvasCurrentAction({action: 'moveHandTool'});
     }
 
     static handlePointerUp(e) {
+        props.root.releasePointerCapture(e.pointerId);
+        KIA.dom.kiaCanvas.setCanvasCurrentAction({action: 'upHandTool'});
+    }
+
+    static handlePointerCancel(){
         props.root.releasePointerCapture(e.pointerId);
         KIA.dom.kiaCanvas.setCanvasCurrentAction({action: 'upHandTool'});
     }

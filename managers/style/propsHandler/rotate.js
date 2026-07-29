@@ -1,23 +1,29 @@
 
-const prop = 'rotate';
 
-function Index(source, result) {
+const Index = {
 
-	const layerObj = KIA.dom.read.getSelectionLayerObject();
+  prop: 'rotate',
 
-	if(source === 'SelectionToPropsInput') {
-		if(layerObj.style[prop]) {
-			result[prop] = parseInt(layerObj.style[prop]);
-		}
+  inputTo(result) {
+    const inputStyle = result.inputStyle;	
+	result.style[this.prop] = inputStyle[this.prop];
+	if(inputStyle[this.prop] === 'deg') result.style[this.prop] = '0deg';
+  },
 
-		if(!layerObj.style[prop]) result[prop] = '';
+  selectionTo(result) {
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
+
+    if(layerObj.style[this.prop]) {
+		result[this.prop] = parseInt(layerObj.style[this.prop]);
 	}
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;	
-		result.style[prop] = inputStyle[prop];
-		if(inputStyle[prop] === 'deg') result.style[prop] = '0deg';
-	}
-}
+	if(!layerObj.style[this.prop]) result[this.prop] = '';
+  },
+
+  computedTo(result) {   
+    
+  }
+};
+
 
 export default Index;

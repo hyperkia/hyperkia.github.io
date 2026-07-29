@@ -1,55 +1,81 @@
 
-import updateDirtyLayerTextContent from './setselection/updateDirtyLayerTextContent.js';
-import deleteDirtyLayer from './dirtyLayer/deleteDirtyLayer.js';
-import deleteSelectedPage from './setselection/deleteSelectedPage.js';
-
-import renderLayers from './layer/renderLayers.js';
-
-import createSelectionLayersOutline from './createSelectionLayersOutline.js';
-import drawMultiElementsSelectionBound from './drawMultiElementsSelectionBound.js';
 import getElementsInMultiSelectionArea from './getElementsInMultiSelectionArea.js';
-import setCanvasCurrentAction from './setCanvasCurrentAction.js';
-import setPageNamePosition from './setPageNamePosition.js';
-import setCanvasPositionScale from './setCanvasPositionScale.js';
-import setSelectionPageTitle from './setSelectionPageTitle.js';
-import createPage from './createPage.js';
-import createPageName from './createPageName.js';
-import updateCanvasStyle from './updateCanvasStyle.js';
-import setCanvasActiveTool from './setCanvasActiveTool.js';
 
-import updateDirtyLayerAttributes from './dirtyLayer/updateDirtyLayerAttributes.js';
-import updateDirtyLayerStyle from './dirtyLayer/updateDirtyLayerStyle.js';
-import updateDirtyLayerNodeName from './dirtyLayer/updateDirtyLayerNodeName.js';
+// Layer
+import drawMultiElementsSelectionBound from './layer/drawMultiElementsSelectionBound.js';
+import createSelectionLayersOutline from './layer/createSelectionLayersOutline.js';
+import renderLayers from './layer/renderLayers.js';
+import resetLayerById from './layer/resetLayerById.js';
+import selectionLayerResizeController from './layer/selectionLayerResizeController.js';
+import recoverDeletedLayersById from './layer/recoverDeletedLayersById.js';
+import deleteLayersById from './layer/deleteLayersById.js';
+import resetLayerToUngroup from './layer/resetLayerToUngroup.js';
+import resetLayerToGroup from './layer/resetLayerToGroup.js';
+import deleteDirtyLayer from './layer/dirty/deleteDirtyLayer.js';
+import updateDirtyLayerAttributes from './layer/dirty/updateDirtyLayerAttributes.js';
+import updateDirtyLayerStyle from './layer/dirty/updateDirtyLayerStyle.js';
+import updateDirtyLayerTagName from './layer/dirty/updateDirtyLayerTagName.js';
+import updateDirtyLayerTextContent from './layer/dirty/updateDirtyLayerTextContent.js';
+import renderDirtyGroupLayer from './layer/dirty/renderDirtyGroupLayer.js';
+import moveDirtyLayerInTree from './layer/dirty/moveDirtyLayerInTree.js';
+import renderLayersMissFonts from './layer/dirty/renderLayersMissFonts.js';
+import renderDuplicatePasteLayer from './layer/dirty/renderDuplicatePasteLayer.js';
 
-import updatePageSelectionStyle from './selection-page/updatePageSelectionStyle.js';
-import moveLayerInTree from './moveLayerInTree.js';
 
+// Page
+import createPageName from './page/createPageName.js';
+import resetPageById from './page/resetPageById.js';
+import setPageNamePosition from './page/setPageNamePosition.js';
+import createPage from './page/createPage.js';
+import updateDirtyPageTitle from './page/dirty/updateDirtyPageTitle.js';
+import updateDirtyPageStyle from './page/dirty/updateDirtyPageStyle.js';
+import deleteDirtyPage from './page/dirty/deleteDirtyPage.js';
+import deletePagesById from './page/deletePagesById.js';
+
+
+// Canvas
+import updateCanvasStyle from './canvas/updateCanvasStyle.js';
+import setCanvasActiveTool from './canvas/setCanvasActiveTool.js';
+import setCanvasCurrentAction from './canvas/setCanvasCurrentAction.js';
+import setCanvasPositionScale from './canvas/setCanvasPositionScale.js';
+import resetCanvas from './canvas/resetCanvas.js';
 
 
 export default {	
-	updateDirtyLayerTextContent,
-	deleteDirtyLayer,
-	deleteSelectedPage,
-
-	renderLayers,
-	
-	createSelectionLayersOutline,
-	drawMultiElementsSelectionBound,
 	getElementsInMultiSelectionArea,
-	setCanvasCurrentAction,
-	setPageNamePosition,
-	setCanvasPositionScale,
-	setSelectionPageTitle,
-	createPage,
+
+	drawMultiElementsSelectionBound,
+	createSelectionLayersOutline,
+	renderLayers,
+	resetLayerById,
+	selectionLayerResizeController,
+	recoverDeletedLayersById,
+	deleteLayersById,
+	resetLayerToUngroup,
+	resetLayerToGroup,
+	deleteDirtyLayer,
+	updateDirtyLayerAttributes,
+	updateDirtyLayerStyle,
+	updateDirtyLayerTagName,
+	updateDirtyLayerTextContent,
+	renderDirtyGroupLayer,
+	renderLayersMissFonts,
+	moveDirtyLayerInTree,
+	renderDuplicatePasteLayer,
+
 	createPageName,
+	resetPageById,
+	setPageNamePosition,
+	createPage,
+	updateDirtyPageTitle,
+	updateDirtyPageStyle,
+	deleteDirtyPage,
+	deletePagesById,
+	
 	updateCanvasStyle,
 	setCanvasActiveTool,
+	setCanvasCurrentAction,
+	setCanvasPositionScale,
+	resetCanvas,
 
-	updateDirtyLayerAttributes,
-
-	updateDirtyLayerStyle,
-	updateDirtyLayerNodeName,
-
-	updatePageSelectionStyle,
-	moveLayerInTree,
-};
+}

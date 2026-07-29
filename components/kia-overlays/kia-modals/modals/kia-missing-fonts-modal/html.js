@@ -1,7 +1,7 @@
 const html = `
 	<section class="section">
 		<header class="header">
-			<h4 class="title">Missing Fonts</h2>
+			<h4 class="title">Font Search & Replace</h2>
 			<kia-button data-icon="x-solid-symbol" data-event="closeModal"></kia-button>
 		</header>
 		

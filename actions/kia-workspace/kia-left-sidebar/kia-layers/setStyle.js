@@ -8,8 +8,12 @@ function Index(newLayerObj){
             id: newLayerObj.id,
             style: Object.keys(newLayerObj.style),
             flag: 'style',
+            computed: newLayerObj.computed,
         }
-    });
+    }); 
+    
+    delete newLayerObj.computed;
+
     KIA.state.layers.setStyle(newLayerObj);
     KIA.state.ui.resetDirtyMap();
     clearTimeout(debounceTimeout);

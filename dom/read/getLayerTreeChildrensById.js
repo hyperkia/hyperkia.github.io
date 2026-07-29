@@ -1,17 +1,14 @@
 
-
 function Index(id) {
-    const layers = KIA.state.layers.getProp('map');
     const ids = [id];
-
     function walk(children) {
         (children || []).forEach(id => {
             ids.push(id);
-            walk(layers[id].children);
+            KIA.nodesMap[id] && walk(KIA.nodesMap[id].children);
         });
     }
 
-    const children = layers[id].children;
+    const children = KIA.nodesMap[id].children;
     walk(children);
     return ids;
 }

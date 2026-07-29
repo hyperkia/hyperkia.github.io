@@ -1,7 +1,5 @@
 const Index = {
-	template: `
-    
-    
+	template: `      
     <!DOCTYPE html>
       <html>
         <head>
@@ -11,18 +9,13 @@ const Index = {
 
           <style>
             /* Default */
-            .page{background-color: #fff;position: relative;overflow: hidden;isolation: isolate;user-select: auto;transform-origin: 0 0;}
-            .canvas-layer{background: #d9d9d9;stroke:none;stroke-width: 1px;fill: #d9d9d9;user-select: auto;transition: none;caret-color: transparent;pointer-events: auto;display: block;overflow-wrap: anywhere;white-space: pre-wrap;border: 0px solid #000000;position: absolute;}
-            .page-svg, svg.canvas-layer {fill: transparent;background-color: transparent;}
+            .page{position: relative;overflow: hidden;isolation: isolate;user-select: auto;transform-origin: 0 0;}
+            .canvas-layer{stroke:none;stroke-width: 1px;user-select: auto;transition: none;caret-color: transparent;pointer-events: auto;display: block;overflow-wrap: anywhere;white-space: pre-wrap;border: 0px solid #000000;position: absolute;}
 
             /* Img layer */
             .canvas-layer.imghtml{background-color: transparent;}
             .canvas-layer.imghtml[src=""]{background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-image'%3E%3Crect x='3' y='3' width='18' height='18' rx='2' ry='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpolyline points='21 15 16 10 5 21'/%3E%3C/svg%3E") center center no-repeat #687787;background-size: 65% auto;}
-
-            /* Text Layer */
-            .texthtml{background: transparent;cursor: auto;user-select: auto;caret-color: transparent;fill: transparent;line-height: normal;}
-            .texthtml:focus-visible{outline: none;}
-            .texthtml[contenteditable="true"]{cursor: auto;user-select: auto;caret-color: #383838;}
+            .texthtml{cursor: context-menu;user-select: none;caret-color: currentColor;line-height: normal;}            
           </style>  
 
           <style>
@@ -34,7 +27,7 @@ const Index = {
             .menu-pages-btn svg{width: 20px;}
             .menu-pages-btn input{position: absolute;top: 0;left: 0;width: 100%;height: 100%;opacity: 0;z-index: 1;}
 
-            .menu-pages-list{list-style: none;padding: 0 10px;background: #0d99ff;margin-top: 2px;min-width: 250px;max-height: 0px;transition: 0.3s all linear;overflow: hidden;}
+            .menu-pages-list{list-style: none;padding: 0 10px;background: #0d99ff;margin-top: 2px;min-width: 250px;max-height: 0px;transition: 0.3s all linear;overflow: auto;}
             .menu-pages-list li{font-size: 16px;line-height: 24px;color: #fff;border-bottom: 1px solid #fff;padding: 7px 0;user-select: none;cursor: pointer;}
             .menu-pages-list li:last-child{border-bottom: none;}
             .menu-pages-btn:has(input:checked) + .menu-pages-list{max-height: 70vh;}
@@ -60,13 +53,14 @@ const Index = {
                 menuPagesList: document.querySelector('#menu-pages-list'),
                 pages: document.querySelector('#pages'),
                 style: document.querySelector('#style'),
+                navCheckInput: document.querySelector('#navCheckInput'),                
               },
 
               renderPagesAsMenu(){
                 const html = [];
                 for(let [pk, pObj] of Object.entries(__HYPERKIA_PROJECT__.pages)) {
                   html.push(
-                    '<li data-menu="' + pk + '">' + pObj.name + '</li>'
+                    '<li data-menu="' + pk + '">' + pObj.title + '</li>'
                   );
                 }
                 this.els.menuPagesList.innerHTML = html.join('')
@@ -74,15 +68,17 @@ const Index = {
 
               renderPageByKey(key){
                 const pageObj = __HYPERKIA_PROJECT__.pages[key];
+                if(!pageObj) return;
                 obj.els.style.innerHTML = __HYPERKIA_PROJECT__.style;
                 const pageDivEl = document.createElement('div');
                 pageDivEl.classList.add('page');
                 pageDivEl.innerHTML = __HYPERKIA_PROJECT__.pageInnerHtml[key];
                 pageDivEl.dataset.page = key;
-                pageDivEl.style.scale = window.innerWidth / parseInt(pageObj.css.width);
-                Object.assign(pageDivEl.style, pageObj.css);
+                pageDivEl.style.scale = window.innerWidth / parseInt(pageObj.style.width);
+                Object.assign(pageDivEl.style, pageObj.style);                
                 obj.els.pages.innerHTML = '';
                 obj.els.pages.appendChild(pageDivEl);
+                document.title = pageObj.title;
 
                 pageDivEl.querySelectorAll('*').forEach((el)=>{
                   el.removeAttribute('data-name');
@@ -90,6 +86,13 @@ const Index = {
                 });
 
                 obj.setImgSrc();
+                obj.setImageSrc();
+                obj.setDivMaskImage();
+                window.scrollTo(0,0);
+                this.els.navCheckInput && (this.els.navCheckInput.checked = false);
+                setTimeout(()=>{
+                  this.els.pages.style.height = pageDivEl.getBoundingClientRect().height+'px';
+                },400);
               },
 
               setImgSrc(){
@@ -97,10 +100,33 @@ const Index = {
                 imgEls.forEach((imgEl)=>{
                   const lkey = imgEl.dataset.layer;
                   const lObj = __HYPERKIA_PROJECT__.layers[lkey];
-                  const srcAssetKey = lObj.assets.src;
-                  const assetPath = __HYPERKIA_PROJECT__.assets[srcAssetKey]?.path;
+                  const srcAssetKey = lObj.attributes.src;
+                  const assetPath = __HYPERKIA_PROJECT__.assets[srcAssetKey]?.path;                
                   if(assetPath) imgEl.src = assetPath;
                 })
+              },
+
+              setImageSrc(){
+                const imgEls = document.querySelectorAll('[href^="blob"]');                
+                imgEls.forEach((imgEl)=>{
+                  const lId = imgEl.dataset.layer;
+                  const lObj = __HYPERKIA_PROJECT__.layers[lId];
+                  const hrefAssetId = lObj.attributes.href;
+                  const assetPath = __HYPERKIA_PROJECT__.assets[hrefAssetId]?.path;                
+                  if(assetPath) imgEl.setAttribute('href', assetPath);
+                });
+              },
+
+              setDivMaskImage(){
+                const maskDivEls = document.querySelectorAll('div.canvas-layer');                
+                maskDivEls.forEach((maskDivEl)=>{
+                  const lId = maskDivEl.dataset.layer;
+                  const lObj = __HYPERKIA_PROJECT__.layers[lId];
+                  const maskImageDataUrl = lObj.style['mask-image'];                
+                  if(maskImageDataUrl && maskImageDataUrl.indexOf('url("data:')===0) {
+                    maskDivEl.style.maskImage = maskImageDataUrl;
+                  }
+                });
               },
 
               pageRenderEvent(){
@@ -108,18 +134,36 @@ const Index = {
                   const pageKey = e.target?.dataset?.menu;
                   if(pageKey) obj.renderPageByKey(pageKey);
                 })
+              },
+
+              loadProjectFonts(){
+                const fonts = __HYPERKIA_PROJECT__.canvas.projectFontsStyle;
+                const styleEl = document.createElement('style');
+                styleEl.innerHTML = fonts;
+                document.head.appendChild(styleEl);
+              },
+
+              getFirstNonEmptyPageId(){
+                let first = null;
+                __HYPERKIA_PROJECT__.canvas.children.forEach((pId)=>{
+                  if(first) return;
+                  const pageObj = __HYPERKIA_PROJECT__.pages[pId];
+                  if(pageObj.children.length) first = pId;
+                });
+
+                return first;
               }
             }
 
             obj.renderPagesAsMenu();
-            const firstPageKey = __HYPERKIA_PROJECT__.canvas.children[0];
+            const firstPageKey = obj.getFirstNonEmptyPageId();
             obj.renderPageByKey(firstPageKey);
             obj.pageRenderEvent();
+            obj.loadProjectFonts();
             
           </script>
         </body>
       </html>
-  
 	`,
 }
 

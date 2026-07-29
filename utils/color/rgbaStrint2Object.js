@@ -1,4 +1,4 @@
-function Index(){
+function Index(str){
 	const rgba = str.split('(')[1].split(')')[0].split(',');
     if (rgba.length === 3) rgba.push('1');
     const rgbaObject = {

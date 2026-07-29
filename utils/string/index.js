@@ -8,6 +8,8 @@ import getFileExtension from './getFileExtension.js';
 import escapeHtml from './escapeHtml.js';
 import base64ToBlobUrl from './base64ToBlobUrl.js';
 import encodeBase64 from './encodeBase64.js';
+import getLineCount from './getLineCount.js';
+import splitCamelCase from './splitCamelCase.js';
 
 export default {
 	underScoreToCamelCase,
@@ -20,4 +22,6 @@ export default {
 	escapeHtml,
 	base64ToBlobUrl,
 	encodeBase64,
+	getLineCount,
+	splitCamelCase,
 }

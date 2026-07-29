@@ -5,6 +5,7 @@ import canvas from './canvas.js';
 
 function Index(style) {
 	const selectionType = KIA.dom.read.getSelectionStoreType();
+
 	switch(selectionType) {
 		case 'layers':
 			layer(style);

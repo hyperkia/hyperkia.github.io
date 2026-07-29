@@ -1,9 +1,10 @@
 :host{display: block;}
 :host header{display: flex;justify-content: space-between;align-items: center;min-height: 43px;padding: 5px 4px 5px 11px;}
 
+h5{user-select: none;}
 
 .menu-items{display: flex;gap: 6px;}
-.menu-items a{color:#7b7b7b;text-decoration: none;display: inline-flex;justify-content: center;align-items: center;padding: 5px;transition: background-color 0.3s linear;border-radius: 5px;background: transparent;position: relative;overflow: hidden;}
+.menu-items a{color:#7b7b7b;text-decoration: none;display: inline-flex;justify-content: center;align-items: center;padding: 5px;transition: background-color 0.3s linear;border-radius: 5px;background: transparent;position: relative;overflow: hidden;user-select: none;}
 .menu-items a.active{color: #383838;font-weight: 500;background: #f5f5f5;}
 .menu-items a:hover{background: #f5f5f5;}
 .menu-items svg{display: none;fill: none;stroke: currentColor;stroke-width: 2px;}
@@ -22,5 +23,7 @@
 .search-input:focus{outline:2px solid #0d99ff;border-color: transparent;}
 
 
-
-
+/* Dark Theme */
+:host([data-theme="dark"]) {background: #2c2c2c;}
+:host([data-theme="dark"]) .menu-items a:hover {background: #383838;}
+:host([data-theme="dark"]) .menu-items a.active {background: #383838;color: #fff;}

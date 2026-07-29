@@ -29,6 +29,7 @@ function Index(data){
 	if(data.position === 'inside') {
 	
 		dropObj.children.push(dragObj.id);
+		dropObj.children = [...new Set(dropObj.children)];
 		dragObj.parent = dropObj.id;
 	}
 

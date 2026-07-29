@@ -18,3 +18,7 @@
 :host([data-shadow="box-shadow"]) :where(.spread-radius-item, .inset-item){display: flex;}
 
 kia-input, kia-select{width: 126px;}
+
+
+:host([data-theme="dark"]) {background: #2c2c2c;}
+:host * {color: #fff;}

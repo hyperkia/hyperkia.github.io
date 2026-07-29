@@ -1,9 +1,9 @@
-function Index(canvas) {
+function Index(canvas, name='layer.png') {
     return new Promise((resolve) => {
         canvas.toBlob((blob) => {
             if (!blob) return resolve(null);
 
-            const file = new File([blob], "layer.png", {
+            const file = new File([blob], name, {
                 type: "image/png",
                 lastModified: Date.now()
             });

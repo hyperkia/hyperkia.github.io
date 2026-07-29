@@ -4,16 +4,13 @@ function Index(layerObjs) {
     KIA.state.ui.setActiveTool('triangle');
 
     const svgObj = layerObjs[0];
+    const parentObjectStore = KIA.dom.read.getObjectStoreNameById(svgObj.parent);
 
-    let parentStore = '';
-    if(KIA.state.layers.getProp('map')[svgObj.parent]) parentStore = 'layers';
-    if(KIA.state.pages.getProp('map')[svgObj.parent]) parentStore = 'pages';
-
-    if(parentStore === 'layers') {
+    if(parentObjectStore === 'layers') {
         KIA.state.layers.addLayerToParent(svgObj);    	
     	const parentObj = KIA.nodesMap[svgObj.parent];
     	KIA.services.idb.core.replaceObjectByKey('layers', parentObj);
-    } else if (parentStore === 'pages') {
+    } else if (parentObjectStore === 'pages') {
     	KIA.state.pages.addLayerToParent(svgObj);
     	const parentObj = KIA.nodesMap[svgObj.parent];
     	KIA.services.idb.core.replaceObjectByKey('pages', parentObj);

@@ -11,7 +11,7 @@ class KIA_Layers extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-workspace/kia-left-sidebar/sections/kia-layers/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-left-sidebar/sections/kia-layers/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -26,7 +26,7 @@ class KIA_Layers extends KIACustomElement {
         this._eventsSetup(Events);  
     }
 
-    handleEvents(e){       
+    handleEvents(e){
         Object.assign(props, props.root._resolveEventContext(e));
          
         // Throttle
@@ -47,6 +47,10 @@ class KIA_Layers extends KIACustomElement {
         }
 
         Events[e.type]?.handler?.(e);      
+    }
+
+    appSelectionChange(event){
+        methods.removeCloneItemContentEls();
     }
 
 }

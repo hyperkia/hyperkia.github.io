@@ -4,5 +4,5 @@ import uiLeftSidebarCollapseChange from './uiLeftSidebarCollapseChange.js';
 
 export { 
 	click,
-	uiLeftSidebarCollapseChange
+	uiLeftSidebarCollapseChange,
 }

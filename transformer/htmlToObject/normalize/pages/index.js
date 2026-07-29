@@ -17,7 +17,6 @@ function extractPage(iframeEl) {
             height: iframeEl.offsetHeight + 'px',
             'pointer-events': 'auto',
             visibility: 'visible',
-            order: Object.keys(KIA.state.pages.getProp('map')).length + 1,
         },
         layers: [],
         source: 'url',

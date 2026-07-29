@@ -4,22 +4,22 @@ import data from './data.js';
 const Index = {
 	getGroup(){},
 
-	isText(nodeName){
-		return data[nodeName]?.editable;
+	isText(tagName){
+		return data[tagName]?.editable;
 	},
 
-	canTransform(nodeName){
-		return data[nodeName]?.transformGroup;
+	canTransform(tagName){
+		return data[tagName]?.transformGroup;
 	},
 
-	canHaveChildren(nodeName){
-		return data[nodeName].canHaveChildren;
+	canHaveChildren(tagName){		
+		return data[tagName]?.canHaveChildren || false;
 	},
 	
 	isContainer(){},
 
-	getUIType(nodeName){		
-		return data[nodeName]?.uiGroup;
+	getUIType(tagName){		
+		return data[tagName]?.uiGroup;
 	}
 }
 

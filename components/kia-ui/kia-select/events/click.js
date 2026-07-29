@@ -5,7 +5,7 @@ class Index {
   
     static handler() {            
        if(!props.eRootNode.$id.details.open) {
-            methods.setDropdownPosition();
+            methods.setDropdownPosition(props.eRootNode);
        } else if(props.eTarget.closest('.select-option')) {
             methods.dropDownItemSelected();
        }

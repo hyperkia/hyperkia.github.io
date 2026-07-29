@@ -3,7 +3,7 @@ import html from './html.js';
 
 class KIA_Input extends KIACustomElement{
 
-	customizer = {styleHref: '/components/kia-ui/kia-input/style.css'};
+	customizer = {styleHref: `/components/kia-ui/kia-input/style.css?v=${cacheVersion}`};
 
 	constructor(){
 		super();
@@ -18,11 +18,11 @@ class KIA_Input extends KIACustomElement{
 	}
 
 	handleEvents(e){		
-		if (Date.now() - this.lastThrottle < 50) return; 
-		props.eTarget = e.composedPath()[0];
-		props.eRootNode = props.eTarget.getRootNode().host;
-        this.lastThrottle = Date.now();
-        Events[e.type]?.handler?.(e);
+		// if (Date.now() - this.lastThrottle < 50) return; 
+		// props.eTarget = e.composedPath()[0];
+		// props.eRootNode = props.eTarget.getRootNode().host;
+        // this.lastThrottle = Date.now();
+        // Events[e.type]?.handler?.(e);
 	}
 
 	get value() {

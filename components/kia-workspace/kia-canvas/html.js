@@ -19,7 +19,6 @@ const html = `
 	
 	<div class="dimension-indicator" data-id="dimension-indicator"></div>
 
-	
 	<div data-id="canvas-selection" class="canvas-selection"></div>	
 	<svg class="active-layers-outline-svg">
 	  <defs>
@@ -30,10 +29,16 @@ const html = `
 		<path clip-path="url(#active-layers-outline-clippath)" class="active-layers-outline" data-id="active-layers-outline" data-selection="0" vector-effect="non-scaling-stroke" shape-rendering="crispEdges"></path>
 	</svg>
 
-
 	<svg viewBox="0 0 1200 800" style="width:0px;height:0px;" xmlns="http://www.w3.org/2000/svg">
 		<defs data-id="gradient-registry-defs"></defs>
 	</svg>
+
+	<div class="resize-controller" data-id="resize-controller">
+		<span class="resize-controller-point top-resize" data-direction="top"></span>
+		<span class="resize-controller-point right-resize" data-direction="right"></span>
+		<span class="resize-controller-point bottom-resize" data-direction="bottom"></span>
+		<span class="resize-controller-point left-resize" data-direction="left"></span>
+	</div>
 `;
 
 export default html;

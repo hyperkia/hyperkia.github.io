@@ -5,7 +5,7 @@ import popoverBase from '../../popover-base.js';
 class Index {
   
     static handler(e) {
-       if(props.eTarget.getRootNode().host.dataset.event === 'closePopover') popoverBase.closePopover(e);
+       if(props.eTarget.getRootNode().host.dataset.event === 'closePopover') props.root.close();
     } 
 } 
 

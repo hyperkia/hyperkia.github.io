@@ -7,7 +7,7 @@ import base from './base.js';
 function isusedLayer(l) {
 	if(l.closest('[data-htmlparse]')) return;
 	const s = props.activeParseLayer.layerStyle;
-	if (['HTML', 'LINK', 'HEAD', 'META', 'SCRIPT', 'TITLE', 'NOSCRIPT', 'STYLE', 'TEMPLATE'].includes(l.nodeName)) return;
+	if (['HTML', 'LINK', 'HEAD', 'META', 'SCRIPT', 'TITLE', 'NOSCRIPT', 'STYLE', 'TEMPLATE'].includes(l.tagName)) return;
     if (l.offsetWidth === 0 || l.offsetHeight === 0) return;
     if(s.opacity === '0') return;
     if(s.visibility === 'hidden') return;
@@ -19,7 +19,7 @@ function isusedLayer(l) {
 	if (s['background-image'] !== 'none') isUsed = true;
 	if(s['border-width']) isUsed = true;
 	if (l.src) isUsed = true;
-	if (l.nodeName === 'VIDEO') isUsed = true;
+	if (l.tagName === 'VIDEO') isUsed = true;
 	if (l.classList.toString().indexOf('fa-')>=0) isUsed = true;
 
     return isUsed;

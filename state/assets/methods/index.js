@@ -1,15 +1,19 @@
 import getProp from "./getProp.js";
 import selectAsset from './selectAsset.js';
 import importAssets from './importAssets.js';
-import loadData from './loadData.js';
+import loadAssets from './loadAssets.js';
 import uploadAsset from './uploadAsset.js';
+import getAssets from './getAssets.js';
+import deleteAssetsById from './deleteAssetsById.js';
 
 export default {
 	getProp,
 	selectAsset,
 	importAssets,
-	loadData,
+	loadAssets,
 	uploadAsset,
+	getAssets,
+	deleteAssetsById,
 };
 
 

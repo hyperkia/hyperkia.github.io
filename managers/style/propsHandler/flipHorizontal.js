@@ -1,26 +1,31 @@
+const Index = {
 
-function Index(source, result) {
+  inputTo(result) {
+    
+  },
 
-	if(source === 'propsInputToSelection') {
-		const id = KIA.state.ui.getSelectionId();
-		const lCss = KIA.state.layers.map[id].css;
-		
-		let scale = lCss.scale;
-		let scaleX = '';
-		let scaleY = '';
+  selectionTo(result) {
+    
+  },
 
-		if(scale) {
-			[scaleX, scaleY] = scale.split(' ');
-			scaleX = -(scaleX);
-		} else {
-			scaleX = -1;	
-			scaleY = 1;	
-		}
+  computedTo(result) {   
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
+    
+    let scale = layerObj.style.scale;
+    let scaleX = '';
+    let scaleY = '';
 
-		result.style.scale = `${scaleX} ${scaleY}`;
-		console.log(result);
-	}
+    if(scale) {
+      [scaleX, scaleY] = scale.split(' ');
+      scaleX = -(scaleX);
+    } else {
+      scaleX = -1;  
+      scaleY = 1; 
+    }
 
-}
+    result.style.scale = `${scaleX} ${scaleY}`; 
+  }
+};
+
 
 export default Index;

@@ -5,8 +5,9 @@ class Index {
 
     static handler(e) {
         if (props.eRTAction === 'closeModal') props.root.close();
+        if (props.eTAction === 'loadMoreAssets') KIA.dom.kiaAssetsManagerModal.renderAssetList();
         if (props.eTarget.closest('.tabmenu-item')) this.switchTab();
-        if (props.eTarget.closest('[data-asset]')) this.assetSelected();
+        if (props.eTarget.closest('[data-asset]')) this.assetSelected();        
     }
 
     static switchTab(targetTab = null) {

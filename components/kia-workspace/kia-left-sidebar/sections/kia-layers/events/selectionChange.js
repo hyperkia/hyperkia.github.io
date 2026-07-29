@@ -4,9 +4,9 @@ import methods from '../utils/methods.js';
 
 class Index {
 
-	static handler(e){
+	static handler(e){		
 		KIA.dom.kiaLayers.scrollIntoViewSelection();
-		methods.activeSelection();
+		KIA.dom.kiaLayers.activeSelectionInUI();
 	}
 
 	

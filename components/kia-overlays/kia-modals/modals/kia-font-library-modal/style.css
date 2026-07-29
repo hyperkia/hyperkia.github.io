@@ -1,5 +1,5 @@
 :host{display: block;}
-.section{width:85vw;height: 85vh;border:1px solid #ccc;display: flex;flex-direction: column;}
+.section{width:85vw;height: 85vh;display: flex;flex-direction: column;}
 .header{display: flex;flex-wrap: wrap;justify-content: space-between;align-items: center;padding:15px 20px;border-bottom:2px solid #ccc;}
 .title {margin-bottom: 0;}
 .title-link {color: inherit;text-decoration: none;}
@@ -19,16 +19,16 @@
 .tabcontent{height:100%;display: none;pointer-events: none;}
 .tabcontent.active{display: block;pointer-events: auto;}
 
-.font-item{transition-property: opacity;opacity: 1;transition-duration: 0.5s;line-height: 1.2;letter-spacing: 2px;padding: 15px;border: 2px solid #e6e6e6;border-radius: 8px;}
+.font-items:has(.font-item.deleting) [data-action="delete"]{pointer-events: none;}
+.font-item{transition-property: opacity;opacity: 1;transition-duration: 0.1s;line-height: 1.2;letter-spacing: 2px;padding: 15px;border: 2px solid #e6e6e6;border-radius: 8px;}
 .font-item.deleting{outline:2px solid red;outline-offset: -2px;opacity: 0;}
 .font-items{height: 100%;display: flex;flex-direction: column;gap:15px;}
+.font-item:nth-child(1):last-child [data-action="delete"]{display: none;}
 
 .font-item-button{display: inline-flex;width: 40px;height: 32px;background: #0d99ff;border: none;border-radius: 4px;justify-content: center;align-items: center;cursor: pointer;}
-
 .font-item-button::before{content: '';background-color: #fff;mask-repeat: no-repeat;mask-position: center center;mask-size: 14px auto;width: 20px;height: 20px;mask-size: 30px 30px;}
 
 .font-item-button[data-action="add"]::before{mask-image: url(/assets/images/plus-solid.svg);mask-size: 18px 20px;}
-
 .font-item-button[data-action="added"]{background-color: #008000;pointer-events: none;}
 .font-item-button[data-action="added"]::before{mask-image: url(/assets/images/check-solid-full.svg);mask-size: 18px 20px;}
 
@@ -47,5 +47,9 @@
 .search-fount-name::before{content: var(--search-fount-name);}
 
 
+
+/* Dark Theme */
+:host([data-theme="dark"]) .font-search{color: #383838;}
+:host([data-theme="dark"]) .tabmenu-item.active {color: #fff !important;border-color: #fff;}
 
 

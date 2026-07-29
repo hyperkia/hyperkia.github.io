@@ -24,6 +24,7 @@ class Index {
                 'font-style': fontStyle,
             }
         });
+        
         KIA.actions.kiaMissingFontsModal.resolveFont(data);
         props.root.close();
     }

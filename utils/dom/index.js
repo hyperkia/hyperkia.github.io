@@ -13,6 +13,10 @@ import fileToDimensionObject from './fileToDimensionObject.js';
 import getDropFile from './getDropFile.js';
 import getTypeOf from './getTypeOf.js';
 import cleanSVGElement from './cleanSVGElement.js';
+import isTypingTarget from './isTypingTarget.js';
+import getNodesFromHTML from './getNodesFromHTML.js';
+import getAllCustomElements from './getAllCustomElements.js';
+
 	
 	
 export default {
@@ -31,4 +35,7 @@ export default {
 	getDropFile,
 	getTypeOf,
 	cleanSVGElement,
+	isTypingTarget,
+	getNodesFromHTML,
+	getAllCustomElements,
 }

@@ -8,6 +8,7 @@ function getClosestActiveNode(id){
 }
 
 function createParents(){
+	closestParents.pop();
 	closestParents.forEach((id, i)=>{		
 		const nodeEl = KIA.layersRefMap[id];
 		if(nodeEl) {
@@ -27,7 +28,7 @@ function createParents(){
 		newNodeEl.dataset.item = l.id;
 		newNodeEl.dataset.visibility = l.style.visibility || 'inherit';
 		newNodeEl.dataset.lock = l.style['pointer-events'] || 'inherit';
-		headerEl.dataset.title = l.title || l.nodeName;
+		headerEl.dataset.title = l.title || l.tagName;
 		if(l.children.length > 0) newNodeEl.classList.add('show');
 		nodeParentEl.querySelector('.childrens')?.appendChild(itemTemplate);
 	});

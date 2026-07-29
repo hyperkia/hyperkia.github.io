@@ -1,11 +1,11 @@
 
 class Index {
 
-	static components = ['kiaCanvas', 'kiaColorPickerPopover'];
+	static components = ['kiaCanvas'];
 
 	static handler(e){
 		Index.components.forEach((c)=>{
-			KIA[c]?.init(e); 
+			KIA[c]?.init?.(e); 
 		}) 
 	}
 

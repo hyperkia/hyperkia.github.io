@@ -1,6 +1,7 @@
 import icons from './icons/index.js';
 import fonts from './fonts/index.js';
 
+window.cacheVersion = '1784828628110';
 
 if(window.KIA){
 	document.body.innerHTML = '<h1>KIA is reserve keyword, please use different identifier</h1>';
@@ -17,3 +18,5 @@ if(window.KIA){
 		propInputs: {},
 	};
 }
+
+

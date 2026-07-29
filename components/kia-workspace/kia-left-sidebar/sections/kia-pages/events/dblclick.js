@@ -12,7 +12,7 @@ class Index {
 		const id = props.eTarget.closest('[data-page]').dataset.page;
 		const editElement = KIA.kiaPages._qs(`[data-page="${id}"] .page-name`);
 		const ids = new Set().add(id);
-        KIA.actions.share.setSelectionKeys(ids);
+        KIA.actions.share.setSelectionIds(ids);
 		KIA.utils.dom.enableEditingAndFocusEnd(editElement);
 	}
 

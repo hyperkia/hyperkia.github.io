@@ -7,9 +7,13 @@ import * as Events from './events/index.js';
 
 class KIA_Missing_Fonts_Modal extends KIACustomElement {
 
+    static get observedAttributes() {
+        return ['class'];
+    }
+
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-overlays/kia-modals/modals/kia-missing-fonts-modal/style.css'};
+    customizer = {styleHref: `/components/kia-overlays/kia-modals/modals/kia-missing-fonts-modal/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -22,7 +26,7 @@ class KIA_Missing_Fonts_Modal extends KIACustomElement {
         this._defaultSetup();
         this.props.root = this;       
         this._eventsSetup(Events);
-        this.afterConnected();
+        methods.init();
     }
 
     handleEvents(e){
@@ -48,12 +52,19 @@ class KIA_Missing_Fonts_Modal extends KIACustomElement {
         Events[e.type]?.handler?.(e);      
     }
 
+    open(){
+        KIA.actions.ui.shortcutsKey.pushEscapeStack({
+            close: props.root.close,
+            id: 'kiaMissingFontsModal',
+        });
+    }
+
     close(){
         props.root.classList.remove('show');
     }
 
-    afterConnected(){
-        methods.init();
+    attributeChangedCallback(name, oldValue, newValue) {
+        if(props.root && newValue.indexOf('show')>=0 ) methods.init();
     }
 
 }

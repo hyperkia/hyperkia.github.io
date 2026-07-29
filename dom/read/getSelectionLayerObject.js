@@ -1,6 +1,7 @@
 function Index() {
 	const id = KIA.state.ui.getSelectionId();
-	return KIA.state.layers.getProp('map')?.[id];
+	const layerObj = KIA.nodesMap[id];
+	if(layerObj && ['html','svg'].includes(layerObj.instanceof)) return layerObj;
 }
 
 export default Index;

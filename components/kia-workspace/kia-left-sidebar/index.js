@@ -10,7 +10,7 @@ class KIA_Left_Sidebar extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-workspace/kia-left-sidebar/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-left-sidebar/style.css?v=${cacheVersion}`};
  
     constructor() {
         super();

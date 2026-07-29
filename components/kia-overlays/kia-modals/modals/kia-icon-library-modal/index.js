@@ -9,7 +9,7 @@ class KIA_Icon_Library_Modal extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-overlays/kia-modals/modals/kia-icon-library-modal/style.css'};
+    customizer = {styleHref: `/components/kia-overlays/kia-modals/modals/kia-icon-library-modal/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -48,7 +48,19 @@ class KIA_Icon_Library_Modal extends KIACustomElement {
         Events[e.type]?.handler?.(e);      
     }
 
+    open(){
+        KIA.actions.ui.shortcutsKey.pushEscapeStack({
+            close: props.root.close,
+            id: 'kiaIconLibraryModal',
+        });
+    }
+
     close(){
+        KIA.kiaApp.dispatchEvent(new CustomEvent('iconLibraryIconSelected', {
+            bubbles: true,
+            composed: true,
+            detail: { source: 'kiaIconLibrary', iconName: '' }
+        }));
         props.root.classList.remove('show');
     }
 

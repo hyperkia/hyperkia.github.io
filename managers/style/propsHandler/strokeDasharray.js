@@ -1,24 +1,29 @@
 
-const prop = 'stroke-dasharray';
+const Index = {
 
-function Index(source, result) {
+  prop: 'stroke-dasharray',
 
-	const layerObj = KIA.dom.read.getSelectionLayerObject();
+  inputTo(result) {
+    const inputStyle = result.inputStyle;	
+	result.attributes[this.prop] = inputStyle[this.prop];
+	if(!inputStyle[this.prop]) result.attributes[this.prop] = 'none';
+  },
 
-	if(source === 'SelectionToPropsInput') {
-		if(!layerObj.attributes) return;
-		if(layerObj.attributes[prop]) {
-			result[prop] = layerObj.attributes[prop];
-		}
+  selectionTo(result) {
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
 
-		if(!layerObj.attributes[prop] || layerObj.attributes[prop].trim() === 'none') result[prop] = '';
+	if(!layerObj.attributes) return;
+	if(layerObj.attributes[this.prop]) {
+		result[this.prop] = layerObj.attributes[this.prop];
 	}
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;	
-		result.attributes[prop] = inputStyle[prop];
-		if(!inputStyle[prop]) result.attributes[prop] = 'none';
-	}
-}
+	if(!layerObj.attributes[this.prop] || layerObj.attributes[this.prop].trim() === 'none') result[this.prop] = '';    
+  },
+
+  computedTo(result) {   
+    
+  }
+};
+
 
 export default Index;

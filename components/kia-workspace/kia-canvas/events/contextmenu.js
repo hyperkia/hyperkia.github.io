@@ -4,8 +4,7 @@ import props from '../utils/props.js';
 class Index {
 
 	static handler(e){
-		if(! props.eTarget.matches('[data-page]')) this.openContextMenu(e);
-		
+		if(props.eTarget.matches('.canvas-layer') || props.eTarget.matches('.page')) this.openContextMenu(e);		
 	}
 
 	static openContextMenu(e){		

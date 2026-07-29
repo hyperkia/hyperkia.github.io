@@ -5,11 +5,11 @@ import * as Events from './events/index.js';
 import methods from './utils/methods.js';
 import props from './utils/props.js';
 
-class KIA_Prop_Input extends KIACustomElement{
+class KIA_Prop_Input extends KIACustomElement {
 
 	methods = methods;
 	props = props;
-	customizer = {styleHref: '/components/kia-ui/kia-prop-input/style.css'};
+	customizer = {styleHref: `/components/kia-ui/kia-prop-input/style.css?v=${cacheVersion}`};
 
 	constructor(){
 		super();
@@ -24,10 +24,11 @@ class KIA_Prop_Input extends KIACustomElement{
 		this._eventsSetup(Events);
 	}
 
-	handleEvents(e){		
-		if (Date.now() - this.lastThrottle < 50) return; 
-		props.eTarget = e.composedPath()[0];
-		props.eRootNode = props.eTarget.getRootNode().host;
+	handleEvents(e){
+		props.root = e.target.matches('kia-prop-input') ? e.target : e.target.getRootNode().host;
+		if(!props.root) return;
+		if (Date.now() - this.lastThrottle < 50) return;		
+		Object.assign(props, props.root._resolveEventContext(e));
         this.lastThrottle = Date.now();
         Events[e.type]?.handler?.(e);
 	}
@@ -36,6 +37,7 @@ class KIA_Prop_Input extends KIACustomElement{
 		return this.$id.input.value;
 	}
 
+
 	set value(value) {		
 		this.$id.input.value = value;
 		this.dispatchEvent(new CustomEvent('kiaPropInput', {
@@ -43,6 +45,10 @@ class KIA_Prop_Input extends KIACustomElement{
 		  composed: true,
 		  detail: { source: this}
 		}));	
+	}
+
+	get type() {
+		return this.$id.input.type;
 	}
 
 	set type(valu) {

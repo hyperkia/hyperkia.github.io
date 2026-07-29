@@ -28,21 +28,21 @@ const Index = {
 
 	'justify-content': `
 		<span class="input-wrapper">
-			<input type="radio" name="justify-content" value="flex-start" title="Horizontal left" data-prop="justify-content" />
+			<input type="radio" name="justify-content" value="flex-start" title="Horizontal left" data-prop="justify-content" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align_justify_flex_start-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
-			<input type="radio" name="justify-content" value="center" title="Horizontal center" data-prop="justify-content" />
+			<input type="radio" name="justify-content" value="center" title="Horizontal center" data-prop="justify-content" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align_justify_center-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
-			<input type="radio" name="justify-content" value="flex-end" title="Horizontal right" data-prop="justify-content" />
+			<input type="radio" name="justify-content" value="flex-end" title="Horizontal right" data-prop="justify-content" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align_justify_flex_end-symbol"></use>
 			</svg>
@@ -51,21 +51,21 @@ const Index = {
 
 	'align-items': `
 		<span class="input-wrapper">
-			<input type="radio" name="align-items" value="flex-start" title="Vertical top" data-prop="align-items" />
+			<input type="radio" name="align-items" value="flex-start" title="Vertical top" data-prop="align-items" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align_vertical_top-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
-			<input type="radio" name="align-items" value="center" title="Vertical center" data-prop="align-items" />
+			<input type="radio" name="align-items" value="center" title="Vertical center" data-prop="align-items" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align_vertical_center-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
-			<input type="radio" name="align-items" value="flex-end" title="Vertical bottom" data-prop="align-items" />
+			<input type="radio" name="align-items" value="flex-end" title="Vertical bottom" data-prop="align-items" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align_vertical_bottom-symbol"></use>
 			</svg>
@@ -74,21 +74,21 @@ const Index = {
 
 	'roateScale': `
 		<span class="input-wrapper">
-			<input type="radio" data-prop="rotate90" data-unit="deg" title="Rotate 90°" />
+			<input type="radio" data-prop="rotate90" data-unit="deg" title="Rotate 90°" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#rotate_90_degrees_cw-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
-			<input type="radio" data-prop="flip-horizontal" title="Flip horizontally" />
+			<input type="radio" data-prop="flip-horizontal" title="Flip horizontally" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg" style="rotate: 90deg;">
 				<use href="assets/images/svg-icons.svg#align-vertical-symbol"></use>
 			</svg>
 		</span>
 
 		<span class="input-wrapper">
-			<input type="radio" data-prop="flip-vertical" title="Flip vertically" />
+			<input type="radio" data-prop="flip-vertical" title="Flip vertically" data-computed="true" />
 			<svg part="svg" xmlns="http://www.w3.org/2000/svg">
 				<use href="assets/images/svg-icons.svg#align-vertical-symbol"></use>
 			</svg>

@@ -1,10 +1,9 @@
 
-import props from '../props.js';
 
 function Index(newLayerObj){
 	const updateStack = newLayerObj.updateStack;
 	const stackId = updateStack.id;
-	const layerStack = props.map[newLayerObj.id].stack;
+	const layerStack = KIA.nodesMap[newLayerObj.id].stack;
 
 	layerStack.forEach((s, i)=>{
 		if(s.id === updateStack.id) {
@@ -13,5 +12,6 @@ function Index(newLayerObj){
 		}
 	});
 }
+
 
 export default Index;

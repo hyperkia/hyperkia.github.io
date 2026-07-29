@@ -5,13 +5,17 @@ import * as registry from '../registry/index.js';
 
 class Index {
 
-	static handler(e){		
+	static handler(e){
 		e.detail.e.preventDefault();
 		const eventObj = e.detail.e;
+		props.pointer.clientX = eventObj.clientX;
+		props.pointer.clientY = eventObj.clientY;
 		const target = methods.getClosestContextMenuTarget(eventObj.composedPath()[0]);
-		const keys = new Set().add(target.id);
-        KIA.actions.share.setSelectionKeys(keys);
-
+		const ids = new Set().add(target.id);
+        KIA.actions.share.setSelectionIds(ids);
+        const targetEl = KIA.canvasRefMap[target.id];
+        targetEl && (props.root.dataset.selectionTagName = targetEl.tagName.toLowerCase());
+ 
 		const menu = registry[target.type];
 		if(!menu) return;
 		for(let c of props.root.$id.menu.children) c.classList.add('hidden');
@@ -40,9 +44,17 @@ class Index {
 		})
 
 		props.root.style.left = `${eventObj.clientX}px`;
-		props.root.style.top = `${eventObj.clientY}px`;
+		props.root.style.top = `${eventObj.clientY}px`;		
 		props.root.classList.add('show');
 		props.root.dataset.for = target.type;
+
+		const rootElRect = props.root.getBoundingClientRect(); 
+		if(rootElRect.bottom > KIA.kiaApp.offsetHeight) props.root.style.top = eventObj.clientY-rootElRect.height+'px';
+
+		KIA.actions.ui.shortcutsKey.pushEscapeStack({
+            close: props.root.close,
+            id: 'kiaContextMenu',
+        });
 	}
 
 }

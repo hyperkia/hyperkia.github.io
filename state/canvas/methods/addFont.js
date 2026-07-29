@@ -1,5 +1,4 @@
 
-
 import props from '../props.js';
 
 function Index(fonts){

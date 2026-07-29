@@ -3,6 +3,14 @@ import props from '../../utils/props.js';
 import methods from '../../utils/methods.js';
 
 const Index = {
+
+    pointer: {
+        dX: 0,
+        dY: 0,
+        mX: 0,
+        mY: 0,
+    },
+
 	event(e){
 		this[e.type](e);
 	},
@@ -15,7 +23,7 @@ const Index = {
     },
 
     pointermove(e) {
-
+        
         this.cssmXY = KIA.dom.read.getCanvasScrollCoords({e});        
 
         const tX = Math.floor(this.cssmXY.x - this.cssdXY.x);
@@ -40,6 +48,7 @@ const Index = {
 
     pointerup(e) {
         KIA.dom.kiaCanvas.setCanvasCurrentAction({action: 'upMultiSelection'});
+        
         if (!props.isActualMove) return;
 
         // selection
@@ -63,6 +72,8 @@ const Index = {
 
         KIA.actions.kiaCanvas.movingLayers(layersObject);
     },
+
+    pointercancel(){},
 }
 
 export default Index;

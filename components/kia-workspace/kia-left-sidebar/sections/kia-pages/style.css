@@ -1,5 +1,7 @@
 
 :host{display: block;}
+h5{user-select: none;}
+
 .section{padding-bottom: 5px;}
 .header{padding: 10px 5px 5px 11px;display: flex;align-items: center;justify-content: space-between;}
 .add-new-page-button::part(svg){width: 17px;height: 17px;}
@@ -12,16 +14,20 @@
 .page-item:focus-within{outline:none;border-color: #0d99ff;}
 .page-item .mask-image{opacity: 0;}
 .page-item:hover .mask-image{opacity: 1;}
-.page-item:has([data-visiblity="hidden"]) .mask-image{opacity: 1;}
+.page-item:has([data-visibility="hidden"]) .mask-image{opacity: 1;}
 .page-item:has([data-lock="none"]) .mask-image{opacity: 1;}
 
 .page-name{margin-right: auto;flex-grow: 1;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;outline: none;}
-[data-visiblity="visible"]{mask-image: url(/assets/images/eye.svg);}
-[data-visiblity="hidden"]{mask-image: url(/assets/images/eye-off.svg);}
+[data-visibility="inherit"]{mask-image: url(/assets/images/eye.svg);}
+[data-visibility="hidden"]{mask-image: url(/assets/images/eye-off.svg);}
 [data-lock="none"]{mask-image: url(/assets/images/lock.svg);}
-[data-lock="auto"]{mask-image: url(/assets/images/unlock.svg);}
+[data-lock="inherit"]{mask-image: url(/assets/images/unlock.svg);}
 
 .page-item:has(.page-name[contenteditable="true"]){padding: 0;}
 .page-item:has(.page-name[contenteditable="true"]) :where(.page-visible, .page-lock){display: none;}
 .page-item:has(.page-name[contenteditable="true"]) .page-name{padding: 3px 6px;}
 
+
+/* Dark Theme */
+:host([data-theme="dark"]) {background: #2c2c2c;}
+:host([data-theme="dark"]) .page-item:hover, :host([data-theme="dark"]) .page-item.active{background-color: #383838;}

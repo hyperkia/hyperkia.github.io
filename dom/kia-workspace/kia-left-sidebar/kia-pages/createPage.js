@@ -16,12 +16,17 @@ function Index() {
 
 			pageItemEl.dataset.page = id;			
 			pageNameEl.textContent = pageObj.title;
-			pageVisibleEl.dataset.visiblity = pageObj.style.visibility;
-			pageLockEl.dataset.lock = pageObj.style['pointer-events'];
+			pageVisibleEl.dataset.visibility = pageObj.style.visibility || 'inherit';
+			pageLockEl.dataset.lock = pageObj.style['pointer-events'] || 'inherit';
 
 			KIA.kiaPages.$id.pageItems.appendChild(pageItemTemplate);
 		}
-	})
+	});
+
+	ids.forEach(id => {
+        const el = KIA.kiaPages._qs(`[data-page="${id}"]`);
+        if (el) KIA.kiaPages.$id.pageItems.appendChild(el);
+    });
 }
 
 export default Index;

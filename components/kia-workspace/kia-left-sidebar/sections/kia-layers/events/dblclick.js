@@ -11,18 +11,21 @@ class Index {
 	static layerTitleEditable(){
 		const headerEl = props.eTarget.closest('.header');
 		const id = headerEl.closest('[data-item]').dataset.item;
-		if(KIA.state.pages.getProp('map')[id]) return;
+
+		const objectStore = KIA.dom.read.getObjectStoreNameById(id);
+		if(objectStore === 'pages') return;
 
 		let editElement = headerEl.querySelector('.title[contenteditable="true"]');
 		if(!editElement) {			
 			const contentEl = props.root.$id.itemContent;
 			contentEl.removeAttribute('data-id');
+			contentEl.classList.add('clone-item-content');
 			const contentCloneEl = contentEl.cloneNode(true);
 			editElement = contentCloneEl.querySelector('.title');
 			props.root.$id.layers.appendChild(contentEl);
 			headerEl.appendChild(contentCloneEl);
 		}
-		KIA.utils.dom.enableEditingAndFocusEnd(editElement);
+		KIA.utils.dom.enableEditingAndFocusEnd(editElement);		
 	}
 
 }

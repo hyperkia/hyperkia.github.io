@@ -22,9 +22,8 @@ const html = `
 				</div>
 				<div class="tabcontent" data-id="medialibrary">
 					<div class="medialibrary-sec">
-						<div class="medialibrary-items" data-id="medialibraryItems">
-	
-						</div>
+						<div class="medialibrary-items" data-id="medialibraryItems"></div>
+						<button class="load-more-assets-btn" data-event="loadMoreAssets" data-id="loadMoreAssets">Load More</button>
 					</div>
 				</div>				
 			</div>

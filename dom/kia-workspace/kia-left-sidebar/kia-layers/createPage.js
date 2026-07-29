@@ -1,6 +1,5 @@
 function Index() {
     const ids = KIA.state.canvas.getProp('children');
-    const pages = KIA.state.pages.getProp('map');
     const fragments = document.createDocumentFragment();
 
     ids.forEach((id)=>{
@@ -23,8 +22,13 @@ function Index() {
         KIA.layersRefMap[id] = nodeEl;
     });
 
+
     KIA.kiaLayers.$id.layers.appendChild(fragments);
 
+    ids.forEach(id => {
+        const el = KIA.layersRefMap[id];
+        if (el) KIA.kiaLayers.$id.layers.appendChild(el);
+    });
 }
 
 export default Index;

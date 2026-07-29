@@ -1,12 +1,21 @@
 
-const prop = 'pointer-events';
+const Index = {
 
-function Index(source, result) {
+  prop: 'pointer-events',
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;	
-		result.style[prop] = inputStyle[prop];
-	}
-}
+  inputTo(result) {
+    const inputStyle = result.inputStyle;	
+	result.style[this.prop] = inputStyle[this.prop];
+  },
+
+  selectionTo(result) {
+    
+  },
+
+  computedTo(result) {   
+    
+  }
+};
+
 
 export default Index;

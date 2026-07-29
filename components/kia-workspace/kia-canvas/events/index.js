@@ -7,6 +7,7 @@ import keyup from './keyup.js';
 import pointerdown from './pointerdown.js';
 import pointermove from './pointermove.js';
 import pointerup from './pointerup.js';
+import pointercancel from './pointercancel.js';
 import pointerover from './pointerover.js';
 import pointerout from './pointerout.js';
 import scroll from './scroll.js';
@@ -18,14 +19,15 @@ import contextmenu from './contextmenu.js';
 import dragstart from './dragstart.js';
 import iconLibraryIconSelected from './iconLibraryIconSelected.js';
 import selectionChange from './selectionChange.js';
+import changePressedKey from './changePressedKey.js';
 
 
 
 export { 
 	blur, click, dblclick, focusout, input, keyup, pointerdown, 
-	pointermove, pointerup, scroll, wheel, transitionstart, transitionend, pointerover, 
+	pointermove, pointerup, pointercancel, scroll, wheel, transitionstart, transitionend, pointerover, 
 	pointerout, change, contextmenu, dragstart, iconLibraryIconSelected,
-	selectionChange
+	selectionChange, changePressedKey, 
 }
 
 

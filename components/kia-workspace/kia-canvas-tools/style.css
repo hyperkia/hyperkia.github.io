@@ -48,3 +48,11 @@ svg{width: 24px;height: 24px;max-height: 24px;}
 .tool-item .ellipse-icon{width: 24px;height: 12px;}
 ::part(moresvg-icon){font-size: 26px;line-height: 17px;position: relative;top: -6px;}
 
+
+/* Dark Theme */
+:host([data-theme="dark"]) .tools{background: #2c2c2c;}
+:host([data-theme="dark"]) .tool-item.activetool{background: #545454;}
+:host([data-theme="dark"]) ::part(summary){color:#fff;}
+:host([data-theme="dark"]) .svgshape[data-tool="svgtag"]::before{color: #fff;}
+:host([data-theme="dark"]) ::part(select-option){color: #fff;}
+:host([data-theme="dark"]) .svgshape[data-tool="moresvg"] svg path{fill: #fff;}

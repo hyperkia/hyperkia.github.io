@@ -1,23 +1,22 @@
+const Index = {
+  prop: 'border-style',
 
-const prop = 'border-style';
+  inputTo(result) {
+    const inputStyle = result.inputStyle;
+    result.style[this.prop] = inputStyle[this.prop];
+  },
 
-function Index(source, result) {
+  selectionTo(result) {
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
+    
+    if(layerObj.style[this.prop]) result[this.prop] = layerObj.style[this.prop];
+    if(!layerObj.style[this.prop]) result[this.prop] = 'none';
+  },
 
-	const layerObj = KIA.dom.read.getSelectionLayerObject();
+  computedTo(result) {
+    
+  }
+};
 
-	if(source === 'SelectionToPropsInput') {
-		if(layerObj.style[prop]) result[prop] = layerObj.style[prop];
-		if(!layerObj.style[prop]) result[prop] = 'none';
-	}
-
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;
-		result.style[prop] = inputStyle[prop];
-	}
-
-}
 
 export default Index;
-
-
-

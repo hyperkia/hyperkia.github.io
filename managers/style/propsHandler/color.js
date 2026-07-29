@@ -1,24 +1,23 @@
+const Index = {
+  prop: 'color',
 
-const prop = 'color';
+  inputTo(result) {
+    const inputStyle = result.inputStyle;
+    result.style[this.prop] = inputStyle[this.prop];
+  },
 
-function Index(source, result) {
+  selectionTo(result) {
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
+    
+    if(layerObj.style[this.prop]) result[this.prop] = layerObj.style[this.prop];
+    if(!result[this.prop]) result[this.prop] = '';
+    if(result[this.prop] === 'transparent') result[this.prop] = '';
+  },
 
-	const layerObj = KIA.dom.read.getSelectionLayerObject();
+  computedTo(result) {
+    
+  }
+};
 
-	if(source === 'SelectionToPropsInput') {
-		if(layerObj.style[prop]) result[prop] = layerObj.style[prop];
-		if(!result[prop]) result[prop] = '';
-		if(result[prop] === 'transparent') result[prop] = '';
-	}
-
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;
-		result.style[prop] = inputStyle[prop];
-	}
-
-}
 
 export default Index;
-
-
-

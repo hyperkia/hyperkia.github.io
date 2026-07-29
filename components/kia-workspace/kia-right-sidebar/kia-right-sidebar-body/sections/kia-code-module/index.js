@@ -1,0 +1,66 @@
+import KIACustomElement from '../../../../../kia-custom-element/index.js';
+import html from './html.js';
+
+import Events from './events/index.js';
+import methods from './utils/methods.js';
+import props from './utils/props.js';
+
+class KIA_Code_Module extends KIACustomElement {
+
+    static get observedAttributes() {
+        return ['class'];
+    }
+
+    methods = methods;
+    props = props;
+    customizer = { styleHref: '/components/kia-workspace/kia-right-sidebar/kia-right-sidebar-body/sections/kia-code-module/style.css' };
+
+    constructor() {
+        super();
+        this.html = html;
+        this.moduleURL =
+            import.meta.url;
+    }
+
+    connectedCallback() {
+        this.attachShadow({ mode: 'open' });
+        this._defaultSetup();
+        this.props.root = this;
+        this._eventsSetup(Events);
+    }
+
+    handleEvents(e) {
+        Object.assign(props, props.root._resolveEventContext(e));  
+
+        // Throttle
+        if (['pointermove', 'input', 'scroll'].includes(e.type)) {
+            if (Date.now() - this.lastThrottle < 30) return;
+            this.lastThrottle = Date.now();
+            Events[e.type]?.handler?.(e);
+            return;
+        }
+
+        // Debounce
+        if (['keyup'].includes(e.type)) {
+            clearTimeout(this.debounceTimeout);
+            this.debounceTimeout = setTimeout(() => {
+                Events[e.type]?.handler?.(e);
+            }, 100);
+            return;
+        }
+
+        Events[e.type]?.handler?.(e);
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'class' && newValue.includes('active')) {
+            methods.setSelectionTypeUi();
+            methods.renderDevUi();
+        }
+    }
+
+}
+
+if (!customElements.get('kia-code-module')) {
+    customElements.define('kia-code-module', KIA_Code_Module);
+}

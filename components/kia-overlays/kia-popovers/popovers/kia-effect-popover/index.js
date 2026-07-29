@@ -10,7 +10,7 @@ class KIA_Effect_Popover extends KIACustomElement {
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-overlays/kia-popovers/popovers/kia-effect-popover/style.css'};
+    customizer = {styleHref: `/components/kia-overlays/kia-popovers/popovers/kia-effect-popover/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -46,6 +46,11 @@ class KIA_Effect_Popover extends KIACustomElement {
         }
 
         Events[e.type]?.handler?.(e);      
+    }
+
+    close(){
+        props.root.classList.remove('show');
+        if(!KIA.kiaPopovers._qs('.popover.show')) KIA.kiaPopovers.classList.remove('show');
     }
 
 }

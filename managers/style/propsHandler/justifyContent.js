@@ -1,7 +1,19 @@
-function Index(source, result) {
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;
+const Index = {
+
+  prop: 'justify-content',
+
+  inputTo(result) {
+    
+  },
+
+  selectionTo(result) {
+    
+  },
+
+  computedTo(result) { 
+  
+    const inputStyle = result.inputStyle;
 		const parentObj = KIA.dom.read.getSelectionParentObject();
 		const selectionObj = KIA.dom.read.getSelectionObject();
 
@@ -10,7 +22,7 @@ function Index(source, result) {
 
 		let left = 0;
 
-		switch (inputStyle['justify-content']) {
+		switch (inputStyle[this.prop]) {
 
 			case 'flex-start':
 				left = 0;
@@ -25,9 +37,10 @@ function Index(source, result) {
 				break;
 		}
 
+		left = Math.round(left);
 		result.style.left = left + 'px';
-	}
+  }
+};
 
-}
 
 export default Index;

@@ -8,7 +8,7 @@ class Index {
 		if(props.eTAction === 'uploadFileInput') {
 			const fileObj = props.root.$id.uploadFileInput.files[0];
 			const assetObj = {
-				key:crypto.randomUUID(),
+				id:crypto.randomUUID(),
 				name: fileObj.name,
 				size: fileObj.size,
 				type: fileObj.type,	

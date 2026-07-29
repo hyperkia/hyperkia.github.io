@@ -1,6 +1,6 @@
 function Index() {
 	const id = KIA.state.ui.getSelectionId();
-	return KIA.state.layers.getProp('map')[id] || KIA.state.pages.getProp('map')[id];
+	return KIA.nodesMap[id];
 }
 
 export default Index;

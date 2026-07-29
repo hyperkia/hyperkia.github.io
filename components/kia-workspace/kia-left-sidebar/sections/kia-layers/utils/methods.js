@@ -1,8 +1,9 @@
-const Methods = {
-	activeSelection(){
-		const id = KIA.state.ui.getSelectionId();
-		KIA.kiaLayers._qs('.node.selection')?.classList.remove('selection');
-		KIA.layersRefMap[id]?.classList.add('selection');
+
+import props from '../utils/props.js';
+
+const Methods = {	
+	removeCloneItemContentEls(){
+		props.root._qsAll('.clone-item-content').forEach(el => el.remove());
 	}
 };
 

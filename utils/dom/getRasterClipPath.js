@@ -4,8 +4,8 @@ function Index(l) {
 	// clippath
 	if(l.clipPath) {
 		l.clipPath.forEach((c)=>{
-			if(c.nodeName === 'img') clipPart += `<image x="${c.left}" y="${c.top}" width="${c.width}" height="${c.height}" href="${c.src}" />`
-			if(c.nodeName === 'path') clipPart += `<path fill="#fff" transform="translate(${c.left}px ${c.top}px)" d="${c.d}" />`
+			if(c.tagName === 'IMG') clipPart += `<image x="${c.left}" y="${c.top}" width="${c.width}" height="${c.height}" href="${c.src}" />`
+			if(c.tagName === 'path') clipPart += `<path fill="#fff" transform="translate(${c.left}px ${c.top}px)" d="${c.d}" />`
 		})
 		uiPart = `<image x="0" y="0" width="${l.css.width.replace('px','')}" height="${l.css.height.replace('px','')}" href="${l.attrs.src}" mask="url(#${l.key}-arrow)" />`;	
 	}

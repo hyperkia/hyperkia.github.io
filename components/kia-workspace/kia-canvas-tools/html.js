@@ -37,11 +37,7 @@ const html = `
 						<li part="select-option" class="select-option" value="linesvg">
 							<i class="line-icon" part="line-icon select-option-i"></i>
 							Line
-						</li> 
-						<li part="select-option" class="select-option" value="circlesvg">
-							<i class="circle-icon" part="circle-icon select-option-i"></i>
-							Circle
-						</li>
+						</li> 						
 						<li part="select-option" class="select-option" value="ellipsesvg">
 							<i class="ellipse-icon" part="ellipse-icon select-option-i"></i>
 							Ellipse

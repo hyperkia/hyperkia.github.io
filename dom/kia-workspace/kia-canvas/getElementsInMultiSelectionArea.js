@@ -3,7 +3,7 @@ let layers = null;
 
 function Index() {
 
-    !layers && (layers = KIA.state.layers.getProp('map'));
+    !layers && (layers = KIA.state.layers.getLayers());
     selection.clear();
 
     KIA.kiaCanvas._qsAll('[data-layer]').forEach(el => {

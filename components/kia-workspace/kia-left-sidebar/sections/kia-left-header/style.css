@@ -1,4 +1,6 @@
 :host{display: block;}
+h5{user-select: none;}
+
 .header{display: flex;justify-content: space-between;align-items: center;padding: 5px;position: relative;width: 100%;position: relative;}
 
 .nav{pointer-events: none;opacity: 0;visibility: hidden;z-index: 3;position: absolute;top: 32px;left: 8px;}
@@ -21,4 +23,6 @@
 
 
 
+/* Dark Theme */
+:host([data-theme="dark"]) {background: #2c2c2c;}
 

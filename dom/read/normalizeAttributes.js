@@ -1,8 +1,11 @@
 function Index(attrs){
 	const result = structuredClone(attrs);
-	const assetObj = KIA.state.assets.getProp('map')[attrs.src||''];
 
-	if(assetObj) result.src = assetObj.url;
+	let assetAttr = '';
+	if(attrs.src) assetAttr = 'src';
+	if(attrs.href) assetAttr = 'href';
+	const assetObj = KIA.state.assets.getAssets()[attrs[assetAttr]];
+	if(assetObj) result[assetAttr] = assetObj.url;
 
 	return result;
 }

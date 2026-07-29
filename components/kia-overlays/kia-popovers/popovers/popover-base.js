@@ -16,6 +16,7 @@ const Index = {
 		}
 		if(e.type === 'pointermove') this.eventMove(e);
 		if(e.type === 'pointerup') this.eventUp(e);
+		if(e.type === 'pointercancel') this.eventUp(e);
 	},
 
 	eventDown(e){
@@ -41,15 +42,9 @@ const Index = {
         if((this.elLeft+this.mX-this.dX) > document.body.offsetWidth-200) this.popoverEl.style.left = document.body.offsetWidth-200+'px';
 	},
 
-	eventUp(){
-
+	eventUp(e){
+		this.popoverEl.releasePointerCapture(e.pointerId)
 	},
-
-	closePopover(e){
-		this.popoverEl = e.target.getRootNode().host;
-		if(this.popoverEl.matches('.popover')) this.popoverEl.classList.remove('show');
-		if(!KIA.kiaPopovers._qs('.popover.show')) KIA.kiaPopovers.classList.remove('show');
-	}
 }
 
 export default Index;

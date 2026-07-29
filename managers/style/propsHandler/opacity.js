@@ -1,23 +1,28 @@
 
-const prop = 'opacity';
+const Index = {
 
-function Index(source, result) {
+  prop: 'opacity',
 
-	const layerObj = KIA.dom.read.getSelectionLayerObject();
+  inputTo(result) {
+    const inputStyle = result.inputStyle;	
+	result.style[this.prop] = (inputStyle[this.prop]/100).toFixed(2)
+	if(inputStyle[this.prop] === '') result.style[this.prop] = 1;
+  },
 
-	if(source === 'SelectionToPropsInput') {
-		if(layerObj.style[prop]) {
-			result[prop] = (layerObj.style[prop]*100).toFixed(0);			
-		}
+  selectionTo(result) {
+    const layerObj = KIA.dom.read.getSelectionLayerObject();
 
-		if(!layerObj.style[prop]) result[prop] = '';
+    if(layerObj.style[this.prop]) {
+		result[this.prop] = (layerObj.style[this.prop]*100).toFixed(0);			
 	}
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;	
-		result.style[prop] = (inputStyle[prop]/100).toFixed(2)
-		if(inputStyle[prop] === '') result.style[prop] = 1;
-	}
-}
+	if(!layerObj.style[this.prop]) result[this.prop] = '';
+  },
+
+  computedTo(result) {   
+    
+  }
+};
+
 
 export default Index;

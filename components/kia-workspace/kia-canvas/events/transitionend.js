@@ -9,6 +9,9 @@ class Index {
 			cancelAnimationFrame(props.rafZoomingID);
 			props.rafZoomingID = null;
 			KIA.dom.kiaCanvas.setPageNamePosition();
+			props.root.$id.pages.classList.remove('canvas-zooming');
+			KIA.dom.kiaCanvas.createSelectionLayersOutline();
+			KIA.dom.kiaCanvas.selectionLayerResizeController();
 		}
 	}
 

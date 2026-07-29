@@ -6,14 +6,11 @@ import props from './utils/props.js';
 import * as Events from './events/index.js';
 
 
-
-
-
 class KIA_Color_Picker_Popover extends KIACustomElement{
 
     methods = methods;
     props = props;
-    customizer = {styleHref: '/components/kia-overlays/kia-popovers/popovers/kia-color-picker-popover/style.css'};   
+    customizer = {styleHref: `/components/kia-overlays/kia-popovers/popovers/kia-color-picker-popover/style.css?v=${cacheVersion}`};
 
     constructor(){
         super();
@@ -55,10 +52,15 @@ class KIA_Color_Picker_Popover extends KIACustomElement{
     open() {
         props.root.classList.add('show');
         methods.uiStateColorPickerValueToUI();
+        KIA.actions.ui.shortcutsKey.pushEscapeStack({
+            close: this.close,
+            id: 'kiaColorPickerPopover',
+        });        
     }
- 
-    init(){
-        methods.updateAdditionalData();
+
+    close(){
+        props.root.classList.remove('show');
+        if(!KIA.kiaPopovers._qs('.popover.show')) KIA.kiaPopovers.classList.remove('show');
     }
 }
 

@@ -1,5 +1,5 @@
 :host{display: block;}
-.section{width:85vw;height: 85vh;border:1px solid #ccc;display: flex;flex-direction: column;}
+.section{width:85vw;height: 85vh;display: flex;flex-direction: column;}
 .header{display: flex;flex-wrap: wrap;justify-content: space-between;align-items: center;padding:15px 20px;border-bottom:2px solid #ccc;}
 .title {margin-bottom: 0;}
 
@@ -21,11 +21,15 @@
 .upload-btn{display: inline-block;text-align: center;padding: 11px 30px;border: 2px solid #a9acb4;font-size: 20px;color: #54575c;border-radius: 27px;margin-top: 20px;}
 .upload-input{position: absolute;top: 0;left:0;width:100%;height:100%;z-index: 1;opacity: 0;cursor: pointer;}
 
-.medialibrary-sec{padding-top: 20px;height: 100%;}
+.medialibrary-sec{padding-top: 20px;height: 100%;position: relative;}
+.load-more-assets-btn{display: inline-block;position: absolute;bottom: 15px;left:50%;transform: translateX(-50%);background: #0d99ff;border: 0;color: #fff;padding: 10px 25px;font-size: 14px;font-weight: 600;text-transform: uppercase;border-radius: 4px;cursor: pointer;}
 .medialibrary-items {display: flex;gap: 12px;flex-wrap: wrap;height: 100%;overflow: auto;align-content: flex-start;}
 .medialibrary-item {width: 100px;aspect-ratio: 1/1;height: 100px;padding: 10px;border: 2px dashed #ccc;display: inline-flex;justify-content: center;align-items: center;position: relative;transition:0.3s all linear;}
 .medialibrary-item img {max-width: 100%;max-height: 100%;width:40px;object-fit: cover;}
 .medialibrary-item:hover{background-color: #ccc;}
-/*.delete-asset-btn{position: absolute;top: -10px;right: -10px;width: 22px;height: 22px;background: red;display: inline-flex;justify-content: center;align-items: center;padding: 0;border-radius: 50%;opacity: 0;pointer-events: none;visibility: hidden;}
-.delete-asset-btn::part(svg){width: 10px;height: 10px;color: #fff;}
-.medialibrary-item:hover .delete-asset-btn{opacity: 1;pointer-events: auto;visibility: visible;}*/
+
+
+/* Dark Theme */
+:host([data-theme="dark"]) .tabmenu-item{border-color: transparent;color: #fff;background: transparent;}
+:host([data-theme="dark"]) .tabmenu-item.active{color: #fff !important;background: #383838 !important;}
+:host([data-theme="dark"]) .upload-btn {border-color: #fff;color: #fff;}

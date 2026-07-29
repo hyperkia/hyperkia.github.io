@@ -1,5 +1,5 @@
 function Index(svgEl) {
-  if (!svgEl || svgEl.nodeName !== "svg") return null;
+  if (!svgEl || svgEl.tagName !== "svg") return null;
 
   // 1. Remove unsafe elements
   svgEl.querySelectorAll("script, style, foreignObject").forEach(el => el.remove());

@@ -6,6 +6,7 @@ class Index {
     static handlePointerDown(){}
     static handlePointerMove(){}
     static handlePointerUp(){}
+    static handlePointerCancel(){}
 }
 
 export default Index;

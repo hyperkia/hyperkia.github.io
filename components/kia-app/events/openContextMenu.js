@@ -1,7 +1,7 @@
 
 class Index {
 
-	static components = ['kiaContextMenu'];
+	static components = ['kiaContextMenu', 'kiaCanvas'];
 
 	static handler(e){
 		Index.components.forEach((c)=>{

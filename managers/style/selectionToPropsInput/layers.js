@@ -6,7 +6,7 @@ function Index() {
 	const propsInputCss = {};
 	
 	for(let ph in propHandler) {
-		propHandler[ph]('SelectionToPropsInput', propsInputCss);
+		propHandler[ph].selectionTo(propsInputCss);
 	}
 
 	for(let p in propsInputCss) {

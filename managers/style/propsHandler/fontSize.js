@@ -1,23 +1,26 @@
+const Index = {
+  prop: 'font-size',
 
-const prop = 'font-size';
+  inputTo(result) {
+    const inputStyle = result.inputStyle;	
+	result.style[this.prop] = inputStyle[this.prop];
+	if(inputStyle[this.prop] === 'px') result.style[this.prop] = '0px';
+  },
 
-function Index(source, result) {
+  selectionTo(result) {
+  	const layerObj = KIA.dom.read.getSelectionLayerObject();
 
-	const layerObj = KIA.dom.read.getSelectionLayerObject();
-
-	if(source === 'SelectionToPropsInput') {
-		if(layerObj.style[prop]) {
-			result[prop] = parseInt(layerObj.style[prop]);
-		}
-
-		if(!layerObj.style[prop]) result[prop] = '';
+    if(layerObj.style[this.prop]) {
+		result[this.prop] = parseInt(layerObj.style[this.prop]);
 	}
 
-	if(source === 'propsInputToSelection') {
-		const inputStyle = result.inputStyle;	
-		result.style[prop] = inputStyle[prop];
-		if(inputStyle[prop] === 'px') result.style[prop] = '0px';
-	}
-}
+	if(!layerObj.style[this.prop]) result[this.prop] = '';
+  },
+
+  computedTo(result) {   
+    
+  }
+};
+
 
 export default Index;

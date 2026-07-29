@@ -4,9 +4,12 @@ import setStyle from './setStyle.js'
 import createPage from './createPage.js'
 import importPages from './importPages.js'
 import setTitle from './setTitle.js'
-import deleteSelectedPage from './deleteSelectedPage.js'
 import deleteLayerAsChildren from './deleteLayerAsChildren.js'
 import loadPages from './loadPages.js'
+import addNewLayerAsChild from './addNewLayerAsChild.js'
+import duplicatePages from './duplicatePages.js'
+import deletePage from './deletePage.js'
+import getPages from './getPages.js'
 
 export default {
 	addLayerToParent,
@@ -15,8 +18,11 @@ export default {
 	createPage,
 	importPages,
 	setTitle,
-	deleteSelectedPage,
 	deleteLayerAsChildren,
 	loadPages,
+	addNewLayerAsChild,
+	duplicatePages,
+	deletePage,
+	getPages,
 };
 

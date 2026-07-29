@@ -1,9 +1,8 @@
 
-import props from '../props.js';
 
-function Index(pages){
-	Object.assign(props.map, pages);
-	KIA.observer.pages.observe('renderPageList');
+function Index(pages){	
+	Object.assign(KIA.nodesMap, pages);	
+	KIA.observer.pages.observe('loadPages');
 }
 
 export default Index;

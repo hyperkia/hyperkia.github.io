@@ -14,7 +14,7 @@ class KIA_Canvas extends KIACustomElement {
     props = props;
     regions = regions;
     tools = tools;
-    customizer = {styleHref: '/components/kia-workspace/kia-canvas/style.css'};
+    customizer = {styleHref: `/components/kia-workspace/kia-canvas/style.css?v=${cacheVersion}`};
 
     constructor() {
         super();
@@ -30,8 +30,7 @@ class KIA_Canvas extends KIACustomElement {
     }
 
     handleEvents(e){
-
-        props.eTarget = e.composedPath()[0];
+        Object.assign(props, props.root._resolveEventContext(e));
         
         if(e.type === 'dblclick') props.eTarget = props.root.shadowRoot.elementFromPoint(e.clientX, e.clientY);         
         // Throttle
@@ -57,8 +56,8 @@ class KIA_Canvas extends KIACustomElement {
     init(){
         props.root.scrollTop = 0;
         props.root.scrollLeft = 0;
-        const keys = new Set().add('canvas');
-        KIA.actions.share.setSelectionKeys(keys);
+        const ids = new Set().add('canvas');
+        KIA.actions.share.setSelectionIds(ids);
     }
 
 }

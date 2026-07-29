@@ -1,9 +1,8 @@
 
-import props from '../props.js';
 
 function Index(layerObj){
-	Object.assign(props.map[layerObj.id].style, layerObj.style);
-	KIA.observer.layers.observe('setLayerDirtyFlagToPropField');
+	Object.assign(KIA.nodesMap[layerObj.id].style, layerObj.style);
+	KIA.observer.layers.observe('movingLayer');
 }
 
 export default Index;

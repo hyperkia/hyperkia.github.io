@@ -10,7 +10,8 @@ const Props = {
 		downY: 0,
 		moveX: 0,
 		moveY: 0,
-	}
+	},
+	eventData: {},
 };
 
 export default Props;

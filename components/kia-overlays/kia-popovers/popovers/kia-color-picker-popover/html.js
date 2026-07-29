@@ -20,7 +20,7 @@ const html = `
             </div>
             <div class="cpicker-alphaslider">
                 <div data-id="cpicker-alphaslider-bg" class="cpicker-alphaslider-bg">
-                    <input data-id="inputslider-alpha" type="range" value="100" min="0" max="100">
+                    <input data-id="inputslider-alpha" type="range" value="100" min="0" max="100" step="1">
                 </div>
             </div>
             <div class="cpicker-form">           
@@ -33,17 +33,17 @@ const html = `
                         </ul>
                     </details>
                 </kia-select>
-                <div data-id="cpicker-inputs-wrapper" class="cpicker-inputs-wrapper" style="cursor:not-allowed;">
-                    <div class="cpicker-inputs cpicker-inputs-rgb show" style="pointer-events:none;">
-                        <input data-id="inputrgb-r" type="number" class="cpicker-input">
-                        <input data-id="inputrgb-g" type="number" class="cpicker-input">
-                        <input data-id="inputrgb-b" type="number" class="cpicker-input">
+                <div data-id="cpicker-inputs-wrapper" class="cpicker-inputs-wrapper">
+                    <div class="cpicker-inputs cpicker-inputs-rgb show">
+                        <input data-id="inputrgb-r" type="number" class="cpicker-input input-rgb" value="198" step="1" min="0" max="255">
+                        <input data-id="inputrgb-g" type="number" class="cpicker-input input-rgb" value="14" step="1" min="0" max="255">
+                        <input data-id="inputrgb-b" type="number" class="cpicker-input input-rgb" value="14" step="1" min="0" max="255">
                     </div>
-                    <div class="cpicker-inputs cpicker-inputs-hex" style="pointer-events:none;">
+                    <div class="cpicker-inputs cpicker-inputs-hex">
                         <input data-id="inputhex" type="text" class="cpicker-input inputhex">
                     </div>
-                    <div class="cpicker-inputs cpicker-input-alpha show" data-id="cpicker-input-alpha" min="0" max="1" step="0.01" style="pointer-events:none;">
-                        <input data-id="inputalpha" type="text" class="cpicker-input" value="100">
+                    <div class="cpicker-inputs cpicker-input-alpha show" data-id="cpicker-input-alpha">
+                        <input data-id="inputalpha" type="number" class="cpicker-input" value="100" step="1" min="0" max="100">
                     </div>
                 </div>
             </div>
